@@ -26,11 +26,7 @@ struct Roster {
     }
     
     init(testData: Bool) {
-        self.players = []
-        hitters = []
-        pitchers = []
-        self.total_players_count = 0
-        self.players_count_by_position = []
+        self.init()
         createTestDataPlayers()
     }
     
