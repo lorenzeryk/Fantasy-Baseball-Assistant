@@ -31,6 +31,8 @@
 		A519180B29D6892E00410DB3 /* Fantasy_Baseball_AssistantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A519180A29D6892E00410DB3 /* Fantasy_Baseball_AssistantTests.swift */; };
 		A519181529D6892E00410DB3 /* Fantasy_Baseball_AssistantUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A519181429D6892E00410DB3 /* Fantasy_Baseball_AssistantUITests.swift */; };
 		A519181729D6892E00410DB3 /* Fantasy_Baseball_AssistantUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A519181629D6892E00410DB3 /* Fantasy_Baseball_AssistantUITestsLaunchTests.swift */; };
+		A51D633629DA9FCD002DE5B7 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51D633529DA9FCD002DE5B7 /* MainViewModel.swift */; };
+		A51D633829DABE72002DE5B7 /* RosterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51D633729DABE72002DE5B7 /* RosterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +81,8 @@
 		A519181029D6892E00410DB3 /* Fantasy-Baseball-AssistantUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Fantasy-Baseball-AssistantUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A519181429D6892E00410DB3 /* Fantasy_Baseball_AssistantUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fantasy_Baseball_AssistantUITests.swift; sourceTree = "<group>"; };
 		A519181629D6892E00410DB3 /* Fantasy_Baseball_AssistantUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fantasy_Baseball_AssistantUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		A51D633529DA9FCD002DE5B7 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainViewModel.swift; path = "Fantasy-Baseball-Assistant/View Models/MainViewModel.swift"; sourceTree = SOURCE_ROOT; };
+		A51D633729DABE72002DE5B7 /* RosterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RosterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +128,7 @@
 		A5048C1829D6A9A100F63E94 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				A51D633529DA9FCD002DE5B7 /* MainViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -135,6 +140,7 @@
 				A5048C2F29D7B29D00F63E94 /* Statistics */,
 				A5048C1C29D6C16600F63E94 /* CenterView.swift */,
 				A5048C1A29D6ACA000F63E94 /* topLevelView.swift */,
+				A51D633729DABE72002DE5B7 /* RosterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -373,8 +379,10 @@
 				A5048C2429D7A49E00F63E94 /* StatSummaryView.swift in Sources */,
 				A5048C0D29D6A76B00F63E94 /* BaseStats.swift in Sources */,
 				A5048C1129D6A7D500F63E94 /* PitcherStats.swift in Sources */,
+				A51D633629DA9FCD002DE5B7 /* MainViewModel.swift in Sources */,
 				A5048C2A29D7B24500F63E94 /* PitcherStatSummaryView.swift in Sources */,
 				A5048C2629D7A4CE00F63E94 /* PlayerInfoView.swift in Sources */,
+				A51D633829DABE72002DE5B7 /* RosterView.swift in Sources */,
 				A5048C1729D6A91500F63E94 /* Player.swift in Sources */,
 				A5048C1529D6A8FD00F63E94 /* Roster.swift in Sources */,
 			);

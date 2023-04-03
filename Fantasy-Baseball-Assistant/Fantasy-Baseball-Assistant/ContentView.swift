@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var mainViewModel = MainViewModel()
     var tempPlayers: [Player] = []
     
     var body: some View {
-        topLevelView()
+        topLevelView(viewModel: mainViewModel)
     }
 }
 

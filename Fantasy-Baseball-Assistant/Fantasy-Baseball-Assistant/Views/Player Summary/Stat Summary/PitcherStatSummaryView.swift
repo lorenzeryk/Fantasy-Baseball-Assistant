@@ -8,13 +8,17 @@
 import SwiftUI
 
 struct PitcherStatSummaryView: View {
+    @ObservedObject var viewModel: MainViewModel
+    
     var body: some View {
-        HStack {
-            firstSection()
-            Divider()
-            secondSection()
-            Divider()
-            thirdSection()
+        if (viewModel.selectedPlayer != nil && viewModel.selectedPlayer!.stats!.season.pitching_stats != nil) {
+            HStack {
+                firstSection()
+                Divider()
+                secondSection()
+                Divider()
+                thirdSection()
+            }
         }
     }
     
@@ -22,55 +26,55 @@ struct PitcherStatSummaryView: View {
     @ViewBuilder private func firstSection() -> some View {
         VStack {
             Text("WAR")
-            Text("0")
+            Text(String(format: "%.1f", viewModel.selectedPlayer!.stats!.season.pitching_stats!.WAR))
         }
         VStack {
             Text("Win")
-            Text("0")
+            Text(String(viewModel.selectedPlayer!.stats!.season.pitching_stats!.win))
         }
         VStack {
             Text("Loss")
-            Text("0")
+            Text(String(viewModel.selectedPlayer!.stats!.season.pitching_stats!.loss))
         }
         VStack {
             Text("ERA")
-            Text("0")
+            Text(String(format: "%.2f", viewModel.selectedPlayer!.stats!.season.pitching_stats!.ERA))
         }
     }
     
     @ViewBuilder private func secondSection() -> some View {
         VStack {
-            Text("G")
-            Text("0")
+            Text("Games")
+            Text(String(viewModel.selectedPlayer!.stats!.season.pitching_stats!.games_pitched))
         }
         VStack {
-            Text("GS")
-            Text("0")
+            Text("Games Started")
+            Text(String(viewModel.selectedPlayer!.stats!.season.pitching_stats!.games_started))
         }
         VStack {
-            Text("SV")
-            Text("0")
+            Text("Saves")
+            Text(String(viewModel.selectedPlayer!.stats!.season.pitching_stats!.saves))
         }
     }
     
     @ViewBuilder private func thirdSection() -> some View {
         VStack {
-            Text("IP")
-            Text("0")
+            Text("Innings Pitched")
+            Text(String(format: "%.1f", viewModel.selectedPlayer!.stats!.season.pitching_stats!.ERA))
         }
         VStack {
-            Text("SO")
-            Text("0")
+            Text("Strikeouts")
+            Text(String(viewModel.selectedPlayer!.stats!.season.pitching_stats!.strikeouts))
         }
         VStack {
             Text("WHIP")
-            Text("0")
+            Text(String(format: "%.2f", viewModel.selectedPlayer!.stats!.season.pitching_stats!.ERA))
         }
     }
 }
 
-struct PitcherStatSummaryView_Previews: PreviewProvider {
-    static var previews: some View {
-        PitcherStatSummaryView()
-    }
-}
+//struct PitcherStatSummaryView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PitcherStatSummaryView()
+//    }
+//}

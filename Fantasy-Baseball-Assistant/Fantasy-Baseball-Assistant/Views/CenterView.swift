@@ -8,37 +8,48 @@
 import SwiftUI
 
 struct CenterView: View {
+    @ObservedObject var rosterViewModel: MainViewModel
+    
     var body: some View {
-        VStack {
-            PlayerSummaryView()
-                .frame(maxHeight: 150)
-            Divider()
-            HStack {
-                Button("Season") {}
-                Button("Month") {}
-                Button("Week") {}
-                Button("Splits") {}
-                Button("Game Log") {}
-            }
-            Divider()
-            TestStatView()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-        }.toolbar {
-            ToolbarItem(placement: .navigation) {
-                Button(action: backButton, label: {
-                    Image(systemName: "chevron.backward")
-                })
+        if (rosterViewModel.showPlayerInfo) {
+            VStack {
+                PlayerSummaryView(viewModel: rosterViewModel)
+                    .frame(maxHeight: 150)
+                Divider()
+                HStack {
+                    Button("Season") {}
+                    Button("Month") {}
+                    Button("Week") {}
+                    Button("Splits") {}
+                    Button("Game Log") {}
+                    Button("Test Data") {
+                        rosterViewModel.roster.createTestDataPlayers()
+                    }
+                }
+                Divider()
+                TestStatView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }.toolbar {
+                ToolbarItem(placement: .navigation) {
+                    Button(action: backButton, label: {
+                        Image(systemName: "chevron.backward")
+                    })
+                }
             }
         }
+        else {
+            RosterView(viewModel: rosterViewModel)
+        }
     }
-}
-
-private func backButton() {
     
-}
-
-struct CenterView_Previews: PreviewProvider {
-    static var previews: some View {
-        CenterView()
+    private func backButton() {
+        rosterViewModel.clearSelection()
     }
 }
+
+
+//struct CenterView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CenterView()
+//    }
+//}

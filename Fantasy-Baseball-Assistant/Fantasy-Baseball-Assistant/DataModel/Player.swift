@@ -47,4 +47,12 @@ struct Player: Identifiable, Hashable {
         self.primary_position = primary_position
         self.positions = positions
     }
+    
+    func isPitcher() -> Bool {
+        if (primary_position == PlayerPosition.SP || primary_position == PlayerPosition.RP) {
+            return true
+        } else {
+            return false
+        }
+    }
 }

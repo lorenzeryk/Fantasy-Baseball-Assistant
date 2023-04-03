@@ -8,13 +8,17 @@
 import SwiftUI
 
 struct HitterStatSummaryView: View {
+    @ObservedObject var viewModel: MainViewModel
+    
     var body: some View {
         HStack {
-            firstSection()
-            Divider()
-            secondSection()
-            Divider()
-            thirdSection()
+            if (viewModel.selectedPlayer?.stats?.season.hitting_stats != nil) {
+                firstSection()
+                Divider()
+                secondSection()
+                Divider()
+                thirdSection()
+            }
         }
     }
     
@@ -22,63 +26,63 @@ struct HitterStatSummaryView: View {
     @ViewBuilder private func firstSection() -> some View {
         VStack {
             Text("WAR")
-            Text("0")
+            Text(String(format: "%.1f", viewModel.selectedPlayer!.stats!.season.hitting_stats!.WAR))
         }
         VStack {
             Text("AB")
-            Text("0")
+            Text(String(viewModel.selectedPlayer!.stats!.season.hitting_stats!.AB))
         }
         VStack {
             Text("H")
-            Text("0")
+            Text(String(viewModel.selectedPlayer!.stats!.season.hitting_stats!.hits))
         }
         VStack {
             Text("HR")
-            Text("0")
+            Text(String(viewModel.selectedPlayer!.stats!.season.hitting_stats!.homeruns))
         }
         VStack {
             Text("BA")
-            Text("0")
+            Text(String(format: "%.3f", viewModel.selectedPlayer!.stats!.season.hitting_stats!.batting_average))
         }
     }
     
     @ViewBuilder private func secondSection() -> some View {
         VStack {
             Text("R")
-            Text("0")
+            Text(String(viewModel.selectedPlayer!.stats!.season.hitting_stats!.runs))
         }
         VStack {
             Text("RBI")
-            Text("0")
+            Text(String(viewModel.selectedPlayer!.stats!.season.hitting_stats!.RBI))
         }
         VStack {
             Text("SB")
-            Text("0")
+            Text(String(viewModel.selectedPlayer!.stats!.season.hitting_stats!.stolen_bases))
         }
     }
     
     @ViewBuilder private func thirdSection() -> some View {
         VStack {
             Text("OBP")
-            Text("0")
+            Text(String(format: "%.3f", viewModel.selectedPlayer!.stats!.season.hitting_stats!.OBP))
         }
         VStack {
             Text("SLG")
-            Text("0")
+            Text(String(format: "%.3f", viewModel.selectedPlayer!.stats!.season.hitting_stats!.SLG))
         }
         VStack {
             Text("OPS")
-            Text("0")
+            Text(String(format: "%.3f", viewModel.selectedPlayer!.stats!.season.hitting_stats!.OPS))
         }
         VStack {
             Text("OPS+")
-            Text("0")
+            Text(String(format: "%.3f", viewModel.selectedPlayer!.stats!.season.hitting_stats!.OPS_plus))
         }
     }
 }
 
-struct HitterStatSummaryView_Previews: PreviewProvider {
-    static var previews: some View {
-        HitterStatSummaryView()
-    }
-}
+//struct HitterStatSummaryView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        HitterStatSummaryView()
+//    }
+//}

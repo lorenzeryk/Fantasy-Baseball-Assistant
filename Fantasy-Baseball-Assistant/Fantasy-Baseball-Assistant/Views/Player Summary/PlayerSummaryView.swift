@@ -8,23 +8,24 @@
 import SwiftUI
 
 struct PlayerSummaryView: View {
+    var viewModel: MainViewModel
+    
     var body: some View {
         HStack {
-            PlayerInfoView()
+            PlayerInfoView(viewModel: viewModel)
             Divider()
             HStack {
-                StatSummaryView()
+                StatSummaryView(viewModel: viewModel)
                     .frame(maxWidth: .infinity)
                 Divider()
                 MatchupView()
-                    .frame(maxWidth: .infinity)
             }
         }
     }
 }
 
-struct PlayerSummaryView_Previews: PreviewProvider {
-    static var previews: some View {
-        PlayerSummaryView()
-    }
-}
+//struct PlayerSummaryView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PlayerSummaryView()
+//    }
+//}
