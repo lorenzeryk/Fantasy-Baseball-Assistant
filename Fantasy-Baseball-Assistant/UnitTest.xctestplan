@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "1EF6579F-C7E2-4A65-90DD-02652D2EF442",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Fantasy-Baseball-Assistant.xcodeproj",
+        "identifier" : "A519180529D6892E00410DB3",
+        "name" : "Fantasy-Baseball-AssistantTests"
+      }
+    }
+  ],
+  "version" : 1
+}

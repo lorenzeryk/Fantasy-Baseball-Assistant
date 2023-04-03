@@ -4,7 +4,6 @@
 //
 //  Created by Eryk Lorenz on 3/30/23.
 //
-
 import Foundation
 
 struct Roster {
@@ -32,6 +31,7 @@ struct Roster {
         pitchers = []
         self.total_players_count = 0
         self.players_count_by_position = []
+        createTestDataPlayers()
     }
     
     mutating func updatePitchersHitters() {
