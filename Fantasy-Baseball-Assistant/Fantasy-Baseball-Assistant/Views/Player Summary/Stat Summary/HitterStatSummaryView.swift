@@ -18,6 +18,8 @@ struct HitterStatSummaryView: View {
                 secondSection()
                 Divider()
                 thirdSection()
+            } else {
+                Text("No hitting stats found")
             }
         }
     }

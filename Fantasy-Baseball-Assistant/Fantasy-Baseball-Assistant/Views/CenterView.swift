@@ -11,34 +11,38 @@ struct CenterView: View {
     @ObservedObject var rosterViewModel: MainViewModel
     
     var body: some View {
-        if (rosterViewModel.showPlayerInfo) {
-            VStack {
-                PlayerSummaryView(viewModel: rosterViewModel)
-                    .frame(maxHeight: 150)
-                Divider()
-                HStack {
-                    Button("Season") {}
-                    Button("Month") {}
-                    Button("Week") {}
-                    Button("Splits") {}
-                    Button("Game Log") {}
-                    Button("Test Data") {
-                        rosterViewModel.roster.createTestDataPlayers()
+        if (rosterViewModel.displayCreatePlayerView) {
+            CreatePlayer(viewModel: rosterViewModel)
+        } else {
+            if (rosterViewModel.showPlayerInfo) {
+                VStack {
+                    PlayerSummaryView(viewModel: rosterViewModel)
+                        .frame(maxHeight: 150)
+                    Divider()
+                    HStack {
+                        Button("Season") {}
+                        Button("Month") {}
+                        Button("Week") {}
+                        Button("Splits") {}
+                        Button("Game Log") {}
+                        Button("Test Data") {
+                            rosterViewModel.roster.createTestDataPlayers()
+                        }
+                    }
+                    Divider()
+                    TestStatView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }.toolbar {
+                    ToolbarItem(placement: .navigation) {
+                        Button(action: backButton, label: {
+                            Image(systemName: "chevron.backward")
+                        })
                     }
                 }
-                Divider()
-                TestStatView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }.toolbar {
-                ToolbarItem(placement: .navigation) {
-                    Button(action: backButton, label: {
-                        Image(systemName: "chevron.backward")
-                    })
-                }
             }
-        }
-        else {
-            RosterView(viewModel: rosterViewModel)
+            else {
+                RosterView(viewModel: rosterViewModel)
+            }
         }
     }
     

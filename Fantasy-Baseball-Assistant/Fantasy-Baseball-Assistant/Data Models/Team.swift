@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Team: Int {
+enum Team: Int, CaseIterable {
     case Diamondbacks = 0
     case Braves = 1
     case Orioles = 2

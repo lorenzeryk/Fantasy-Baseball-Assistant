@@ -11,7 +11,7 @@ struct PitcherStatSummaryView: View {
     @ObservedObject var viewModel: MainViewModel
     
     var body: some View {
-        if (viewModel.selectedPlayer != nil && viewModel.selectedPlayer!.stats!.season.pitching_stats != nil) {
+        if (viewModel.selectedPlayer?.stats?.season.pitching_stats != nil) {
             HStack {
                 firstSection()
                 Divider()
@@ -19,6 +19,8 @@ struct PitcherStatSummaryView: View {
                 Divider()
                 thirdSection()
             }
+        } else {
+            Text("No pitching stats found")
         }
     }
     

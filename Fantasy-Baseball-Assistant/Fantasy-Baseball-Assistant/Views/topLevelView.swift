@@ -29,8 +29,14 @@ struct topLevelView: View {
                 })
             }
             ToolbarItem(placement: .navigation) {
-                Button(action: loadTestData, label: {
+                Button(action: createPlayer, label: {
                     Image(systemName: "plus")
+                })
+            }
+            //TODO: remove later. Currently only used for testing
+            ToolbarItem(placement: .navigation) {
+                Button(action: loadTestData, label: {
+                    Image(systemName: "plus.diamond")
                 })
             }
         }
@@ -38,6 +44,10 @@ struct topLevelView: View {
     
     private func loadTestData() {
         viewModel.roster.createTestDataPlayers()
+    }
+                        
+    private func createPlayer() {
+        viewModel.setCreatePlayerStatus(true)
     }
 }
 

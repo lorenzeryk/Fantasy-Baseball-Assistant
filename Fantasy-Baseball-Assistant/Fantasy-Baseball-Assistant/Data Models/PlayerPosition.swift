@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum PlayerPosition: Int {
+enum PlayerPosition: Int, CaseIterable {
     case RP = 0
     case SP = 1
     case C = 2
@@ -41,7 +41,7 @@ enum PlayerPosition: Int {
         case .RP: return "Relief Pitcher"
         case .SP: return "Starting Pitcher"
         case .C: return "Catcher"
-        case .First: return "First Basem"
+        case .First: return "First Base"
         case .Second: return "Second Base"
         case .Third: return "Third Base"
         case .Short: return "Shortstop"

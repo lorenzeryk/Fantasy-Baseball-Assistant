@@ -28,6 +28,7 @@ struct RosterView: View {
                 Text($0.team.fullText)
             }
         }
+        //TODO: cite from https://useyourloaf.com/blog/context-menus-for-tables/
         .contextMenu(forSelectionType: Player.ID.self) { player in
             
         } primaryAction: { player in
@@ -50,6 +51,7 @@ struct RosterView: View {
                 Text($0.team.fullText)
             }
         }
+        //TODO: cite from https://useyourloaf.com/blog/context-menus-for-tables/
         .contextMenu(forSelectionType: Player.ID.self) { player in
             
         } primaryAction: { player in

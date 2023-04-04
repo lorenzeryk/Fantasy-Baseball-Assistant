@@ -19,6 +19,7 @@ class MainViewModel: ObservableObject {
         }
     }
     @Published var showPlayerInfo = false
+    @Published var displayCreatePlayerView = false
     
     func clearSelection() {
         self.selectedPlayer = nil
@@ -26,5 +27,17 @@ class MainViewModel: ObservableObject {
     
     func setSelectionFromTable(player: Set<Player.ID>) {
         selectedPlayer = roster.getPlayerByID(playerID: player)
+    }
+    
+    func setCreatePlayerStatus(_ status: Bool) {
+        displayCreatePlayerView = status
+    }
+    
+    func cancelCreatingPlayer() {
+        displayCreatePlayerView = false
+    }
+    
+    func addPlayer(firstName: String, lastName: String, position: PlayerPosition, team: Team) {
+        roster.players.append(Player(first_name: firstName, last_name: lastName, team: team, primary_position: position))
     }
 }
