@@ -35,7 +35,7 @@ struct topLevelView: View {
             }
             //TODO: remove later. Currently only used for testing
             ToolbarItem(placement: .navigation) {
-                Button(action: loadTestData, label: {
+                Button(action: testTeamProfileFetch, label: {
                     Image(systemName: "plus.diamond")
                 })
             }
@@ -48,6 +48,11 @@ struct topLevelView: View {
                         
     private func createPlayer() {
         viewModel.setCreatePlayerStatus(true)
+    }
+    
+    private func testTeamProfileFetch() {
+        let dataFetcher = DataRequester()
+        dataFetcher.getTeamProfile(team: Team.Rockies)
     }
 }
 

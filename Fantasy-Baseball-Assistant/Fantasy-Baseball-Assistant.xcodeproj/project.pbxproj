@@ -66,6 +66,9 @@
 		A5CF9FC629DB678000432079 /* TeamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CF9FC529DB678000432079 /* TeamTests.swift */; };
 		A5CF9FCB29DBD3F700432079 /* CreatePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CF9FCA29DBD3F700432079 /* CreatePlayer.swift */; };
 		A5CF9FCC29DBD3F700432079 /* CreatePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CF9FCA29DBD3F700432079 /* CreatePlayer.swift */; };
+		A5CF9FCF29DD4ADA00432079 /* DataRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CF9FCE29DD4ADA00432079 /* DataRequester.swift */; };
+		A5CF9FD029DD4AE100432079 /* DataRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CF9FCE29DD4ADA00432079 /* DataRequester.swift */; };
+		A5CF9FD129DD4AE100432079 /* DataRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CF9FCE29DD4ADA00432079 /* DataRequester.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +124,7 @@
 		A5CF9FC529DB678000432079 /* TeamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamTests.swift; sourceTree = "<group>"; };
 		A5CF9FC729DB691400432079 /* UnitTest.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = UnitTest.xctestplan; sourceTree = "<group>"; };
 		A5CF9FCA29DBD3F700432079 /* CreatePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlayer.swift; sourceTree = "<group>"; };
+		A5CF9FCE29DD4ADA00432079 /* DataRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRequester.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,6 +241,7 @@
 		A51917F729D6892D00410DB3 /* Fantasy-Baseball-Assistant */ = {
 			isa = PBXGroup;
 			children = (
+				A5CF9FCD29DD4AC400432079 /* Data Fetching */,
 				A5048C0729D6A46500F63E94 /* Data Models */,
 				A5048C1929D6A9BE00F63E94 /* Views */,
 				A5048C1829D6A9A100F63E94 /* View Models */,
@@ -283,6 +288,14 @@
 				A5CF9FC529DB678000432079 /* TeamTests.swift */,
 			);
 			path = "Data Model Unit Tests";
+			sourceTree = "<group>";
+		};
+		A5CF9FCD29DD4AC400432079 /* Data Fetching */ = {
+			isa = PBXGroup;
+			children = (
+				A5CF9FCE29DD4ADA00432079 /* DataRequester.swift */,
+			);
+			path = "Data Fetching";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -433,6 +446,7 @@
 				A5048C1129D6A7D500F63E94 /* PitcherStats.swift in Sources */,
 				A51D633629DA9FCD002DE5B7 /* MainViewModel.swift in Sources */,
 				A5048C2A29D7B24500F63E94 /* PitcherStatSummaryView.swift in Sources */,
+				A5CF9FCF29DD4ADA00432079 /* DataRequester.swift in Sources */,
 				A5048C2629D7A4CE00F63E94 /* PlayerInfoView.swift in Sources */,
 				A51D633829DABE72002DE5B7 /* RosterView.swift in Sources */,
 				A5048C1729D6A91500F63E94 /* Player.swift in Sources */,
@@ -452,6 +466,7 @@
 				A5CF9FA629DB615200432079 /* BaseStats.swift in Sources */,
 				A5CF9FC429DB677300432079 /* PositionTests.swift in Sources */,
 				A5CF9FBE29DB61FD00432079 /* RosterTest.swift in Sources */,
+				A5CF9FD029DD4AE100432079 /* DataRequester.swift in Sources */,
 				A5CF9FAE29DB616000432079 /* Roster.swift in Sources */,
 				A5CF9FC229DB664100432079 /* PlayerTests.swift in Sources */,
 				A5CF9FA829DB615600432079 /* FielderStats.swift in Sources */,
@@ -482,6 +497,7 @@
 				A5CF9FB429DB61BC00432079 /* HitterStatSummaryView.swift in Sources */,
 				A5CF9FB329DB61B900432079 /* PlayerSummaryView.swift in Sources */,
 				A5CF9FBC29DB61D100432079 /* MainViewModel.swift in Sources */,
+				A5CF9FD129DD4AE100432079 /* DataRequester.swift in Sources */,
 				A5CF9FAB29DB615A00432079 /* PitcherStats.swift in Sources */,
 				A5CF9FB129DB616400432079 /* Player.swift in Sources */,
 				A5CF9FAF29DB616100432079 /* Roster.swift in Sources */,
