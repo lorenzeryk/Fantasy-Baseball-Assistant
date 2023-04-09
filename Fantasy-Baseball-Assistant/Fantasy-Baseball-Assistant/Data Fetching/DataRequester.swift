@@ -89,6 +89,7 @@ struct DataRequester {
             }
 
             if let data = data {
+                //TODO: cite from https://benscheirman.com/2017/06/swift-json.html
                 if let players = try? JSONDecoder().decode(ReturnedTeamProfile.self, from: data) {
                     completion(players)
                     return
@@ -101,6 +102,7 @@ struct DataRequester {
     }
     
     private func getTeamProfilePlayers(team: Team) async -> ReturnedTeamProfile? {
+        //TODO: cite from https://www.hackingwithswift.com/quick-start/concurrency/how-to-use-continuations-to-convert-completion-handlers-into-async-functions
         await withCheckedContinuation { continuation in
             getTeamProfilePlayers(team: team) { players in
                 continuation.resume(returning: players)

@@ -45,6 +45,7 @@ class MainViewModel: ObservableObject {
         
         Task.init {
             guard await dataRequester.validatePlayer(first_name: firstName, last_name: lastName, team: team) != false else {
+                //TODO: cite from https://developer.apple.com/forums/thread/718270
                 DispatchQueue.main.async { [self] in
                     failedPlayerValidation = true
                 }
