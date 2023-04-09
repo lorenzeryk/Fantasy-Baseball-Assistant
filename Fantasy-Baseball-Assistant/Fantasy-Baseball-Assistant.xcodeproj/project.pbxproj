@@ -69,6 +69,7 @@
 		A5CF9FCF29DD4ADA00432079 /* DataRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CF9FCE29DD4ADA00432079 /* DataRequester.swift */; };
 		A5CF9FD029DD4AE100432079 /* DataRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CF9FCE29DD4ADA00432079 /* DataRequester.swift */; };
 		A5CF9FD129DD4AE100432079 /* DataRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CF9FCE29DD4ADA00432079 /* DataRequester.swift */; };
+		A5FACA2029E2700D0041CA2C /* DecodingStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FACA1F29E2700D0041CA2C /* DecodingStructs.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +126,7 @@
 		A5CF9FC729DB691400432079 /* UnitTest.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = UnitTest.xctestplan; sourceTree = "<group>"; };
 		A5CF9FCA29DBD3F700432079 /* CreatePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlayer.swift; sourceTree = "<group>"; };
 		A5CF9FCE29DD4ADA00432079 /* DataRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRequester.swift; sourceTree = "<group>"; };
+		A5FACA1F29E2700D0041CA2C /* DecodingStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodingStructs.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -294,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				A5CF9FCE29DD4ADA00432079 /* DataRequester.swift */,
+				A5FACA1F29E2700D0041CA2C /* DecodingStructs.swift */,
 			);
 			path = "Data Fetching";
 			sourceTree = "<group>";
@@ -441,6 +444,7 @@
 				A5048C1329D6A81D00F63E94 /* Stats.swift in Sources */,
 				A5048C2C29D7B25300F63E94 /* HitterStatSummaryView.swift in Sources */,
 				A5048C1D29D6C16600F63E94 /* CenterView.swift in Sources */,
+				A5FACA2029E2700D0041CA2C /* DecodingStructs.swift in Sources */,
 				A5048C2429D7A49E00F63E94 /* StatSummaryView.swift in Sources */,
 				A5048C0D29D6A76B00F63E94 /* BaseStats.swift in Sources */,
 				A5048C1129D6A7D500F63E94 /* PitcherStats.swift in Sources */,

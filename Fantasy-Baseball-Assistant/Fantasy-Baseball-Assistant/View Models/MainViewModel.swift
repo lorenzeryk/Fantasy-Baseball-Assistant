@@ -20,6 +20,7 @@ class MainViewModel: ObservableObject {
     }
     @Published var showPlayerInfo = false
     @Published var displayCreatePlayerView = false
+    @Published var failedPlayerValidation = false
     
     func clearSelection() {
         self.selectedPlayer = nil
@@ -35,9 +36,25 @@ class MainViewModel: ObservableObject {
     
     func cancelCreatingPlayer() {
         displayCreatePlayerView = false
+        failedPlayerValidation = false
     }
     
     func addPlayer(firstName: String, lastName: String, position: PlayerPosition, team: Team) {
-        roster.players.append(Player(first_name: firstName, last_name: lastName, team: team, primary_position: position))
+        failedPlayerValidation = false
+        let dataRequester = DataRequester()
+        
+        Task.init {
+            guard await dataRequester.validatePlayer(first_name: firstName, last_name: lastName, team: team) != false else {
+                DispatchQueue.main.async { [self] in
+                    failedPlayerValidation = true
+                }
+                return
+            }
+            
+            DispatchQueue.main.async { [self] in
+                roster.players.append(Player(first_name: firstName, last_name: lastName, team: team, primary_position: position))
+                cancelCreatingPlayer()
+            }
+        }
     }
 }

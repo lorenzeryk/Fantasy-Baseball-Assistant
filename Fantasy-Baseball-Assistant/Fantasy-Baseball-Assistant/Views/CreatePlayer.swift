@@ -13,7 +13,6 @@ struct CreatePlayer: View {
     @State var last_name: String = ""
     @State var selectedPosition = PlayerPosition.None
     @State var selectedTeam = Team.Angels
-    @State var playerValidated = false
     @State var validationInProgress = true
     
     var body: some View {
@@ -40,7 +39,7 @@ struct CreatePlayer: View {
             }
             HStack {
                 Spacer()
-                if (!playerValidated) {
+                if (viewModel.failedPlayerValidation) {
                     Text("Failed to validate player")
                         .foregroundColor(.red)
                 }
@@ -61,7 +60,6 @@ struct CreatePlayer: View {
     
     private func submitCreatedPlayer() {
         viewModel.addPlayer(firstName: first_name, lastName: last_name, position: selectedPosition, team: selectedTeam)
-        cancelCreatingPlayer()
     }
     
     private func cancelCreatingPlayer() {

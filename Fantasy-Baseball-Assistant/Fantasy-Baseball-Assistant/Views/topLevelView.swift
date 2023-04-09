@@ -51,8 +51,8 @@ struct topLevelView: View {
     }
     
     private func testTeamProfileFetch() {
-        let dataFetcher = DataRequester()
-        dataFetcher.getTeamProfile(team: Team.Rockies)
+//        let dataFetcher = DataRequester()
+        
     }
 }
 
