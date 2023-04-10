@@ -9,8 +9,7 @@ import Foundation
 
 struct DataRequester {
     let base_url = "https://api.sportradar.com/mlb/trial/v7/en"
-    
-    //TODO: move to secure environment variable
+
     var api_key: String = ""
     
     init() {
@@ -97,8 +96,6 @@ struct DataRequester {
                 completion(nil)
             }
         }.resume()
-        
-        
     }
     
     private func getTeamProfilePlayers(team: Team) async -> ReturnedTeamProfile? {

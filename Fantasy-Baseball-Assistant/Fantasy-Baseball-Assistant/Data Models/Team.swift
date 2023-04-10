@@ -7,37 +7,38 @@
 
 import Foundation
 
-enum Team: Int, CaseIterable {
-    case Diamondbacks = 0
-    case Braves = 1
-    case Orioles = 2
-    case RedSox = 3
-    case WhiteSox = 4
-    case Cubs = 5
-    case Reds = 6
-    case Guardings = 7
-    case Rockies = 8
-    case Tigers = 9
-    case Astros = 10
-    case Royals = 11
-    case Angels = 12
-    case Dodgers = 13
-    case Marlins = 14
-    case Brewers = 15
-    case Twins = 16
-    case Yankees = 17
-    case Mets = 18
-    case Athletics = 19
-    case Phillies = 20
-    case Pirates = 21
-    case Padres = 22
-    case Giants = 23
-    case Mariners = 24
-    case Cardinals = 25
-    case Rays = 26
-    case Rangers = 27
-    case BlueJays = 28
-    case Nationals = 29
+enum Team: Int16, CaseIterable {
+    case None = 0
+    case Diamondbacks = 1
+    case Braves = 2
+    case Orioles = 3
+    case RedSox = 4
+    case WhiteSox = 5
+    case Cubs = 6
+    case Reds = 7
+    case Guardings = 8
+    case Rockies = 9
+    case Tigers = 10
+    case Astros = 11
+    case Royals = 12
+    case Angels = 13
+    case Dodgers = 14
+    case Marlins = 15
+    case Brewers = 16
+    case Twins = 17
+    case Yankees = 18
+    case Mets = 19
+    case Athletics = 20
+    case Phillies = 21
+    case Pirates = 22
+    case Padres = 23
+    case Giants = 24
+    case Mariners = 25
+    case Cardinals = 26
+    case Rays = 27
+    case Rangers = 28
+    case BlueJays = 29
+    case Nationals = 30
     
     var abbreviation: String {
         switch self {
@@ -71,6 +72,7 @@ enum Team: Int, CaseIterable {
         case .Rangers: return "TEX"
         case .BlueJays: return "TOR"
         case .Nationals: return "WSH"
+        case .None: return ""
         }
     }
     
@@ -106,6 +108,7 @@ enum Team: Int, CaseIterable {
         case .Rangers: return "Texas Rangers"
         case .BlueJays: return "Toronto Blue Jays"
         case .Nationals: return "Washington Nationals"
+        case .None: return "None"
         }
     }
     
@@ -141,6 +144,7 @@ enum Team: Int, CaseIterable {
         case .Rangers: return "d99f919b-1534-4516-8e8a-9cd106c6d8cd"
         case .BlueJays: return "1d678440-b4b1-4954-9b39-70afb3ebbcfa"
         case .Nationals: return "d89bed32-3aee-4407-99e3-4103641b999a"
+        case .None: return ""
         }
     }
 }

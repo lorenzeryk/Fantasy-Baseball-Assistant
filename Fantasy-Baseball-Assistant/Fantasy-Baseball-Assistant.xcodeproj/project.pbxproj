@@ -70,6 +70,12 @@
 		A5CF9FD029DD4AE100432079 /* DataRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CF9FCE29DD4ADA00432079 /* DataRequester.swift */; };
 		A5CF9FD129DD4AE100432079 /* DataRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CF9FCE29DD4ADA00432079 /* DataRequester.swift */; };
 		A5FACA2029E2700D0041CA2C /* DecodingStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FACA1F29E2700D0041CA2C /* DecodingStructs.swift */; };
+		A5FACA4229E2A5E30041CA2C /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FACA4129E2A5E30041CA2C /* Persistence.swift */; };
+		A5FACA4329E2A5E30041CA2C /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FACA4129E2A5E30041CA2C /* Persistence.swift */; };
+		A5FACA4429E2A5E30041CA2C /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FACA4129E2A5E30041CA2C /* Persistence.swift */; };
+		A5FACA4729E2A6790041CA2C /* FantasyBaseballAssistant.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A5FACA4529E2A6790041CA2C /* FantasyBaseballAssistant.xcdatamodeld */; };
+		A5FACA4829E2A6790041CA2C /* FantasyBaseballAssistant.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A5FACA4529E2A6790041CA2C /* FantasyBaseballAssistant.xcdatamodeld */; };
+		A5FACA4929E2A6790041CA2C /* FantasyBaseballAssistant.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A5FACA4529E2A6790041CA2C /* FantasyBaseballAssistant.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,6 +133,8 @@
 		A5CF9FCA29DBD3F700432079 /* CreatePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlayer.swift; sourceTree = "<group>"; };
 		A5CF9FCE29DD4ADA00432079 /* DataRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRequester.swift; sourceTree = "<group>"; };
 		A5FACA1F29E2700D0041CA2C /* DecodingStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodingStructs.swift; sourceTree = "<group>"; };
+		A5FACA4129E2A5E30041CA2C /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		A5FACA4629E2A6790041CA2C /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,7 +259,9 @@
 				A51917FA29D6892D00410DB3 /* ContentView.swift */,
 				A51917FC29D6892E00410DB3 /* Assets.xcassets */,
 				A519180129D6892E00410DB3 /* Fantasy_Baseball_Assistant.entitlements */,
+				A5FACA4129E2A5E30041CA2C /* Persistence.swift */,
 				A51917FE29D6892E00410DB3 /* Preview Content */,
+				A5FACA4529E2A6790041CA2C /* FantasyBaseballAssistant.xcdatamodeld */,
 			);
 			path = "Fantasy-Baseball-Assistant";
 			sourceTree = "<group>";
@@ -442,6 +452,7 @@
 				A5048C0929D6A48F00F63E94 /* PlayerPosition.swift in Sources */,
 				A51917F929D6892D00410DB3 /* Fantasy_Baseball_AssistantApp.swift in Sources */,
 				A5048C1329D6A81D00F63E94 /* Stats.swift in Sources */,
+				A5FACA4729E2A6790041CA2C /* FantasyBaseballAssistant.xcdatamodeld in Sources */,
 				A5048C2C29D7B25300F63E94 /* HitterStatSummaryView.swift in Sources */,
 				A5048C1D29D6C16600F63E94 /* CenterView.swift in Sources */,
 				A5FACA2029E2700D0041CA2C /* DecodingStructs.swift in Sources */,
@@ -450,6 +461,7 @@
 				A5048C1129D6A7D500F63E94 /* PitcherStats.swift in Sources */,
 				A51D633629DA9FCD002DE5B7 /* MainViewModel.swift in Sources */,
 				A5048C2A29D7B24500F63E94 /* PitcherStatSummaryView.swift in Sources */,
+				A5FACA4229E2A5E30041CA2C /* Persistence.swift in Sources */,
 				A5CF9FCF29DD4ADA00432079 /* DataRequester.swift in Sources */,
 				A5048C2629D7A4CE00F63E94 /* PlayerInfoView.swift in Sources */,
 				A51D633829DABE72002DE5B7 /* RosterView.swift in Sources */,
@@ -471,7 +483,9 @@
 				A5CF9FC429DB677300432079 /* PositionTests.swift in Sources */,
 				A5CF9FBE29DB61FD00432079 /* RosterTest.swift in Sources */,
 				A5CF9FD029DD4AE100432079 /* DataRequester.swift in Sources */,
+				A5FACA4329E2A5E30041CA2C /* Persistence.swift in Sources */,
 				A5CF9FAE29DB616000432079 /* Roster.swift in Sources */,
+				A5FACA4829E2A6790041CA2C /* FantasyBaseballAssistant.xcdatamodeld in Sources */,
 				A5CF9FC229DB664100432079 /* PlayerTests.swift in Sources */,
 				A5CF9FA829DB615600432079 /* FielderStats.swift in Sources */,
 				A5CF9FAA29DB615900432079 /* PitcherStats.swift in Sources */,
@@ -492,6 +506,7 @@
 				A5CF9FA329DB614B00432079 /* PlayerPosition.swift in Sources */,
 				A5CF9FB229DB61B600432079 /* PlayerInfoView.swift in Sources */,
 				A5CF9FB529DB61BF00432079 /* PitcherStatSummaryView.swift in Sources */,
+				A5FACA4429E2A5E30041CA2C /* Persistence.swift in Sources */,
 				A519181529D6892E00410DB3 /* Fantasy_Baseball_AssistantUITests.swift in Sources */,
 				A5CF9FB829DB61C700432079 /* CenterView.swift in Sources */,
 				A5CF9FAD29DB615D00432079 /* Stats.swift in Sources */,
@@ -504,6 +519,7 @@
 				A5CF9FD129DD4AE100432079 /* DataRequester.swift in Sources */,
 				A5CF9FAB29DB615A00432079 /* PitcherStats.swift in Sources */,
 				A5CF9FB129DB616400432079 /* Player.swift in Sources */,
+				A5FACA4929E2A6790041CA2C /* FantasyBaseballAssistant.xcdatamodeld in Sources */,
 				A5CF9FAF29DB616100432079 /* Roster.swift in Sources */,
 				A5CF9FB629DB61C100432079 /* StatSummaryView.swift in Sources */,
 			);
@@ -798,6 +814,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A5FACA4529E2A6790041CA2C /* FantasyBaseballAssistant.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A5FACA4629E2A6790041CA2C /* Model.xcdatamodel */,
+			);
+			currentVersion = A5FACA4629E2A6790041CA2C /* Model.xcdatamodel */;
+			path = FantasyBaseballAssistant.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A51917ED29D6892D00410DB3 /* Project object */;
 }

@@ -6,53 +6,55 @@
 //
 
 import Foundation
+import CoreData
 
-struct Player: Identifiable, Hashable {
-    static func == (lhs: Player, rhs: Player) -> Bool {
-        return lhs.id == rhs.id
+@objc(Player)
+class Player: NSManagedObject, Identifiable {
+    @NSManaged var id: UUID
+    @NSManaged var first_name: String
+    @NSManaged var last_name: String
+    @NSManaged var primary_position_raw: Int16
+    @NSManaged var team_raw: Int16
+    
+    var positions: [PlayerPosition] = []
+    var stats: Stats?
+    
+    var primary_position: PlayerPosition {
+        get {return PlayerPosition(rawValue: primary_position_raw) ?? PlayerPosition.None}
+        set {self.primary_position_raw = newValue.rawValue}
+    }
+    var team: Team {
+        get {return Team(rawValue: team_raw) ?? Team.None}
+        set {self.team_raw = newValue.rawValue}
     }
     
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Player> {
+        return NSFetchRequest<Player>(entityName: "Player")
     }
     
-    let id = UUID()
-    var first_name: String
-    var last_name: String
-    var positions: [PlayerPosition]
-    var primary_position: PlayerPosition
-    var stats: Stats? = nil
-    var team: Team
-    
-    init(first_name: String, last_name: String, team: Team) {
+    @objc
+    private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+    }
+
+    init(first_name: String, last_name: String, team: Team, primary_position: PlayerPosition, entity: NSEntityDescription, context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
         self.first_name = first_name
         self.last_name = last_name
-        self.team = team
-        self.primary_position = PlayerPosition.None
-        self.positions = []
-    }
-    
-    init(first_name: String, last_name: String, team: Team, primary_position: PlayerPosition) {
-        self.first_name = first_name
-        self.last_name = last_name
-        self.team = team
-        self.primary_position = primary_position
-        self.positions = []
-    }
-    
-    init(first_name: String, last_name: String, team: Team, primary_position: PlayerPosition, positions: [PlayerPosition]) {
-        self.first_name = first_name
-        self.last_name = last_name
-        self.team = team
-        self.primary_position = primary_position
-        self.positions = positions
+        self.team_raw = team.rawValue
+        self.primary_position_raw = primary_position.rawValue
+        self.id = UUID()
     }
     
     func isPitcher() -> Bool {
-        if (primary_position == PlayerPosition.SP || primary_position == PlayerPosition.RP) {
+        if (self.primary_position == PlayerPosition.SP || self.primary_position == PlayerPosition.RP) {
             return true
         } else {
             return false
         }
+    }
+    
+    static func == (lhs: Player, rhs: Player) -> Bool {
+        return lhs.id == rhs.id
     }
 }

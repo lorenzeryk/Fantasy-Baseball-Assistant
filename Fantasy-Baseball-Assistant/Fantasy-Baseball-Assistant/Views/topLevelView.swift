@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct topLevelView: View {
-    //TODO: change later. currently just used for testing purposes
-    var players: [Player] = [Player(first_name: "Player", last_name: "One", team: Team.Rockies, primary_position: PlayerPosition.SP), Player(first_name: "Player", last_name: "Two", team: Team.BlueJays, primary_position: PlayerPosition.Center)]
-    
     @ObservedObject var viewModel: MainViewModel
     
     var body: some View {
@@ -23,36 +20,51 @@ struct topLevelView: View {
             
             CenterView(rosterViewModel: viewModel)
         }.toolbar {
+            HomeToolbar(viewModel: viewModel)
+        }
+    }
+}
+
+struct HomeToolbar: ToolbarContent {
+    @ObservedObject var viewModel: MainViewModel
+    
+    var body: some ToolbarContent {
+        ToolbarItem(placement: .navigation) {
+            Button(action: toggleSidebar, label: {
+                Image(systemName: "sidebar.leading")
+            })
+        }
+        ToolbarItem(placement: .navigation) {
+            Button(action: createPlayer, label: {
+                Image(systemName: "plus")
+            })
+        }
+        if (viewModel.showPlayerInfo) {
             ToolbarItem(placement: .navigation) {
-                Button(action: toggleSidebar, label: {
-                    Image(systemName: "sidebar.leading")
+                Button(action: backButton, label: {
+                    Image(systemName: "chevron.backward")
                 })
             }
+        }
+        if (viewModel.selectedPlayer != nil && !viewModel.showPlayerInfo) {
             ToolbarItem(placement: .navigation) {
-                Button(action: createPlayer, label: {
-                    Image(systemName: "plus")
-                })
-            }
-            //TODO: remove later. Currently only used for testing
-            ToolbarItem(placement: .navigation) {
-                Button(action: testTeamProfileFetch, label: {
-                    Image(systemName: "plus.diamond")
+                Button(action: deletePlayer, label: {
+                    Image(systemName: "minus")
                 })
             }
         }
     }
     
-    private func loadTestData() {
-        viewModel.roster.createTestDataPlayers()
-    }
-                        
     private func createPlayer() {
         viewModel.setCreatePlayerStatus(true)
     }
     
-    private func testTeamProfileFetch() {
-//        let dataFetcher = DataRequester()
-        
+    private func backButton() {
+        viewModel.clearSelection()
+    }
+    
+    private func deletePlayer() {
+        viewModel.deleteSelectedPlayer()
     }
 }
 

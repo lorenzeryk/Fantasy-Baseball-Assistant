@@ -25,19 +25,10 @@ struct CenterView: View {
                         Button("Week") {}
                         Button("Splits") {}
                         Button("Game Log") {}
-                        Button("Test Data") {
-                            rosterViewModel.roster.createTestDataPlayers()
-                        }
                     }
                     Divider()
                     TestStatView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }.toolbar {
-                    ToolbarItem(placement: .navigation) {
-                        Button(action: backButton, label: {
-                            Image(systemName: "chevron.backward")
-                        })
-                    }
                 }
             }
             else {

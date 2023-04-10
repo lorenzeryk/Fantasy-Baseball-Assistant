@@ -10,34 +10,32 @@ import SwiftUI
 struct RosterView: View {
     @ObservedObject var viewModel: MainViewModel
     
-    @State var selected: Player.ID? = nil
-    
     var body: some View {
-        Text("Pitchers")
-        Table(viewModel.roster.pitchers, selection: $selected) {
-            TableColumn("Name") {
-                Text($0.first_name + " " + $0.last_name)
-            }
-            TableColumn("Primary Position") {
-                Text($0.primary_position.fullText)
-            }
-            TableColumn("Secondary Positions") {
-                Text(getAllPlayerPositions(player: $0))
-            }
-            TableColumn("Team") {
-                Text($0.team.fullText)
-            }
-        }
+        RosterTables()
+    }
+    
+    @ViewBuilder private func RosterTables() -> some View {
+        PitchersTable()
         //TODO: cite from https://useyourloaf.com/blog/context-menus-for-tables/
         .contextMenu(forSelectionType: Player.ID.self) { player in
             
         } primaryAction: { player in
-            viewModel.setSelectionFromTable(player: player)
+            
+            viewModel.updateShowPlayerInfo()
         }
-        
         Spacer()
-        Text("Fielders")
-        Table(viewModel.roster.hitters, selection: $selected) {
+        HittersTable()
+        //TODO: cite from https://useyourloaf.com/blog/context-menus-for-tables/
+        .contextMenu(forSelectionType: Player.ID.self) { player in
+
+        } primaryAction: { player in
+            viewModel.updateShowPlayerInfo()
+        }
+    }
+    
+    @ViewBuilder private func PitchersTable() -> some View {
+        Text("Pitchers")
+        Table(viewModel.roster.pitchers, selection: $viewModel.selectedPlayerID) {
             TableColumn("Name") {
                 Text($0.first_name + " " + $0.last_name)
             }
@@ -51,11 +49,24 @@ struct RosterView: View {
                 Text($0.team.fullText)
             }
         }
-        //TODO: cite from https://useyourloaf.com/blog/context-menus-for-tables/
-        .contextMenu(forSelectionType: Player.ID.self) { player in
-            
-        } primaryAction: { player in
-            viewModel.setSelectionFromTable(player: player)
+
+    }
+    
+    @ViewBuilder private func HittersTable() -> some View {
+        Text("Fielders")
+        Table(viewModel.roster.hitters, selection: $viewModel.selectedPlayerID) {
+            TableColumn("Name") {
+                Text($0.first_name + " " + $0.last_name)
+            }
+            TableColumn("Primary Position") {
+                Text($0.primary_position.fullText)
+            }
+            TableColumn("Secondary Positions") {
+                Text(getAllPlayerPositions(player: $0))
+            }
+            TableColumn("Team") {
+                Text($0.team.fullText)
+            }
         }
     }
     

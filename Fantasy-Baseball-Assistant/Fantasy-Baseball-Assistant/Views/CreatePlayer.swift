@@ -12,8 +12,7 @@ struct CreatePlayer: View {
     @State var first_name: String = ""
     @State var last_name: String = ""
     @State var selectedPosition = PlayerPosition.None
-    @State var selectedTeam = Team.Angels
-    @State var validationInProgress = true
+    @State var selectedTeam = Team.None
     
     var body: some View {
         VStack {
@@ -42,9 +41,6 @@ struct CreatePlayer: View {
                 if (viewModel.failedPlayerValidation) {
                     Text("Failed to validate player")
                         .foregroundColor(.red)
-                }
-                if (validationInProgress) {
-                    //TODO: add loading icon
                 }
                 Button("Submit") {
                     submitCreatedPlayer()

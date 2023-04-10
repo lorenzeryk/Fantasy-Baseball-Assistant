@@ -8,10 +8,7 @@
 import SwiftUI
 
 struct PlayerInfoView: View {
-    var testPlayer: Player = Player(first_name: "Derek", last_name: "Jeter", team: Team.Yankees, primary_position: PlayerPosition.Short, positions: [PlayerPosition.Short, PlayerPosition.Second])
-    
     @ObservedObject var viewModel: MainViewModel
-    
     
     var body: some View {
         VStack {
@@ -26,25 +23,6 @@ struct PlayerInfoView: View {
                 Text(viewModel.selectedPlayer!.team.fullText)
             }
         }
-        
-        
-//        HStack {
-//            VStack {
-//                HStack {
-//                    Text(testPlayer.first_name)
-//                        .font(.system(size: 32))
-//                    Text(testPlayer.last_name)
-//                        .font(.system(size: 32))
-//                }
-//                HStack {
-//                    VStack {
-//                        Text(testPlayer.primary_position.fullText)
-//                        Text("Secondary Positions: \(getAllPlayerPositions(player: testPlayer))")
-//                        Text(testPlayer.team.fullText)
-//                    }
-//                }
-//            }
-//        }
         .padding()
     }
     

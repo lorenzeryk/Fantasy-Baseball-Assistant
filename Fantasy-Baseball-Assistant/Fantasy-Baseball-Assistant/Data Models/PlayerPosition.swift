@@ -7,18 +7,18 @@
 
 import Foundation
 
-enum PlayerPosition: Int, CaseIterable {
-    case RP = 0
+enum PlayerPosition: Int16, CaseIterable {
+    case None = 0
     case SP = 1
-    case C = 2
-    case First = 3
-    case Second = 4
-    case Third = 5
-    case Short = 6
-    case Left = 7
-    case Center = 8
-    case Right = 9
-    case None = 10
+    case RP = 2
+    case C = 3
+    case First = 4
+    case Second = 5
+    case Third = 6
+    case Short = 7
+    case Left = 8
+    case Center = 9
+    case Right = 10
     
     var abbreviation: String {
         switch self {
