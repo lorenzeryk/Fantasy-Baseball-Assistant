@@ -71,7 +71,7 @@ struct RosterView: View {
     }
     
     private func getAllPlayerPositions(player: Player) -> String {
-        if (player.positions.isEmpty || player.positions.count == 1) {
+        if (player.positions.isEmpty) {
             return "None"
         }
         

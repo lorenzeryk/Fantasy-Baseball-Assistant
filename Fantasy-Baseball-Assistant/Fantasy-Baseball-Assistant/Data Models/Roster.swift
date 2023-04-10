@@ -21,6 +21,7 @@ struct Roster {
     }
 
     mutating func addPlayerToRoster(player: Player) {
+        player.updateRawSecondaryPositions()
         players.append(player)
         updatePitchersHitters()
     }
@@ -45,6 +46,9 @@ struct Roster {
         do {
             savedPlayers = try PersistenceController.shared.container.viewContext.fetch(fetchRequest)
             players = savedPlayers
+            for player in players {
+                player.setSecondaryPositions()
+            }
         } catch {
             print("Failed to fetch saved players")
         }

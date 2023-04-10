@@ -15,6 +15,7 @@ class Player: NSManagedObject, Identifiable {
     @NSManaged var last_name: String
     @NSManaged var primary_position_raw: Int16
     @NSManaged var team_raw: Int16
+    @NSManaged var secondary_positions_raw: [Int]
     
     var positions: [PlayerPosition] = []
     var stats: Stats?
@@ -37,13 +38,20 @@ class Player: NSManagedObject, Identifiable {
         super.init(entity: entity, insertInto: context)
     }
 
-    init(first_name: String, last_name: String, team: Team, primary_position: PlayerPosition, entity: NSEntityDescription, context: NSManagedObjectContext?) {
+    init(first_name: String, last_name: String, team: Team, primary_position: PlayerPosition, secondary_positions: [PlayerPosition]?, entity: NSEntityDescription, context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
         self.first_name = first_name
         self.last_name = last_name
         self.team_raw = team.rawValue
         self.primary_position_raw = primary_position.rawValue
+        self.secondary_positions_raw = []
         self.id = UUID()
+        if (secondary_positions != nil) {
+            self.positions = secondary_positions!
+        } else {
+            self.positions = []
+        }
+        updateRawSecondaryPositions()
     }
     
     func isPitcher() -> Bool {
@@ -51,6 +59,20 @@ class Player: NSManagedObject, Identifiable {
             return true
         } else {
             return false
+        }
+    }
+    
+    func updateRawSecondaryPositions() {
+        secondary_positions_raw = []
+        for position in positions {
+            secondary_positions_raw.append(Int(position.rawValue))
+        }
+    }
+    
+    func setSecondaryPositions() {
+        positions = []
+        for rawPosition in secondary_positions_raw {
+            positions.append(PlayerPosition(rawValue: Int16(rawPosition))!)
         }
     }
     

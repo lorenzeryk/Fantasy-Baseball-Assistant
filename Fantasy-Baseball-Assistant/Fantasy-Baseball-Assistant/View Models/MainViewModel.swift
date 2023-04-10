@@ -60,7 +60,7 @@ class MainViewModel: NSObject, ObservableObject {
         }
     }
     
-    func addPlayer(firstName: String, lastName: String, position: PlayerPosition, team: Team) {
+    func addPlayer(firstName: String, lastName: String, position: PlayerPosition, team: Team, secondaryPositions: [PlayerPosition]?) {
         failedPlayerValidation = false
         let dataRequester = DataRequester()
         
@@ -74,8 +74,7 @@ class MainViewModel: NSObject, ObservableObject {
             }
             
             DispatchQueue.main.async { [self] in
-                let tempPlayer = Player(first_name: firstName, last_name: lastName, team: team, primary_position: position, entity: NSEntityDescription.entity(forEntityName: "Player", in: PersistenceController.shared.container.viewContext)!, context: PersistenceController.shared.container.viewContext)
-                roster.addPlayerToRoster(player: tempPlayer)
+                roster.addPlayerToRoster(player: Player(first_name: firstName, last_name: lastName, team: team, primary_position: position, secondary_positions: secondaryPositions, entity: NSEntityDescription.entity(forEntityName: "Player", in: PersistenceController.shared.container.viewContext)!, context: PersistenceController.shared.container.viewContext))
                 cancelCreatingPlayer()
                 saveData()
             }
