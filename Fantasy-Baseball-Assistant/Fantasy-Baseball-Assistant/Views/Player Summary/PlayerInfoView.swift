@@ -8,20 +8,18 @@
 import SwiftUI
 
 struct PlayerInfoView: View {
-    @ObservedObject var viewModel: MainViewModel
+    @ObservedObject var player: Player
     
     var body: some View {
         VStack {
-            if (viewModel.showPlayerInfo) {
-                Text(viewModel.selectedPlayer!.first_name)
-                    .font(.system(size: 40))
-                Text(viewModel.selectedPlayer!.last_name)
-                    .font(.system(size: 40))
-                Text(viewModel.selectedPlayer!.primary_position.fullText)
-                    .font(.system(size: 24))
-                Text("Secondary Positions: \(getAllPlayerPositions(player: viewModel.selectedPlayer!))")
-                Text(viewModel.selectedPlayer!.team.fullText)
-            }
+            Text(player.first_name)
+                .font(.system(size: 40))
+            Text(player.last_name)
+                .font(.system(size: 40))
+            Text(player.primary_position.fullText)
+                .font(.system(size: 24))
+            Text("Secondary Positions: \(getAllPlayerPositions(player: player))")
+            Text(player.team.fullText)
         }
         .padding()
     }

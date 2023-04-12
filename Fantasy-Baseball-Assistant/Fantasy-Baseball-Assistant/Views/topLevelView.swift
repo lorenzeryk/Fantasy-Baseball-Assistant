@@ -9,24 +9,31 @@ import SwiftUI
 
 struct topLevelView: View {
     @ObservedObject var viewModel: MainViewModel
+    @ObservedObject var stateManager: StateManager
     
     var body: some View {
         NavigationView {
-            List(viewModel.roster.players, id: \.self, selection: $viewModel.selectedPlayer) { player in
+            List(viewModel.roster.players, id: \.self.id, selection: $stateManager.selectedPlayerID) { player in
                 Text(String("\(player.first_name) \(player.last_name), \(player.primary_position.abbreviation) \(player.team.abbreviation)"))
+            }.contextMenu(forSelectionType: Player.ID.self) { player in
+                
+            } primaryAction: { player in
+                
+                stateManager.updateShowPlayerInfo(selectedPlayer: viewModel.roster.getPlayerByID(playerID: stateManager.selectedPlayerID!))
             }
                 .listStyle(.sidebar)
                 .navigationTitle("Roster")
             
-            CenterView(rosterViewModel: viewModel)
+            CenterView(rosterViewModel: viewModel, stateManager: stateManager)
         }.toolbar {
-            HomeToolbar(viewModel: viewModel)
+            HomeToolbar(viewModel: viewModel, stateManager: stateManager)
         }
     }
 }
 
 struct HomeToolbar: ToolbarContent {
     @ObservedObject var viewModel: MainViewModel
+    @ObservedObject var stateManager: StateManager
     
     var body: some ToolbarContent {
         ToolbarItem(placement: .navigation) {
@@ -39,14 +46,14 @@ struct HomeToolbar: ToolbarContent {
                 Image(systemName: "plus")
             })
         }
-        if (viewModel.showPlayerInfo) {
+        if (stateManager.showPlayerInfo) {
             ToolbarItem(placement: .navigation) {
                 Button(action: backButton, label: {
                     Image(systemName: "chevron.backward")
                 })
             }
         }
-        if (viewModel.selectedPlayer != nil && !viewModel.showPlayerInfo) {
+        if (stateManager.selectedPlayerID != nil && !stateManager.showPlayerInfo) {
             ToolbarItem(placement: .navigation) {
                 Button(action: deletePlayer, label: {
                     Image(systemName: "minus")
@@ -56,15 +63,15 @@ struct HomeToolbar: ToolbarContent {
     }
     
     private func createPlayer() {
-        viewModel.setCreatePlayerStatus(true)
+        stateManager.setCreatePlayerStatus(true)
     }
     
     private func backButton() {
-        viewModel.clearSelection()
+        stateManager.clearSelection()
     }
     
     private func deletePlayer() {
-        viewModel.deleteSelectedPlayer()
+        viewModel.deleteSelectedPlayer(stateManager.selectedPlayerID)
     }
 }
 

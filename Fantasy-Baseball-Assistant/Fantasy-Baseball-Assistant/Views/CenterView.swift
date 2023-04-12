@@ -9,14 +9,15 @@ import SwiftUI
 
 struct CenterView: View {
     @ObservedObject var rosterViewModel: MainViewModel
+    @ObservedObject var stateManager: StateManager
     
     var body: some View {
-        if (rosterViewModel.displayCreatePlayerView) {
-            CreatePlayer(viewModel: rosterViewModel)
+        if (stateManager.displayCreatePlayerView) {
+            CreatePlayer(viewModel: rosterViewModel, stateManager: stateManager)
         } else {
-            if (rosterViewModel.showPlayerInfo) {
+            if (stateManager.showPlayerInfo) {
                 VStack {
-                    PlayerSummaryView(viewModel: rosterViewModel)
+                    PlayerSummaryView(selectedPlayer: stateManager.selectedPlayer!)
                         .frame(maxHeight: 150)
                     Divider()
                     HStack {
@@ -32,13 +33,9 @@ struct CenterView: View {
                 }
             }
             else {
-                RosterView(viewModel: rosterViewModel)
+                RosterView(viewModel: rosterViewModel, stateManager: stateManager)
             }
         }
-    }
-    
-    private func backButton() {
-        rosterViewModel.clearSelection()
     }
 }
 

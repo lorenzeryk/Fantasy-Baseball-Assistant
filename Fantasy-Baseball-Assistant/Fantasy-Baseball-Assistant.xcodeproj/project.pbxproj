@@ -76,6 +76,7 @@
 		A5FACA4729E2A6790041CA2C /* FantasyBaseballAssistant.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A5FACA4529E2A6790041CA2C /* FantasyBaseballAssistant.xcdatamodeld */; };
 		A5FACA4829E2A6790041CA2C /* FantasyBaseballAssistant.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A5FACA4529E2A6790041CA2C /* FantasyBaseballAssistant.xcdatamodeld */; };
 		A5FACA4929E2A6790041CA2C /* FantasyBaseballAssistant.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A5FACA4529E2A6790041CA2C /* FantasyBaseballAssistant.xcdatamodeld */; };
+		A5FACA7929E736670041CA2C /* StateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FACA7829E736670041CA2C /* StateManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +136,7 @@
 		A5FACA1F29E2700D0041CA2C /* DecodingStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodingStructs.swift; sourceTree = "<group>"; };
 		A5FACA4129E2A5E30041CA2C /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		A5FACA4629E2A6790041CA2C /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		A5FACA7829E736670041CA2C /* StateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,6 +253,7 @@
 		A51917F729D6892D00410DB3 /* Fantasy-Baseball-Assistant */ = {
 			isa = PBXGroup;
 			children = (
+				A5FACA7729E7365A0041CA2C /* Managers */,
 				A5CF9FCD29DD4AC400432079 /* Data Fetching */,
 				A5048C0729D6A46500F63E94 /* Data Models */,
 				A5048C1929D6A9BE00F63E94 /* Views */,
@@ -309,6 +312,14 @@
 				A5FACA1F29E2700D0041CA2C /* DecodingStructs.swift */,
 			);
 			path = "Data Fetching";
+			sourceTree = "<group>";
+		};
+		A5FACA7729E7365A0041CA2C /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				A5FACA7829E736670041CA2C /* StateManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -459,6 +470,7 @@
 				A5048C2429D7A49E00F63E94 /* StatSummaryView.swift in Sources */,
 				A5048C0D29D6A76B00F63E94 /* BaseStats.swift in Sources */,
 				A5048C1129D6A7D500F63E94 /* PitcherStats.swift in Sources */,
+				A5FACA7929E736670041CA2C /* StateManager.swift in Sources */,
 				A51D633629DA9FCD002DE5B7 /* MainViewModel.swift in Sources */,
 				A5048C2A29D7B24500F63E94 /* PitcherStatSummaryView.swift in Sources */,
 				A5FACA4229E2A5E30041CA2C /* Persistence.swift in Sources */,

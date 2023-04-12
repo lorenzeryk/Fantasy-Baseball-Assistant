@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RosterView: View {
     @ObservedObject var viewModel: MainViewModel
+    @ObservedObject var stateManager: StateManager
     
     var body: some View {
         RosterTables()
@@ -21,7 +22,7 @@ struct RosterView: View {
             
         } primaryAction: { player in
             
-            viewModel.updateShowPlayerInfo()
+            stateManager.updateShowPlayerInfo(selectedPlayer: viewModel.roster.getPlayerByID(playerID: stateManager.selectedPlayerID!))
         }
         Spacer()
         HittersTable()
@@ -29,13 +30,13 @@ struct RosterView: View {
         .contextMenu(forSelectionType: Player.ID.self) { player in
 
         } primaryAction: { player in
-            viewModel.updateShowPlayerInfo()
+            stateManager.updateShowPlayerInfo(selectedPlayer: viewModel.roster.getPlayerByID(playerID: stateManager.selectedPlayerID!))
         }
     }
     
     @ViewBuilder private func PitchersTable() -> some View {
         Text("Pitchers")
-        Table(viewModel.roster.pitchers, selection: $viewModel.selectedPlayerID) {
+        Table(viewModel.roster.pitchers, selection: $stateManager.selectedPlayerID) {
             TableColumn("Name") {
                 Text($0.first_name + " " + $0.last_name)
             }
@@ -54,7 +55,7 @@ struct RosterView: View {
     
     @ViewBuilder private func HittersTable() -> some View {
         Text("Fielders")
-        Table(viewModel.roster.hitters, selection: $viewModel.selectedPlayerID) {
+        Table(viewModel.roster.hitters, selection: $stateManager.selectedPlayerID) {
             TableColumn("Name") {
                 Text($0.first_name + " " + $0.last_name)
             }

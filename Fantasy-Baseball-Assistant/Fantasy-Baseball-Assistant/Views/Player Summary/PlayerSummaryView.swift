@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct PlayerSummaryView: View {
-    var viewModel: MainViewModel
+    @ObservedObject var selectedPlayer: Player
     
     var body: some View {
         HStack {
-            PlayerInfoView(viewModel: viewModel)
+            PlayerInfoView(player: selectedPlayer)
             Divider()
             HStack {
-                StatSummaryView(viewModel: viewModel)
+                StatSummaryView(player: selectedPlayer)
                     .frame(maxWidth: .infinity)
                 Divider()
                 MatchupView()

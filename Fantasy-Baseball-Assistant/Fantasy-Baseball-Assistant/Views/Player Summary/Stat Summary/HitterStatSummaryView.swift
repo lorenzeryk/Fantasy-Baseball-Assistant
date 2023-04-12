@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct HitterStatSummaryView: View {
-    @ObservedObject var viewModel: MainViewModel
+    @ObservedObject var player: Player
     
     var body: some View {
         HStack {
-            if (viewModel.selectedPlayer?.stats?.season.hitting_stats != nil) {
+            if (player.stats?.season.hitting_stats != nil) {
                 firstSection()
                 Divider()
                 secondSection()
@@ -28,57 +28,57 @@ struct HitterStatSummaryView: View {
     @ViewBuilder private func firstSection() -> some View {
         VStack {
             Text("WAR")
-            Text(String(format: "%.1f", viewModel.selectedPlayer!.stats!.season.hitting_stats!.WAR))
+            Text(String(format: "%.1f", player.stats!.season.hitting_stats!.WAR))
         }
         VStack {
             Text("AB")
-            Text(String(viewModel.selectedPlayer!.stats!.season.hitting_stats!.AB))
+            Text(String(player.stats!.season.hitting_stats!.AB))
         }
         VStack {
             Text("H")
-            Text(String(viewModel.selectedPlayer!.stats!.season.hitting_stats!.hits))
+            Text(String(player.stats!.season.hitting_stats!.hits))
         }
         VStack {
             Text("HR")
-            Text(String(viewModel.selectedPlayer!.stats!.season.hitting_stats!.homeruns))
+            Text(String(player.stats!.season.hitting_stats!.homeruns))
         }
         VStack {
             Text("BA")
-            Text(String(format: "%.3f", viewModel.selectedPlayer!.stats!.season.hitting_stats!.batting_average))
+            Text(String(format: "%.3f", player.stats!.season.hitting_stats!.batting_average))
         }
     }
     
     @ViewBuilder private func secondSection() -> some View {
         VStack {
             Text("R")
-            Text(String(viewModel.selectedPlayer!.stats!.season.hitting_stats!.runs))
+            Text(String(player.stats!.season.hitting_stats!.runs))
         }
         VStack {
             Text("RBI")
-            Text(String(viewModel.selectedPlayer!.stats!.season.hitting_stats!.RBI))
+            Text(String(player.stats!.season.hitting_stats!.RBI))
         }
         VStack {
             Text("SB")
-            Text(String(viewModel.selectedPlayer!.stats!.season.hitting_stats!.stolen_bases))
+            Text(String(player.stats!.season.hitting_stats!.stolen_bases))
         }
     }
     
     @ViewBuilder private func thirdSection() -> some View {
         VStack {
             Text("OBP")
-            Text(String(format: "%.3f", viewModel.selectedPlayer!.stats!.season.hitting_stats!.OBP))
+            Text(String(format: "%.3f", player.stats!.season.hitting_stats!.OBP))
         }
         VStack {
             Text("SLG")
-            Text(String(format: "%.3f", viewModel.selectedPlayer!.stats!.season.hitting_stats!.SLG))
+            Text(String(format: "%.3f", player.stats!.season.hitting_stats!.SLG))
         }
         VStack {
             Text("OPS")
-            Text(String(format: "%.3f", viewModel.selectedPlayer!.stats!.season.hitting_stats!.OPS))
+            Text(String(format: "%.3f", player.stats!.season.hitting_stats!.OPS))
         }
         VStack {
             Text("OPS+")
-            Text(String(format: "%.3f", viewModel.selectedPlayer!.stats!.season.hitting_stats!.OPS_plus))
+            Text(String(format: "%.3f", player.stats!.season.hitting_stats!.OPS_plus))
         }
     }
 }

@@ -9,9 +9,10 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var mainViewModel = MainViewModel()
+    @StateObject var stateManager: StateManager = StateManager()
     
     var body: some View {
-        topLevelView(viewModel: mainViewModel)
+        topLevelView(viewModel: mainViewModel, stateManager: stateManager)
     }
 }
 

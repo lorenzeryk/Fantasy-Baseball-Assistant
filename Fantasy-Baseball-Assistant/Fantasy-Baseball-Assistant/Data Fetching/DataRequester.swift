@@ -72,8 +72,7 @@ struct DataRequester {
     }
     
     private func getTeamProfilePlayers(team: Team, _ completion: @escaping (_ data: ReturnedTeamProfile?) -> Void) {
-        let full_url = base_url + "/teams/" + team.teamID + "/profile.json?api_key=" + api_key
-        
+        let full_url = "\(base_url)/teams/\(team.teamID)/profile.json?api_key=\(api_key)"
         guard let url = URL(string: full_url) else {
             return
         }

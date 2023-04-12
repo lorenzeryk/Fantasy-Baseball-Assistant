@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CreatePlayer: View {
     @ObservedObject var viewModel: MainViewModel
+    @ObservedObject var stateManager: StateManager
+    
     @State var first_name: String = ""
     @State var last_name: String = ""
     @State var selectedPosition = PlayerPosition.None
@@ -93,11 +95,16 @@ struct CreatePlayer: View {
     
     private func submitCreatedPlayer() {
         let positions = createSecondaryPositionArray()
-        viewModel.addPlayer(firstName: first_name, lastName: last_name, position: selectedPosition, team: selectedTeam, secondaryPositions: positions)
+        Task.init {
+            let playerStatus = await viewModel.addPlayer(firstName: first_name, lastName: last_name, position: selectedPosition, team: selectedTeam, secondaryPositions: positions)
+            if (playerStatus) {
+                stateManager.cancelCreatingPlayer()
+            }
+        }
     }
     
     private func cancelCreatingPlayer() {
-        viewModel.cancelCreatingPlayer()
+        stateManager.cancelCreatingPlayer()
     }
     
     private func createSecondaryPositionArray() -> [PlayerPosition]? {
