@@ -14,6 +14,7 @@ struct CreatePlayer: View {
     @State var createPlayer: CreatePlayerViewModel = CreatePlayerViewModel()
     @State var first_name: String = ""
     @State var last_name: String = ""
+    @State var selectedPosition: PlayerPosition = PlayerPosition.None
     @State var selectedTeam = Team.None
     
     var body: some View {
@@ -58,7 +59,7 @@ struct CreatePlayer: View {
     }
     
     @ViewBuilder private func enumPickers() -> some View {
-        Picker("Primary Position", selection: $createPlayer.selectedPosition) {
+        Picker("Primary Position", selection: $selectedPosition) {
             ForEach(PlayerPosition.allCases, id: \.self) { position in
                 Text(position.fullText)
             }
@@ -81,9 +82,9 @@ struct CreatePlayer: View {
     }
     
     private func submitCreatedPlayer() {
-        let positions = createPlayer.createSecondaryPositionArray()
+        let positions = createPlayer.createSecondaryPositionArray(selectedPrimary: selectedPosition)
         Task.init {
-            let playerStatus = await viewModel.addPlayer(firstName: first_name, lastName: last_name, position: createPlayer.selectedPosition, team: selectedTeam, secondaryPositions: positions)
+            let playerStatus = await viewModel.addPlayer(firstName: first_name, lastName: last_name, position: selectedPosition, team: selectedTeam, secondaryPositions: positions)
             if (playerStatus) {
                 stateManager.cancelCreatingPlayer()
             }

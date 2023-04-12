@@ -21,7 +21,9 @@ class MainViewModel: NSObject, ObservableObject {
     }
     
     func addPlayer(firstName: String, lastName: String, position: PlayerPosition, team: Team, secondaryPositions: [PlayerPosition]?) async -> Bool {
-        failedPlayerValidation = false
+        DispatchQueue.main.async { [self] in
+            failedPlayerValidation = false
+        }
         
         guard let player_id = await dataRequester.validatePlayer(first_name: firstName, last_name: lastName, team: team) else {
             //TODO: cite from https://developer.apple.com/forums/thread/718270
@@ -35,9 +37,11 @@ class MainViewModel: NSObject, ObservableObject {
             print("Failed to get player description")
             return false
         }
-            
-        roster.addPlayerToRoster(player: Player(first_name: firstName, last_name: lastName, api_id: player_id, team: team, primary_position: position, secondary_positions: secondaryPositions, entity: playerDescription, context: persistenceController.container.viewContext))
-        persistenceController.saveData()
+        
+        DispatchQueue.main.async { [self] in
+            roster.addPlayerToRoster(player: Player(first_name: firstName, last_name: lastName, api_id: player_id, team: team, primary_position: position, secondary_positions: secondaryPositions, entity: playerDescription, context: persistenceController.container.viewContext))
+            persistenceController.saveData()
+        }
         return true
     }
     

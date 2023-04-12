@@ -62,7 +62,7 @@ struct DataRequester {
         }
         
         for player in players {
-            if (player.first_name == first_name && player.last_name == last_name) {
+            if ((player.first_name == first_name || player.preferred_name == first_name) && player.last_name == last_name) {
                 print("Player found")
                 return player.id
             }

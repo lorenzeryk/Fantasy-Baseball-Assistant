@@ -7,9 +7,7 @@
 
 import Foundation
 
-class CreatePlayerViewModel: ObservableObject {
-    var selectedPosition: PlayerPosition = PlayerPosition.None
-    
+class CreatePlayerViewModel: ObservableObject {    
     var secondaryPositions: [PlayerPositionBinding] = [
         PlayerPositionBinding(id: 1,position: PlayerPosition(rawValue: 1)!, selected: false),
         PlayerPositionBinding(id: 2,position: PlayerPosition(rawValue: 2)!, selected: false),
@@ -23,10 +21,10 @@ class CreatePlayerViewModel: ObservableObject {
         PlayerPositionBinding(id: 10,position: PlayerPosition(rawValue: 10)!, selected: false)
     ]
     
-    func createSecondaryPositionArray() -> [PlayerPosition]? {
+    func createSecondaryPositionArray(selectedPrimary: PlayerPosition) -> [PlayerPosition]? {
         var secondaryPositionsSelected: [PlayerPosition] = []
         for position in secondaryPositions {
-            if (position.selected && position.position != selectedPosition) {
+            if (position.selected && position.position != selectedPrimary) {
                 secondaryPositionsSelected.append(position.position)
             }
         }
