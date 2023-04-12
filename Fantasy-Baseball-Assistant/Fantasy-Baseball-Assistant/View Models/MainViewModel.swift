@@ -14,7 +14,11 @@ class MainViewModel: NSObject, ObservableObject {
     @Published var showPlayerInfo = false
     @Published var displayCreatePlayerView = false
     @Published var failedPlayerValidation = false
-    @Published var selectedPlayer: Player? = nil
+    @Published var selectedPlayer: Player? = nil {
+        didSet {
+            updateShowPlayerInfo()
+        }
+    }
     @Published var selectedPlayerID: Player.ID? = nil {
         didSet {
             guard let newID = selectedPlayerID else {
@@ -22,6 +26,13 @@ class MainViewModel: NSObject, ObservableObject {
             }
             setSelectionFromTable(player: newID)
         }
+    }
+    var persistenceController: PersistenceController = PersistenceController()
+    var dataRequester: DataRequester = DataRequester()
+    
+    override init() {
+        super.init()
+        initializeData()
     }
     
     func clearSelection() {
@@ -32,6 +43,7 @@ class MainViewModel: NSObject, ObservableObject {
     
     func setSelectionFromTable(player: Player.ID) {
         selectedPlayer = roster.getPlayerByID(playerID: player)
+        showPlayerInfo = false
     }
     
     func updateShowPlayerInfo() {
@@ -51,18 +63,8 @@ class MainViewModel: NSObject, ObservableObject {
         failedPlayerValidation = false
     }
     
-    func saveData() {
-        do {
-            try PersistenceController.shared.container.viewContext.save()
-        } catch {
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-    }
-    
     func addPlayer(firstName: String, lastName: String, position: PlayerPosition, team: Team, secondaryPositions: [PlayerPosition]?) {
         failedPlayerValidation = false
-        let dataRequester = DataRequester()
         
         Task.init {
             guard let player_id = await dataRequester.validatePlayer(first_name: firstName, last_name: lastName, team: team) else {
@@ -74,16 +76,19 @@ class MainViewModel: NSObject, ObservableObject {
             }
 
             DispatchQueue.main.async { [self] in
-                roster.addPlayerToRoster(player: Player(first_name: firstName, last_name: lastName, api_id: player_id, team: team, primary_position: position, secondary_positions: secondaryPositions, entity: NSEntityDescription.entity(forEntityName: "Player", in: PersistenceController.shared.container.viewContext)!, context: PersistenceController.shared.container.viewContext))
+                guard let playerDescription = persistenceController.getDescription(entityName: "Player") else {
+                    print("Failed to get player description")
+                    return
+                }
+                
+                roster.addPlayerToRoster(player: Player(first_name: firstName, last_name: lastName, api_id: player_id, team: team, primary_position: position, secondary_positions: secondaryPositions, entity: playerDescription, context: persistenceController.container.viewContext))
                 cancelCreatingPlayer()
-                saveData()
+                persistenceController.saveData()
             }
         }
     }
     
     func deleteSelectedPlayer() {
-        let fetchRequest: NSFetchRequest<Player> = Player.fetchRequest()
-        
         guard let playerID = selectedPlayer?.id else {
             print("No selected player")
             return
@@ -94,26 +99,16 @@ class MainViewModel: NSObject, ObservableObject {
             return
         }
         
-        fetchRequest.predicate = NSPredicate (
-            format: "id == %@", playerID as CVarArg
-        )
-
-        do {
-            let playerToDelete = try PersistenceController.shared.container.viewContext.fetch(fetchRequest) as [NSManagedObject]
-
-            guard playerToDelete.count == 1 else {
-                print("Did not find one player. Failed to delete")
-                return
-            }
-
-            PersistenceController.shared.container.viewContext.delete(playerToDelete.first!)
-
-        } catch {
-            print("Failed to delete")
+        guard persistenceController.deletePlayerByID(playerID) == true else {
+            print("Failed to delete player from core data")
             return
         }
         roster.deletePlayerByID(playerID: playerID)
         clearSelection()
-        saveData()
+    }
+    
+    func initializeData() {
+        let savedPlayers = persistenceController.loadPlayers()
+        roster.initializeRoster(players: savedPlayers)
     }
 }

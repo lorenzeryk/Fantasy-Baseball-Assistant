@@ -8,17 +8,9 @@ import Foundation
 import CoreData
 
 struct Roster {
-    var players: [Player]
-    var pitchers: [Player]
-    var hitters: [Player]
-    
-    init() {
-        players = []
-        pitchers = []
-        hitters = []
-        getSavedPlayers()
-        updatePitchersHitters()
-    }
+    var players: [Player] = []
+    var pitchers: [Player] = []
+    var hitters: [Player] = []
 
     mutating func addPlayerToRoster(player: Player) {
         player.updateRawSecondaryPositions()
@@ -39,19 +31,12 @@ struct Roster {
         }
     }
     
-    mutating func getSavedPlayers() {
-        var savedPlayers: [Player] = []
-        let fetchRequest: NSFetchRequest<Player> = Player.fetchRequest()
-        
-        do {
-            savedPlayers = try PersistenceController.shared.container.viewContext.fetch(fetchRequest)
-            players = savedPlayers
-            for player in players {
-                player.setSecondaryPositions()
-            }
-        } catch {
-            print("Failed to fetch saved players")
+    mutating func initializeRoster(players: [Player]) {
+        self.players = players
+        for player in players {
+            player.setSecondaryPositions()
         }
+        updatePitchersHitters()
     }
 
     func getPlayerByID(playerID: Player.ID) -> Player? {
