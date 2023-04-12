@@ -44,31 +44,31 @@ struct DataRequester {
         return key
     }
     
-    func validatePlayer(first_name: String, last_name: String, team: Team) async -> Bool {
+    func validatePlayer(first_name: String, last_name: String, team: Team) async -> String? {
         let returnedPlayers: ReturnedTeamProfile? = await getTeamProfilePlayers(team: team)
         
         guard let players = returnedPlayers?.players else {
             print("No players returned in team profile")
-            return false
+            return nil
         }
         
         return getPlayer(first_name: first_name, last_name: last_name, players: players)
     }
     
-    private func getPlayer(first_name: String, last_name: String, players: [RequestedPlayer]) -> Bool {
+    private func getPlayer(first_name: String, last_name: String, players: [RequestedPlayer]) -> String? {
         guard players.count != 0 else {
             print("No players in array of players")
-            return false
+            return nil
         }
         
         for player in players {
             if (player.first_name == first_name && player.last_name == last_name) {
                 print("Player found")
-                return true
+                return player.id
             }
         }
         print("Player not found")
-        return false
+        return nil
     }
     
     private func getTeamProfilePlayers(team: Team, _ completion: @escaping (_ data: ReturnedTeamProfile?) -> Void) {

@@ -65,16 +65,16 @@ class MainViewModel: NSObject, ObservableObject {
         let dataRequester = DataRequester()
         
         Task.init {
-            guard await dataRequester.validatePlayer(first_name: firstName, last_name: lastName, team: team) != false else {
+            guard let player_id = await dataRequester.validatePlayer(first_name: firstName, last_name: lastName, team: team) else {
                 //TODO: cite from https://developer.apple.com/forums/thread/718270
                 DispatchQueue.main.async { [self] in
                     failedPlayerValidation = true
                 }
                 return
             }
-            
+
             DispatchQueue.main.async { [self] in
-                roster.addPlayerToRoster(player: Player(first_name: firstName, last_name: lastName, team: team, primary_position: position, secondary_positions: secondaryPositions, entity: NSEntityDescription.entity(forEntityName: "Player", in: PersistenceController.shared.container.viewContext)!, context: PersistenceController.shared.container.viewContext))
+                roster.addPlayerToRoster(player: Player(first_name: firstName, last_name: lastName, api_id: player_id, team: team, primary_position: position, secondary_positions: secondaryPositions, entity: NSEntityDescription.entity(forEntityName: "Player", in: PersistenceController.shared.container.viewContext)!, context: PersistenceController.shared.container.viewContext))
                 cancelCreatingPlayer()
                 saveData()
             }

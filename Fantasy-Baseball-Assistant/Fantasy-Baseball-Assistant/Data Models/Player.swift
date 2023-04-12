@@ -13,6 +13,7 @@ class Player: NSManagedObject, Identifiable {
     @NSManaged var id: UUID
     @NSManaged var first_name: String
     @NSManaged var last_name: String
+    @NSManaged var api_id: String
     @NSManaged var primary_position_raw: Int16
     @NSManaged var team_raw: Int16
     @NSManaged var secondary_positions_raw: [Int]
@@ -38,10 +39,11 @@ class Player: NSManagedObject, Identifiable {
         super.init(entity: entity, insertInto: context)
     }
 
-    init(first_name: String, last_name: String, team: Team, primary_position: PlayerPosition, secondary_positions: [PlayerPosition]?, entity: NSEntityDescription, context: NSManagedObjectContext?) {
+    init(first_name: String, last_name: String, api_id: String,team: Team, primary_position: PlayerPosition, secondary_positions: [PlayerPosition]?, entity: NSEntityDescription, context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
         self.first_name = first_name
         self.last_name = last_name
+        self.api_id = api_id
         self.team_raw = team.rawValue
         self.primary_position_raw = primary_position.rawValue
         self.secondary_positions_raw = []

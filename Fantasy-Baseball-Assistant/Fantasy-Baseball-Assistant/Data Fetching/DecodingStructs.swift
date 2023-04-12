@@ -11,6 +11,7 @@ struct RequestedPlayer: Codable {
     var first_name: String
     var last_name: String
     var primary_position: String
+    var id: String
 }
 
 struct ReturnedTeamProfile: Codable {
