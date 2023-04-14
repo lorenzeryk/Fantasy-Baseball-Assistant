@@ -68,10 +68,12 @@ class MainViewModel: NSObject, ObservableObject {
         let savedPlayers = persistenceController.loadPlayers()
         roster.initializeRoster(players: savedPlayers)
         
-        for player in roster.players {
-            Task.init {
+        Task.init {
+            for player in roster.players {
                 sleep(2)
-                await updateStats(player: player)
+                Task.init {
+                    await updateStats(player: player)
+                }
             }
         }
     }
