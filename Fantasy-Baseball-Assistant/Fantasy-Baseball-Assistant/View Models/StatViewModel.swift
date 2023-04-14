@@ -17,6 +17,7 @@ class StatViewModel: ObservableObject {
     
     @Published var selectedHittingStats: [FielderStatsBase]
     @Published var selectedPitchingStats: [PitcherStatsBase]
+    @Published var displayAdvancedStats = false
     
     init() {
         currentPlayer = nil
@@ -36,27 +37,30 @@ class StatViewModel: ObservableObject {
             return
         }
         
-        guard currentPlayer!.hittingStats != nil else {
-            return
-        }
-        
         if currentPlayer!.isPitcher() {
+            guard currentPlayer!.pitchingStats != nil else {
+                return
+            }
+            
             selectedPitchingStats = []
             switch selectedStatView {
             case .Season:
-                return
+                selectedPitchingStats.append(currentPlayer!.pitchingStats!.season)
             case .Month:
-                return
+                selectedPitchingStats.append(contentsOf: currentPlayer!.pitchingStats!.month)
             case .DayNight:
-                return
+                selectedPitchingStats.append(contentsOf: currentPlayer!.pitchingStats!.day_night)
             case .Opponent:
-                return
+                selectedPitchingStats.append(contentsOf: currentPlayer!.pitchingStats!.byOpponent)
             }
         } else {
+            guard currentPlayer!.hittingStats != nil else {
+                return
+            }
+            
             selectedHittingStats = []
             switch selectedStatView {
             case .Season:
-                print("Season hitting stats selected")
                 selectedHittingStats.append(currentPlayer!.hittingStats!.season)
             case .Month:
                 selectedHittingStats.append(contentsOf: currentPlayer!.hittingStats!.month)
@@ -66,6 +70,31 @@ class StatViewModel: ObservableObject {
                 selectedHittingStats.append(contentsOf: currentPlayer!.hittingStats!.byOpponent)
             }
         }
+    }
+    
+    func translateKey(stat: FielderStatsBase) -> String {
+        if (selectedStatView == SelectedStatView.Month) {
+            return Month(rawValue: Int16(stat.key!)!)!.text
+        }
+        if (selectedStatView == SelectedStatView.Opponent || selectedStatView == SelectedStatView.DayNight) {
+            return stat.key ?? ""
+        }
+        
+        return ""
+    }
+    
+    func getKey() -> String {
+        if (selectedStatView == SelectedStatView.Month) {
+            return "Month"
+        }
+        if (selectedStatView == SelectedStatView.Opponent) {
+            return "Opponent"
+        }
+        if (selectedStatView == SelectedStatView.DayNight) {
+            return "Time of Day"
+        }
+        
+        return ""
     }
 }
 

@@ -25,6 +25,8 @@ struct MainStatView: View {
             Button("By Opponent") {
                 updateStatView(view: SelectedStatView.Opponent)
             }
+            Toggle("Advanced", isOn: $statViewModel.displayAdvancedStats)
+                .toggleStyle(.switch)
         }
         Divider()
         if (stateManager.selectedPlayer != nil && stateManager.selectedPlayer!.isPitcher()) {

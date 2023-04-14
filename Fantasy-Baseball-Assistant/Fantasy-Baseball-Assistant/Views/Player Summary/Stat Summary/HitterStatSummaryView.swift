@@ -27,10 +27,6 @@ struct HitterStatSummaryView: View {
     //TODO: change func names
     @ViewBuilder private func firstSection() -> some View {
         VStack {
-            Text("WAR")
-            Text(String(format: "%.1f", player.hittingStats!.season.WAR))
-        }
-        VStack {
             Text("AB")
             Text(String(player.hittingStats!.season.ab))
         }
@@ -75,10 +71,6 @@ struct HitterStatSummaryView: View {
         VStack {
             Text("OPS")
             Text(String(format: "%.3f", player.hittingStats!.season.ops))
-        }
-        VStack {
-            Text("OPS+")
-            Text(String(format: "%.3f", player.hittingStats!.season.OPS_plus))
         }
     }
 }

@@ -62,23 +62,23 @@ struct OverallHitting: Codable {
 }
 
 struct HittingStats: Codable {
-    var ab: Int
-    var runs: Int
+    var ab: Int //
+    var runs: Int //
     var s: Int //single
     var d: Int //double
     var t: Int //triple
-    var hr: Int
-    var rbi: Int
-    var bb: Int
-    var ibb: Int
-    var hbp: Int
-    var sb: Int
-    var cs: Int
-    var obp: Double
-    var slg: Double
-    var ops: Double
-    var h: Int
-    var ktotal: Int
+    var hr: Int //
+    var rbi: Int //
+    var bb: Int //
+    var ibb: Int //
+    var hbp: Int //
+    var sb: Int //
+    var cs: Int //
+    var obp: Double //
+    var slg: Double //
+    var ops: Double //
+    var h: Int //
+    var ktotal: Int //
     var avg: String
     var value: String?
     var name: String?

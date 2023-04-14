@@ -177,18 +177,18 @@ class DataRequester: ObservableObject {
         }
         
         if overallStats.total.first != nil {
-            let seasonHittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(seasonStats.avg) ?? 0.0, WAR: 0.0, AB: seasonStats.ab, hits: seasonStats.h, homeruns: seasonStats.hr, runs: seasonStats.runs, RBI: seasonStats.rbi, stolen_bases: seasonStats.sb, OBP: seasonStats.obp, SLG: seasonStats.slg, OPS: seasonStats.ops, OPS_plus: 0.0, key: nil)
+            let seasonHittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(seasonStats.avg) ?? 0.0, ab: seasonStats.ab, hits: seasonStats.h, homeruns: seasonStats.hr, runs: seasonStats.runs, rbi: seasonStats.rbi, stolen_bases: seasonStats.sb, obp: seasonStats.obp, slg: seasonStats.slg, ops: seasonStats.ops, single: seasonStats.s, double: seasonStats.d, triple: seasonStats.t, walks: seasonStats.bb, intentional_walks: seasonStats.ibb, hit_by_pitch: seasonStats.hbp, caught_stealing: seasonStats.cs, strike_outs: seasonStats.ktotal)
             
             localStats.hittingStats!.season = seasonHittingStats
         }
         
         for stat in overallStats.day_night {
             if (stat.value == "day") {
-                let dayHittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, WAR: 0.0, AB: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, RBI: stat.rbi, stolen_bases: stat.sb, OBP: stat.obp, SLG: stat.slg, OPS: stat.ops, OPS_plus: 0.0, key: "Day")
+                let dayHittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, ab: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, rbi: stat.rbi, stolen_bases: stat.sb, obp: stat.obp, slg: stat.slg, ops: stat.ops, single: stat.s, double: stat.d, triple: stat.t, walks: stat.bb, intentional_walks: stat.ibb, hit_by_pitch: stat.hbp, caught_stealing: stat.cs, strike_outs: stat.ktotal, key: "Day")
                 
                 localStats.hittingStats!.day_night.append(dayHittingStats)
             } else if (stat.value == "night") {
-                let nightHittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, WAR: 0.0, AB: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, RBI: stat.rbi, stolen_bases: stat.sb, OBP: stat.obp, SLG: stat.slg, OPS: stat.ops, OPS_plus: 0.0, key: "Night")
+                let nightHittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, ab: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, rbi: stat.rbi, stolen_bases: stat.sb, obp: stat.obp, slg: stat.slg, ops: stat.ops, single: stat.s, double: stat.d, triple: stat.t, walks: stat.bb, intentional_walks: stat.ibb, hit_by_pitch: stat.hbp, caught_stealing: stat.cs, strike_outs: stat.ktotal, key: "Night")
                 
                 localStats.hittingStats!.day_night.append(nightHittingStats)
             }
@@ -196,24 +196,24 @@ class DataRequester: ObservableObject {
             
         for stat in overallStats.home_away {
             if (stat.value == "home") {
-                let homeHittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(seasonStats.avg) ?? 0.0, WAR: 0.0, AB: seasonStats.ab, hits: seasonStats.h, homeruns: seasonStats.hr, runs: seasonStats.runs, RBI: seasonStats.rbi, stolen_bases: seasonStats.sb, OBP: seasonStats.obp, SLG: seasonStats.slg, OPS: seasonStats.ops, OPS_plus: 0.0, key: "Home")
+                let homeHittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, ab: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, rbi: stat.rbi, stolen_bases: stat.sb, obp: stat.obp, slg: stat.slg, ops: stat.ops, single: stat.s, double: stat.d, triple: stat.t, walks: stat.bb, intentional_walks: stat.ibb, hit_by_pitch: stat.hbp, caught_stealing: stat.cs, strike_outs: stat.ktotal, key: "Home")
                 
                 localStats.hittingStats!.home_away.append(homeHittingStats)
             } else if (stat.value == "away") {
-                let awayHittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(seasonStats.avg) ?? 0.0, WAR: 0.0, AB: seasonStats.ab, hits: seasonStats.h, homeruns: seasonStats.hr, runs: seasonStats.runs, RBI: seasonStats.rbi, stolen_bases: seasonStats.sb, OBP: seasonStats.obp, SLG: seasonStats.slg, OPS: seasonStats.ops, OPS_plus: 0.0, key: "Away")
+                let awayHittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, ab: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, rbi: stat.rbi, stolen_bases: stat.sb, obp: stat.obp, slg: stat.slg, ops: stat.ops, single: stat.s, double: stat.d, triple: stat.t, walks: stat.bb, intentional_walks: stat.ibb, hit_by_pitch: stat.hbp, caught_stealing: stat.cs, strike_outs: stat.ktotal, key: "Away")
                 
                 localStats.hittingStats!.home_away.append(awayHittingStats)
             }
         }
         
         for stat in overallStats.month {
-            let hittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, WAR: 0.0, AB: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, RBI: stat.rbi, stolen_bases: stat.sb, OBP: stat.obp, SLG: seasonStats.slg, OPS: stat.ops, OPS_plus: 0.0, key: stat.value ?? "Month Error")
+            let hittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, ab: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, rbi: stat.rbi, stolen_bases: stat.sb, obp: stat.obp, slg: stat.slg, ops: stat.ops, single: stat.s, double: stat.d, triple: stat.t, walks: stat.bb, intentional_walks: stat.ibb, hit_by_pitch: stat.hbp, caught_stealing: stat.cs, strike_outs: stat.ktotal, key: stat.value ?? "Month Error")
             
             localStats.hittingStats!.month.append(hittingStats)
         }
         
         for stat in overallStats.opponent {
-            let hittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, WAR: 0.0, AB: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, RBI: stat.rbi, stolen_bases: stat.sb, OBP: stat.obp, SLG: seasonStats.slg, OPS: stat.ops, OPS_plus: 0.0, key: stat.name ?? "Team Error")
+            let hittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, ab: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, rbi: stat.rbi, stolen_bases: stat.sb, obp: stat.obp, slg: stat.slg, ops: stat.ops, single: stat.s, double: stat.d, triple: stat.t, walks: stat.bb, intentional_walks: stat.ibb, hit_by_pitch: stat.hbp, caught_stealing: stat.cs, strike_outs: stat.ktotal, key: stat.name ?? "Month Error")
             
             localStats.hittingStats!.byOpponent.append(hittingStats)
         }
