@@ -118,3 +118,8 @@ struct PitchingStats: Codable {
     var value: String?
     var abbr: String?
 }
+
+struct Stats {
+    var hittingStats: FielderStats?
+    var pitchingStats: PitcherStats?
+}

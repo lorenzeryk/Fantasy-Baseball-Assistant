@@ -46,7 +46,14 @@ class RosterViewModel: NSObject, ObservableObject {
     }
 
     func updateStats(player: Player) async {
-        let playerStats = await dataRequester.getPlayerStats(player)
+        guard let playerStats = await dataRequester.getPlayerStats(player) else {
+            print("Failed to retrieve stats for \(player.first_name) \(player.last_name)")
+            return
+        }
+        
+        player.hittingStats = playerStats.hittingStats
+        player.pitchingStats = playerStats.pitchingStats
+        
     }
     
     func deleteSelectedPlayer(_ playerID: Player.ID?) {

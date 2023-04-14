@@ -103,7 +103,15 @@ class DataRequester: ObservableObject {
     }
     
     func getPlayerStats(_ player: Player) async -> Stats? {
-        let returnedStats = await fetchStats(player: player)
+        guard let returnedStats = await fetchStats(player: player) else {
+            return nil
+        }
+        
+        for fetchedPlayer in returnedStats.players {
+            if (fetchedPlayer.id == player.api_id) {
+                return convertStats(stats: fetchedPlayer, isPitcher: player.isPitcher())
+            }
+        }
         
         return nil
     }
@@ -142,5 +150,59 @@ class DataRequester: ObservableObject {
                 continuation.resume(returning: stats)
             }
         }
+    }
+    
+    private func convertStats(stats: PlayerStats, isPitcher: Bool) -> Stats? {
+        if (isPitcher) {
+            return convertPitchingStats(stats: stats)
+        } else {
+            return convertHittingStats(stats: stats)
+        }
+    }
+    
+    private func convertHittingStats(stats: PlayerStats) -> Stats? {
+        var localStats = Stats()
+        localStats.hittingStats = FielderStats()
+        
+        guard let hittingStats =  stats.splits.hitting else {
+            return nil
+        }
+        
+        guard let overallStats = hittingStats.overall.first else {
+            return nil
+        }
+        
+        guard let seasonStats = overallStats.total.first else {
+            return nil
+        }
+        
+        let seasonHittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(seasonStats.avg) ?? 0.0, WAR: 0.0, AB: seasonStats.ab, hits: seasonStats.h, homeruns: seasonStats.hr, runs: seasonStats.runs, RBI: seasonStats.rbi, stolen_bases: seasonStats.sb, OBP: seasonStats.obp, SLG: seasonStats.slg, OPS: seasonStats.ops, OPS_plus: 0.0)
+        
+        localStats.hittingStats!.season = seasonHittingStats
+        
+        return localStats
+    }
+    
+    private func convertPitchingStats(stats: PlayerStats) -> Stats? {
+        var localStats = Stats()
+        localStats.pitchingStats = PitcherStats()
+        
+        guard let pitching =  stats.splits.pitching else {
+            return nil
+        }
+        
+        guard let overallStats = pitching.overall.first else {
+            return nil
+        }
+        
+        guard let seasonStats = overallStats.total.first else {
+            return nil
+        }
+        
+        let seasonPitchingStats: PitcherStatsBase = PitcherStatsBase(innings_pitched: seasonStats.ip_2, WAR: 0.0, win: seasonStats.win, loss: seasonStats.loss, ERA: seasonStats.era, games_pitched: seasonStats.play, games_started: seasonStats.start, saves: seasonStats.save, strikeouts: seasonStats.ktotal, whip: 0.0)
+        
+        localStats.pitchingStats!.season = seasonPitchingStats
+        
+        return localStats
     }
 }

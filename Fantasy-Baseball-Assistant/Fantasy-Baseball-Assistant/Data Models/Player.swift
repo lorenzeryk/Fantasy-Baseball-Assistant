@@ -19,7 +19,8 @@ class Player: NSManagedObject, Identifiable {
     @NSManaged var secondary_positions_raw: [Int]
     
     var positions: [PlayerPosition] = []
-    var stats: Stats?
+    var hittingStats: FielderStats?
+    var pitchingStats: PitcherStats?
     
     var primary_position: PlayerPosition {
         get {return PlayerPosition(rawValue: primary_position_raw) ?? PlayerPosition.None}

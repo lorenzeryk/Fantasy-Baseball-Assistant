@@ -27,13 +27,13 @@ struct topLevelView: View {
             CenterView()
                 .environmentObject(viewModel)
         }.toolbar {
-            HomeToolbar()
+            HomeToolbar(viewModel: viewModel)
         }
     }
 }
 
 struct HomeToolbar: ToolbarContent {
-    @EnvironmentObject var viewModel: RosterViewModel
+    @ObservedObject var viewModel: RosterViewModel
     @EnvironmentObject var stateManager: StateManager
     
     var body: some ToolbarContent {

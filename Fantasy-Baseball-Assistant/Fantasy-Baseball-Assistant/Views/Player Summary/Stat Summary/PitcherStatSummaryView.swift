@@ -11,7 +11,7 @@ struct PitcherStatSummaryView: View {
     @ObservedObject var player: Player
     
     var body: some View {
-        if (player.stats?.season.pitching_stats != nil) {
+        if (player.pitchingStats?.season != nil) {
             HStack {
                 firstSection()
                 Divider()
@@ -28,49 +28,49 @@ struct PitcherStatSummaryView: View {
     @ViewBuilder private func firstSection() -> some View {
         VStack {
             Text("WAR")
-            Text(String(format: "%.1f", player.stats!.season.pitching_stats!.WAR))
+            Text(String(format: "%.1f", player.pitchingStats!.season.WAR))
         }
         VStack {
             Text("Win")
-            Text(String(player.stats!.season.pitching_stats!.win))
+            Text(String(player.pitchingStats!.season.win))
         }
         VStack {
             Text("Loss")
-            Text(String(player.stats!.season.pitching_stats!.loss))
+            Text(String(player.pitchingStats!.season.loss))
         }
         VStack {
             Text("ERA")
-            Text(String(format: "%.2f", player.stats!.season.pitching_stats!.ERA))
+            Text(String(format: "%.2f", player.pitchingStats!.season.ERA))
         }
     }
     
     @ViewBuilder private func secondSection() -> some View {
         VStack {
             Text("Games")
-            Text(String(player.stats!.season.pitching_stats!.games_pitched))
+            Text(String(player.pitchingStats!.season.games_pitched))
         }
         VStack {
             Text("Games Started")
-            Text(String(player.stats!.season.pitching_stats!.games_started))
+            Text(String(player.pitchingStats!.season.games_started))
         }
         VStack {
             Text("Saves")
-            Text(String(player.stats!.season.pitching_stats!.saves))
+            Text(String(player.pitchingStats!.season.saves))
         }
     }
     
     @ViewBuilder private func thirdSection() -> some View {
         VStack {
             Text("Innings Pitched")
-            Text(String(format: "%.1f", player.stats!.season.pitching_stats!.ERA))
+            Text(String(format: "%.1f", player.pitchingStats!.season.ERA))
         }
         VStack {
             Text("Strikeouts")
-            Text(String(player.stats!.season.pitching_stats!.strikeouts))
+            Text(String(player.pitchingStats!.season.strikeouts))
         }
         VStack {
             Text("WHIP")
-            Text(String(format: "%.2f", player.stats!.season.pitching_stats!.ERA))
+            Text(String(format: "%.2f", player.pitchingStats!.season.ERA))
         }
     }
 }
