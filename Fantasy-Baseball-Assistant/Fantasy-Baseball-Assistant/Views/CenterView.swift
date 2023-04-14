@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct CenterView: View {
-    @ObservedObject var rosterViewModel: MainViewModel
-    @ObservedObject var stateManager: StateManager
+    @EnvironmentObject var rosterViewModel: RosterViewModel
+    @EnvironmentObject var stateManager: StateManager
     
     var body: some View {
         if (stateManager.displayCreatePlayerView) {
-            CreatePlayer(viewModel: rosterViewModel, stateManager: stateManager)
+            CreatePlayer()
         } else {
             if (stateManager.showPlayerInfo) {
                 VStack {

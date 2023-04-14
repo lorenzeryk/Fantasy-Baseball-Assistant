@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class MainViewModel: NSObject, ObservableObject {
+class RosterViewModel: NSObject, ObservableObject {
     @Published var roster: Roster = Roster()
     @Published var failedPlayerValidation = false
     var persistenceController: PersistenceController = PersistenceController()

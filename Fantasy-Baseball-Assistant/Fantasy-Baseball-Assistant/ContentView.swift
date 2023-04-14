@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var mainViewModel = MainViewModel()
-    @StateObject var stateManager: StateManager = StateManager()
+    @EnvironmentObject var stateManager: StateManager
     
     var body: some View {
-        topLevelView(viewModel: mainViewModel, stateManager: stateManager)
+        topLevelView()
     }
 }
 

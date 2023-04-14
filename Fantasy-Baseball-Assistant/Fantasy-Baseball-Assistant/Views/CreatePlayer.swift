@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct CreatePlayer: View {
-    @ObservedObject var viewModel: MainViewModel
-    @ObservedObject var stateManager: StateManager
+    @EnvironmentObject var viewModel: RosterViewModel
+    @EnvironmentObject var stateManager: StateManager
     
     @State var createPlayer: CreatePlayerViewModel = CreatePlayerViewModel()
     @State var first_name: String = ""

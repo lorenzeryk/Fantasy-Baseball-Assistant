@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct topLevelView: View {
-    @ObservedObject var viewModel: MainViewModel
-    @ObservedObject var stateManager: StateManager
+    @StateObject var viewModel: RosterViewModel = RosterViewModel()
+    @EnvironmentObject var stateManager: StateManager
     
     var body: some View {
         NavigationView {
@@ -24,16 +24,17 @@ struct topLevelView: View {
                 .listStyle(.sidebar)
                 .navigationTitle("Roster")
             
-            CenterView(rosterViewModel: viewModel, stateManager: stateManager)
+            CenterView()
+                .environmentObject(viewModel)
         }.toolbar {
-            HomeToolbar(viewModel: viewModel, stateManager: stateManager)
+            HomeToolbar()
         }
     }
 }
 
 struct HomeToolbar: ToolbarContent {
-    @ObservedObject var viewModel: MainViewModel
-    @ObservedObject var stateManager: StateManager
+    @EnvironmentObject var viewModel: RosterViewModel
+    @EnvironmentObject var stateManager: StateManager
     
     var body: some ToolbarContent {
         ToolbarItem(placement: .navigation) {

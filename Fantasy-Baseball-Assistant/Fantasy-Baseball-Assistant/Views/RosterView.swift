@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RosterView: View {
-    @ObservedObject var viewModel: MainViewModel
+    @ObservedObject var viewModel: RosterViewModel
     @ObservedObject var stateManager: StateManager
     
     var body: some View {

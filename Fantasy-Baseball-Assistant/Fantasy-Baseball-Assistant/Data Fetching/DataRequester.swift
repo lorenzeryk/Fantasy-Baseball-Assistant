@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DataRequester {
+class DataRequester: ObservableObject {
     let base_url = "https://api.sportradar.com/mlb/trial/v7/en"
 
     var api_key: String = ""

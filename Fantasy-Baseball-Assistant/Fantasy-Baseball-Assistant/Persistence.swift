@@ -7,7 +7,7 @@
 
 import CoreData
 
-struct PersistenceController {
+class PersistenceController: ObservableObject {
     let container: NSPersistentContainer
     
     init(inMemory: Bool = false) {
