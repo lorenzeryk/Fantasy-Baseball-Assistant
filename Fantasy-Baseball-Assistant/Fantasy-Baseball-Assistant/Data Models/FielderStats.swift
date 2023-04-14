@@ -9,9 +9,8 @@ import Foundation
 
 class FielderStats {
     var season: FielderStatsBase = FielderStatsBase()
-    var month: FielderStatsBase = FielderStatsBase()
-    var week: FielderStatsBase = FielderStatsBase()
-    var home: FielderStatsBase = FielderStatsBase()
-    var away: FielderStatsBase = FielderStatsBase()
+    var month: [FielderStatsBase] = []
+    var day_night: [FielderStatsBase] = []
     var byOpponent: [FielderStatsBase] = []
+    var home_away: [FielderStatsBase] = []
 }

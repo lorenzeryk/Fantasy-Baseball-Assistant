@@ -7,7 +7,7 @@
 
 import Foundation
 
-class FielderStatsBase {
+class FielderStatsBase: Identifiable {
     var batting_average: Double = 0.0
     var WAR: Double = 0.0
     var ab: Int = 0
@@ -20,8 +20,9 @@ class FielderStatsBase {
     var slg: Double = 0.0
     var ops: Double = 0.0
     var OPS_plus: Double = 0.0
+    var key: String?
 
-    init(batting_average: Double, WAR: Double, AB: Int, hits: Int, homeruns: Int, runs: Int, RBI: Int, stolen_bases: Int, OBP: Double, SLG: Double, OPS: Double, OPS_plus: Double) {
+    init(batting_average: Double, WAR: Double, AB: Int, hits: Int, homeruns: Int, runs: Int, RBI: Int, stolen_bases: Int, OBP: Double, SLG: Double, OPS: Double, OPS_plus: Double, key: String?) {
         self.batting_average = batting_average
         self.WAR = WAR
         self.ab = AB
@@ -34,6 +35,7 @@ class FielderStatsBase {
         self.slg = SLG
         self.ops = OPS
         self.OPS_plus = OPS_plus
+        self.key = key
     }
     
     init() {

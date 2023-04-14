@@ -17,7 +17,7 @@
 		A5048C2229D7A46100F63E94 /* PlayerSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5048C2129D7A46100F63E94 /* PlayerSummaryView.swift */; };
 		A5048C2429D7A49E00F63E94 /* StatSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5048C2329D7A49E00F63E94 /* StatSummaryView.swift */; };
 		A5048C2629D7A4CE00F63E94 /* PlayerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5048C2529D7A4CE00F63E94 /* PlayerInfoView.swift */; };
-		A5048C2829D7A80400F63E94 /* TestStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5048C2729D7A80400F63E94 /* TestStatView.swift */; };
+		A5048C2829D7A80400F63E94 /* MainStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5048C2729D7A80400F63E94 /* MainStatView.swift */; };
 		A5048C2A29D7B24500F63E94 /* PitcherStatSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5048C2929D7B24500F63E94 /* PitcherStatSummaryView.swift */; };
 		A5048C2C29D7B25300F63E94 /* HitterStatSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5048C2B29D7B25300F63E94 /* HitterStatSummaryView.swift */; };
 		A5048C3129D7B8D100F63E94 /* MatchupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5048C3029D7B8D100F63E94 /* MatchupView.swift */; };
@@ -51,7 +51,7 @@
 		A5CF9FBB29DB61D000432079 /* RosterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51D633529DA9FCD002DE5B7 /* RosterViewModel.swift */; };
 		A5CF9FBC29DB61D100432079 /* RosterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51D633529DA9FCD002DE5B7 /* RosterViewModel.swift */; };
 		A5CF9FBE29DB61FD00432079 /* RosterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CF9FBD29DB61FD00432079 /* RosterTest.swift */; };
-		A5CF9FC029DB637900432079 /* TestStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5048C2729D7A80400F63E94 /* TestStatView.swift */; };
+		A5CF9FC029DB637900432079 /* MainStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5048C2729D7A80400F63E94 /* MainStatView.swift */; };
 		A5CF9FC229DB664100432079 /* PlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CF9FC129DB664100432079 /* PlayerTests.swift */; };
 		A5CF9FC429DB677300432079 /* PositionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CF9FC329DB677300432079 /* PositionTests.swift */; };
 		A5CF9FC629DB678000432079 /* TeamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CF9FC529DB678000432079 /* TeamTests.swift */; };
@@ -74,6 +74,9 @@
 		A5FACA7F29E927EA0041CA2C /* FielderStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FACA7E29E927EA0041CA2C /* FielderStats.swift */; };
 		A5FACA8129E927F50041CA2C /* PitcherStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FACA8029E927F50041CA2C /* PitcherStats.swift */; };
 		A5FACA8329E928EC0041CA2C /* FielderStatsBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FACA8229E928EC0041CA2C /* FielderStatsBase.swift */; };
+		A5FACA8529E94B2D0041CA2C /* StatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FACA8429E94B2D0041CA2C /* StatViewModel.swift */; };
+		A5FACA8729E94C650041CA2C /* HitterStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FACA8629E94C650041CA2C /* HitterStatView.swift */; };
+		A5FACA8929E94C6E0041CA2C /* PitcherStatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5FACA8829E94C6E0041CA2C /* PitcherStatView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,7 +107,7 @@
 		A5048C2129D7A46100F63E94 /* PlayerSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerSummaryView.swift; sourceTree = "<group>"; };
 		A5048C2329D7A49E00F63E94 /* StatSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatSummaryView.swift; sourceTree = "<group>"; };
 		A5048C2529D7A4CE00F63E94 /* PlayerInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerInfoView.swift; sourceTree = "<group>"; };
-		A5048C2729D7A80400F63E94 /* TestStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestStatView.swift; sourceTree = "<group>"; };
+		A5048C2729D7A80400F63E94 /* MainStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStatView.swift; sourceTree = "<group>"; };
 		A5048C2929D7B24500F63E94 /* PitcherStatSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitcherStatSummaryView.swift; sourceTree = "<group>"; };
 		A5048C2B29D7B25300F63E94 /* HitterStatSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitterStatSummaryView.swift; sourceTree = "<group>"; };
 		A5048C3029D7B8D100F63E94 /* MatchupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchupView.swift; sourceTree = "<group>"; };
@@ -135,6 +138,9 @@
 		A5FACA7E29E927EA0041CA2C /* FielderStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FielderStats.swift; sourceTree = "<group>"; };
 		A5FACA8029E927F50041CA2C /* PitcherStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitcherStats.swift; sourceTree = "<group>"; };
 		A5FACA8229E928EC0041CA2C /* FielderStatsBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FielderStatsBase.swift; sourceTree = "<group>"; };
+		A5FACA8429E94B2D0041CA2C /* StatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatViewModel.swift; sourceTree = "<group>"; };
+		A5FACA8629E94C650041CA2C /* HitterStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitterStatView.swift; sourceTree = "<group>"; };
+		A5FACA8829E94C6E0041CA2C /* PitcherStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitcherStatView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +188,7 @@
 			children = (
 				A51D633529DA9FCD002DE5B7 /* RosterViewModel.swift */,
 				A5FACA7A29E773B80041CA2C /* CreatePlayerViewModel.swift */,
+				A5FACA8429E94B2D0041CA2C /* StatViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -223,7 +230,9 @@
 		A5048C2F29D7B29D00F63E94 /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
-				A5048C2729D7A80400F63E94 /* TestStatView.swift */,
+				A5048C2729D7A80400F63E94 /* MainStatView.swift */,
+				A5FACA8629E94C650041CA2C /* HitterStatView.swift */,
+				A5FACA8829E94C6E0041CA2C /* PitcherStatView.swift */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
@@ -456,8 +465,9 @@
 				A5048C0B29D6A5EF00F63E94 /* Team.swift in Sources */,
 				A5048C2229D7A46100F63E94 /* PlayerSummaryView.swift in Sources */,
 				A5048C1B29D6ACA000F63E94 /* topLevelView.swift in Sources */,
-				A5048C2829D7A80400F63E94 /* TestStatView.swift in Sources */,
+				A5048C2829D7A80400F63E94 /* MainStatView.swift in Sources */,
 				A51917FB29D6892D00410DB3 /* ContentView.swift in Sources */,
+				A5FACA8529E94B2D0041CA2C /* StatViewModel.swift in Sources */,
 				A5048C0929D6A48F00F63E94 /* PlayerPosition.swift in Sources */,
 				A51917F929D6892D00410DB3 /* Fantasy_Baseball_AssistantApp.swift in Sources */,
 				A5FACA4729E2A6790041CA2C /* FantasyBaseballAssistant.xcdatamodeld in Sources */,
@@ -470,6 +480,8 @@
 				A51D633629DA9FCD002DE5B7 /* RosterViewModel.swift in Sources */,
 				A5048C2A29D7B24500F63E94 /* PitcherStatSummaryView.swift in Sources */,
 				A5FACA4229E2A5E30041CA2C /* Persistence.swift in Sources */,
+				A5FACA8929E94C6E0041CA2C /* PitcherStatView.swift in Sources */,
+				A5FACA8729E94C650041CA2C /* HitterStatView.swift in Sources */,
 				A5CF9FCF29DD4ADA00432079 /* DataRequester.swift in Sources */,
 				A5FACA8129E927F50041CA2C /* PitcherStats.swift in Sources */,
 				A5FACA7B29E773B80041CA2C /* CreatePlayerViewModel.swift in Sources */,
@@ -511,7 +523,7 @@
 				A5CF9FA529DB614F00432079 /* Team.swift in Sources */,
 				A5CF9FB929DB61CA00432079 /* topLevelView.swift in Sources */,
 				A519181729D6892E00410DB3 /* Fantasy_Baseball_AssistantUITestsLaunchTests.swift in Sources */,
-				A5CF9FC029DB637900432079 /* TestStatView.swift in Sources */,
+				A5CF9FC029DB637900432079 /* MainStatView.swift in Sources */,
 				A5CF9FA329DB614B00432079 /* PlayerPosition.swift in Sources */,
 				A5FACA7D29E773B80041CA2C /* CreatePlayerViewModel.swift in Sources */,
 				A5CF9FB229DB61B600432079 /* PlayerInfoView.swift in Sources */,

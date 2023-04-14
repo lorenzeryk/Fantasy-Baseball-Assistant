@@ -18,8 +18,9 @@ class PitcherStatsBase {
     var saves: Int = 0
     var strikeouts: Int = 0
     var whip: Double = 0.0
+    var key: String?
     
-    init(innings_pitched: Double, WAR: Double, win: Int, loss: Int, ERA: Double, games_pitched: Int, games_started: Int, saves: Int, strikeouts: Int, whip: Double) {
+    init(innings_pitched: Double, WAR: Double, win: Int, loss: Int, ERA: Double, games_pitched: Int, games_started: Int, saves: Int, strikeouts: Int, whip: Double, key: String?) {
         self.innings_pitched = innings_pitched
         self.WAR = WAR
         self.win = win
@@ -30,6 +31,7 @@ class PitcherStatsBase {
         self.saves = saves
         self.strikeouts = strikeouts
         self.whip = whip
+        self.key = key
     }
     
     init() {

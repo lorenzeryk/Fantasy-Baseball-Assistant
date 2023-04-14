@@ -81,7 +81,7 @@ struct HittingStats: Codable {
     var ktotal: Int
     var avg: String
     var value: String?
-    var abbr: String?
+    var name: String?
 }
 
 struct PitchingStats: Codable {
@@ -116,7 +116,7 @@ struct PitchingStats: Codable {
     var ops: Double
     var bf: Int
     var value: String?
-    var abbr: String?
+    var name: String?
 }
 
 struct Stats {

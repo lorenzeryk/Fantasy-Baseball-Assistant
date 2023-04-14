@@ -20,16 +20,7 @@ struct CenterView: View {
                     PlayerSummaryView(selectedPlayer: stateManager.selectedPlayer!)
                         .frame(maxHeight: 150)
                     Divider()
-                    HStack {
-                        Button("Season") {}
-                        Button("Month") {}
-                        Button("Week") {}
-                        Button("Splits") {}
-                        Button("Game Log") {}
-                    }
-                    Divider()
-                    TestStatView()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    MainStatView(statViewModel: StatViewModel(player: stateManager.selectedPlayer))
                 }
             }
             else {
