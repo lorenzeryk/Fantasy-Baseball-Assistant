@@ -52,10 +52,6 @@ struct DataRequester {
             return nil
         }
         
-        return getPlayer(first_name: first_name, last_name: last_name, players: players)
-    }
-    
-    private func getPlayer(first_name: String, last_name: String, players: [RequestedPlayer]) -> String? {
         guard players.count != 0 else {
             print("No players in array of players")
             return nil
@@ -102,6 +98,48 @@ struct DataRequester {
         await withCheckedContinuation { continuation in
             getTeamProfilePlayers(team: team) { players in
                 continuation.resume(returning: players)
+            }
+        }
+    }
+    
+    func getPlayerStats(_ player: Player) async -> Stats? {
+        let returnedStats = await fetchStats(player: player)
+        
+        return nil
+    }
+    
+    private func fetchStats(player: Player, _ completion: @escaping (_ data: ReturnedStats?) -> Void) {
+        let full_url = "\(base_url)/seasons/2023/REG/teams/\(player.team.teamID)/splits.json?api_key=\(api_key)"
+        guard let url = URL(string: full_url) else {
+            print("Failed to convert URL")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error requesting stats for \(player): \(error)")
+                completion(nil)
+            }
+
+            if let data = data {
+                print(data)
+                if let playerStats = try? JSONDecoder().decode(ReturnedStats.self, from: data) {
+                    completion(playerStats)
+                    return
+                }
+                print("Failed to convert to json")
+                completion(nil)
+            }
+        }.resume()
+    }
+    
+    private func fetchStats(player: Player) async -> ReturnedStats? {
+        await withCheckedContinuation { continuation in
+            fetchStats(player: player) { stats in
+                continuation.resume(returning: stats)
             }
         }
     }

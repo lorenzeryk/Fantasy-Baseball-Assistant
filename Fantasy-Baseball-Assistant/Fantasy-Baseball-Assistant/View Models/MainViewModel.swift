@@ -44,6 +44,10 @@ class MainViewModel: NSObject, ObservableObject {
         }
         return true
     }
+
+    func updateStats(player: Player) async {
+        let playerStats = await dataRequester.getPlayerStats(player)
+    }
     
     func deleteSelectedPlayer(_ playerID: Player.ID?) {
         guard playerID != nil else {
@@ -63,5 +67,12 @@ class MainViewModel: NSObject, ObservableObject {
     func initializeData() {
         let savedPlayers = persistenceController.loadPlayers()
         roster.initializeRoster(players: savedPlayers)
+        
+        for player in roster.players {
+            Task.init {
+                sleep(2)
+                await updateStats(player: player)
+            }
+        }
     }
 }
