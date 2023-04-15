@@ -13,18 +13,22 @@ struct MainStatView: View {
     
     var body: some View {
         HStack {
-            Button("Season") {
-                updateStatView(view: SelectedStatView.Season)
+            Spacer()
+            HStack {
+                Button("Season") {
+                    updateStatView(view: SelectedStatView.Season)
+                }
+                Button("Month") {
+                    updateStatView(view: SelectedStatView.Month)
+                }
+                Button("Day/Night") {
+                    updateStatView(view: SelectedStatView.DayNight)
+                }
+                Button("By Opponent") {
+                    updateStatView(view: SelectedStatView.Opponent)
+                }
             }
-            Button("Month") {
-                updateStatView(view: SelectedStatView.Month)
-            }
-            Button("Day/Night") {
-                updateStatView(view: SelectedStatView.DayNight)
-            }
-            Button("By Opponent") {
-                updateStatView(view: SelectedStatView.Opponent)
-            }
+            Spacer()
             Toggle("Advanced", isOn: $statViewModel.displayAdvancedStats)
                 .toggleStyle(.switch)
         }

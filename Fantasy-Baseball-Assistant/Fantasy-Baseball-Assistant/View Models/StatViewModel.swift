@@ -8,6 +8,7 @@
 import Foundation
 
 class StatViewModel: ObservableObject {
+    //TODO: determine solution to have stats view update stats when player stats update
     var currentPlayer: Player?
     var selectedStatView: SelectedStatView = SelectedStatView.Season {
         didSet {
