@@ -75,10 +75,10 @@ class StatViewModel: ObservableObject {
     
     func translateKey(stat: FielderStatsBase) -> String {
         if (selectedStatView == SelectedStatView.Month) {
-            return Month(rawValue: Int16(stat.key!)!)!.text
+            return Month(rawValue: Int16(stat.key)!)!.text
         }
         if (selectedStatView == SelectedStatView.Opponent || selectedStatView == SelectedStatView.DayNight) {
-            return stat.key ?? ""
+            return stat.key
         }
         
         return ""

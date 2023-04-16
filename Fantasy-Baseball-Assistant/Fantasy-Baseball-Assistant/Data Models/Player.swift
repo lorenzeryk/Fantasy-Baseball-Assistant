@@ -17,11 +17,10 @@ class Player: NSManagedObject, Identifiable {
     @NSManaged var primary_position_raw: Int16
     @NSManaged var team_raw: Int16
     @NSManaged var secondary_positions_raw: [Int]
+    @NSManaged var hittingStats: FielderStats?
+    var pitchingStats: PitcherStats?
     
     var positions: [PlayerPosition] = []
-    
-    @Published var hittingStats: FielderStats?
-    @Published var pitchingStats: PitcherStats?
     
     var primary_position: PlayerPosition {
         get {return PlayerPosition(rawValue: primary_position_raw) ?? PlayerPosition.None}

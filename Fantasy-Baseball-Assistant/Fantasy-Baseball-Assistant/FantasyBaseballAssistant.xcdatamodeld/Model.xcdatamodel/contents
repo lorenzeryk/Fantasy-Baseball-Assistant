@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22C65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="FielderStats" representedClassName="FielderStats" syncable="YES">
+        <relationship name="byOpponent" toMany="YES" deletionRule="Nullify" destinationEntity="FielderStatsBase"/>
+        <relationship name="day_night" toMany="YES" deletionRule="Nullify" destinationEntity="FielderStatsBase"/>
+        <relationship name="home_away" toMany="YES" deletionRule="Nullify" destinationEntity="FielderStatsBase"/>
+        <relationship name="month" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FielderStatsBase"/>
+        <relationship name="season" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FielderStatsBase"/>
+    </entity>
+    <entity name="FielderStatsBase" representedClassName="FielderStatsBase" syncable="YES">
+        <attribute name="ab" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="batting_average" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="caught_stealing" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="double" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="hit_by_pitch" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="hits" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="homeruns" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="intentional_walks" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="key" attributeType="String"/>
+        <attribute name="obp" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="ops" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="rbi" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="runs" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="single" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="slg" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="stolen_bases" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="strike_outs" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="triple" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="walks" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
     <entity name="Player" representedClassName="Player" syncable="YES">
         <attribute name="api_id" attributeType="String"/>
         <attribute name="first_name" attributeType="String"/>
-        <attribute name="hitting_stats" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[FielderStats]"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="last_name" attributeType="String"/>
         <attribute name="primary_position_raw" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="secondary_positions_raw" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[Int]"/>
         <attribute name="stat_update" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="team_raw" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="hittingStats" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="FielderStats"/>
     </entity>
 </model>

@@ -6,53 +6,61 @@
 //
 
 import Foundation
+import CoreData
 
-class FielderStatsBase: Identifiable {
-    var batting_average: Double
-    var ab: Int
-    var hits: Int
-    var homeruns: Int
-    var runs: Int
-    var rbi: Int
-    var strike_outs: Int
-    var stolen_bases: Int
-    var caught_stealing: Int
+@objc(FielderStatsBase)
+class FielderStatsBase: NSManagedObject, Identifiable {
+    @NSManaged var batting_average: Double
+    @NSManaged var ab: Int16
+    @NSManaged var hits: Int16
+    @NSManaged var homeruns: Int16
+    @NSManaged var runs: Int16
+    @NSManaged var rbi: Int16
+    @NSManaged var strike_outs: Int16
+    @NSManaged var stolen_bases: Int16
+    @NSManaged var caught_stealing: Int16
     
-    var single: Int
-    var double: Int
-    var triple: Int
-    var walks: Int
-    var intentional_walks: Int
-    var hit_by_pitch: Int
-    var obp: Double
-    var slg: Double
-    var ops: Double
+    @NSManaged var single: Int16
+    @NSManaged var double: Int16
+    @NSManaged var triple: Int16
+    @NSManaged var walks: Int16
+    @NSManaged var intentional_walks: Int16
+    @NSManaged var hit_by_pitch: Int16
+    @NSManaged var obp: Double
+    @NSManaged var slg: Double
+    @NSManaged var ops: Double
     
-    var key: String?
+    @NSManaged var key: String
     
-    init(batting_average: Double, ab: Int, hits: Int, homeruns: Int, runs: Int, rbi: Int, stolen_bases: Int, obp: Double, slg: Double, ops: Double, single: Int, double: Int, triple: Int, walks: Int, intentional_walks: Int, hit_by_pitch: Int, caught_stealing: Int, strike_outs: Int, key: String? = nil) {
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<FielderStatsBase> {
+        return NSFetchRequest<FielderStatsBase>(entityName: "FielderStatsBase")
+    }
+    
+    init(batting_average: Double, ab: Int, hits: Int, homeruns: Int, runs: Int, rbi: Int, stolen_bases: Int, obp: Double, slg: Double, ops: Double, single: Int, double: Int, triple: Int, walks: Int, intentional_walks: Int, hit_by_pitch: Int, caught_stealing: Int, strike_outs: Int, key: String = "", entity: NSEntityDescription, context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
         self.batting_average = batting_average
-        self.ab = ab
-        self.hits = hits
-        self.homeruns = homeruns
-        self.runs = runs
-        self.rbi = rbi
-        self.stolen_bases = stolen_bases
+        self.ab = Int16(ab)
+        self.hits = Int16(hits)
+        self.homeruns = Int16(homeruns)
+        self.runs = Int16(runs)
+        self.rbi = Int16(rbi)
+        self.stolen_bases = Int16(stolen_bases)
         self.obp = obp
         self.slg = slg
         self.ops = ops
-        self.single = single
-        self.double = double
-        self.triple = triple
-        self.walks = walks
-        self.intentional_walks = intentional_walks
-        self.hit_by_pitch = hit_by_pitch
-        self.caught_stealing = caught_stealing
-        self.strike_outs = strike_outs
+        self.single = Int16(single)
+        self.double = Int16(double)
+        self.triple = Int16(triple)
+        self.walks = Int16(walks)
+        self.intentional_walks = Int16(intentional_walks)
+        self.hit_by_pitch = Int16(hit_by_pitch)
+        self.caught_stealing = Int16(caught_stealing)
+        self.strike_outs = Int16(strike_outs)
         self.key = key
     }
     
-    init() {
+    init(entity: NSEntityDescription, context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
         self.batting_average = 0.0
         self.ab = 0
         self.hits = 0
@@ -71,6 +79,11 @@ class FielderStatsBase: Identifiable {
         self.hit_by_pitch = 0
         self.caught_stealing = 0
         self.strike_outs = 0
-        self.key = nil
+        self.key = ""
+    }
+    
+    @objc
+    private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
     }
 }

@@ -38,22 +38,22 @@ class RosterViewModel: NSObject, ObservableObject {
             return false
         }
         
-        DispatchQueue.main.async { [self] in
-            roster.addPlayerToRoster(player: Player(first_name: firstName, last_name: lastName, api_id: player_id, team: team, primary_position: position, secondary_positions: secondaryPositions, entity: playerDescription, context: persistenceController.container.viewContext))
-            persistenceController.saveData()
-        }
+        let player = Player(first_name: firstName, last_name: lastName, api_id: player_id, team: team, primary_position: position, secondary_positions: secondaryPositions, entity: playerDescription, context: persistenceController.container.viewContext)
+        roster.addPlayerToRoster(player: player)
+        await updateStats(player: player)
+        persistenceController.saveData()
         return true
     }
 
     func updateStats(player: Player) async {
-        guard let playerStats = await dataRequester.getPlayerStats(player) else {
+        guard let playerStats = await dataRequester.getPlayerStats(player, persistenceController: persistenceController) else {
             print("Failed to retrieve stats for \(player.first_name) \(player.last_name)")
             return
         }
         
         player.hittingStats = playerStats.hittingStats
         player.pitchingStats = playerStats.pitchingStats
-        
+        persistenceController.saveData()
     }
     
     func deleteSelectedPlayer(_ playerID: Player.ID?) {
@@ -74,14 +74,13 @@ class RosterViewModel: NSObject, ObservableObject {
     func initializeData() {
         let savedPlayers = persistenceController.loadPlayers()
         roster.initializeRoster(players: savedPlayers)
-        
-        Task.init {
-            for player in roster.players {
-                sleep(2)
-                Task.init {
-                    await updateStats(player: player)
-                }
-            }
-        }
+//        Task.init {
+//            for player in roster.players {
+//                sleep(2)
+//                Task.init {
+//                    await updateStats(player: player)
+//                }
+//            }
+//        }
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 class DataRequester: ObservableObject {
     let base_url = "https://api.sportradar.com/mlb/trial/v7/en"
@@ -102,14 +103,14 @@ class DataRequester: ObservableObject {
         }
     }
     
-    func getPlayerStats(_ player: Player) async -> Stats? {
+    func getPlayerStats(_ player: Player, persistenceController: PersistenceController) async -> Stats? {
         guard let returnedStats = await fetchStats(player: player) else {
             return nil
         }
         
         for fetchedPlayer in returnedStats.players {
             if (fetchedPlayer.id == player.api_id) {
-                return convertStats(stats: fetchedPlayer, isPitcher: player.isPitcher())
+                return convertStats(stats: fetchedPlayer, isPitcher: player.isPitcher(), persistenceController: persistenceController)
             }
         }
         
@@ -152,17 +153,25 @@ class DataRequester: ObservableObject {
         }
     }
     
-    private func convertStats(stats: PlayerStats, isPitcher: Bool) -> Stats? {
+    private func convertStats(stats: PlayerStats, isPitcher: Bool, persistenceController: PersistenceController) -> Stats? {
         if (isPitcher) {
             return convertPitchingStats(stats: stats)
         } else {
-            return convertHittingStats(stats: stats)
+            guard let statEntity = persistenceController.getDescription(entityName: "FielderStats") else {
+                return nil
+            }
+            
+            guard let statBaseEntity = persistenceController.getDescription(entityName: "FielderStatsBase") else {
+                return nil
+            }
+            
+            return convertHittingStats(stats: stats, statEntity: statEntity, statBaseEntity: statBaseEntity, context: persistenceController.container.viewContext)
         }
     }
     
-    private func convertHittingStats(stats: PlayerStats) -> Stats? {
+    private func convertHittingStats(stats: PlayerStats, statEntity: NSEntityDescription, statBaseEntity: NSEntityDescription, context: NSManagedObjectContext?) -> Stats? {
         var localStats = Stats()
-        localStats.hittingStats = FielderStats()
+        localStats.hittingStats = FielderStats(entity: statEntity, baseStatEntity: statBaseEntity, context: context)
         
         guard let hittingStats =  stats.splits.hitting else {
             return nil
@@ -177,45 +186,45 @@ class DataRequester: ObservableObject {
         }
         
         if overallStats.total.first != nil {
-            let seasonHittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(seasonStats.avg) ?? 0.0, ab: seasonStats.ab, hits: seasonStats.h, homeruns: seasonStats.hr, runs: seasonStats.runs, rbi: seasonStats.rbi, stolen_bases: seasonStats.sb, obp: seasonStats.obp, slg: seasonStats.slg, ops: seasonStats.ops, single: seasonStats.s, double: seasonStats.d, triple: seasonStats.t, walks: seasonStats.bb, intentional_walks: seasonStats.ibb, hit_by_pitch: seasonStats.hbp, caught_stealing: seasonStats.cs, strike_outs: seasonStats.ktotal)
+            let seasonHittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(seasonStats.avg) ?? 0.0, ab: seasonStats.ab, hits: seasonStats.h, homeruns: seasonStats.hr, runs: seasonStats.runs, rbi: seasonStats.rbi, stolen_bases: seasonStats.sb, obp: seasonStats.obp, slg: seasonStats.slg, ops: seasonStats.ops, single: seasonStats.s, double: seasonStats.d, triple: seasonStats.t, walks: seasonStats.bb, intentional_walks: seasonStats.ibb, hit_by_pitch: seasonStats.hbp, caught_stealing: seasonStats.cs, strike_outs: seasonStats.ktotal, entity: statBaseEntity, context: context)
             
             localStats.hittingStats!.season = seasonHittingStats
         }
         
         for stat in overallStats.day_night {
             if (stat.value == "day") {
-                let dayHittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, ab: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, rbi: stat.rbi, stolen_bases: stat.sb, obp: stat.obp, slg: stat.slg, ops: stat.ops, single: stat.s, double: stat.d, triple: stat.t, walks: stat.bb, intentional_walks: stat.ibb, hit_by_pitch: stat.hbp, caught_stealing: stat.cs, strike_outs: stat.ktotal, key: "Day")
+                let dayHittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, ab: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, rbi: stat.rbi, stolen_bases: stat.sb, obp: stat.obp, slg: stat.slg, ops: stat.ops, single: stat.s, double: stat.d, triple: stat.t, walks: stat.bb, intentional_walks: stat.ibb, hit_by_pitch: stat.hbp, caught_stealing: stat.cs, strike_outs: stat.ktotal, key: "Day", entity: statBaseEntity, context: context)
                 
-                localStats.hittingStats!.day_night.append(dayHittingStats)
+                localStats.hittingStats!.day_night.insert(dayHittingStats)
             } else if (stat.value == "night") {
-                let nightHittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, ab: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, rbi: stat.rbi, stolen_bases: stat.sb, obp: stat.obp, slg: stat.slg, ops: stat.ops, single: stat.s, double: stat.d, triple: stat.t, walks: stat.bb, intentional_walks: stat.ibb, hit_by_pitch: stat.hbp, caught_stealing: stat.cs, strike_outs: stat.ktotal, key: "Night")
+                let nightHittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, ab: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, rbi: stat.rbi, stolen_bases: stat.sb, obp: stat.obp, slg: stat.slg, ops: stat.ops, single: stat.s, double: stat.d, triple: stat.t, walks: stat.bb, intentional_walks: stat.ibb, hit_by_pitch: stat.hbp, caught_stealing: stat.cs, strike_outs: stat.ktotal, key: "Night", entity: statBaseEntity, context: context)
                 
-                localStats.hittingStats!.day_night.append(nightHittingStats)
+                localStats.hittingStats!.day_night.insert(nightHittingStats)
             }
         }
             
         for stat in overallStats.home_away {
             if (stat.value == "home") {
-                let homeHittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, ab: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, rbi: stat.rbi, stolen_bases: stat.sb, obp: stat.obp, slg: stat.slg, ops: stat.ops, single: stat.s, double: stat.d, triple: stat.t, walks: stat.bb, intentional_walks: stat.ibb, hit_by_pitch: stat.hbp, caught_stealing: stat.cs, strike_outs: stat.ktotal, key: "Home")
+                let homeHittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, ab: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, rbi: stat.rbi, stolen_bases: stat.sb, obp: stat.obp, slg: stat.slg, ops: stat.ops, single: stat.s, double: stat.d, triple: stat.t, walks: stat.bb, intentional_walks: stat.ibb, hit_by_pitch: stat.hbp, caught_stealing: stat.cs, strike_outs: stat.ktotal, key: "Home", entity: statBaseEntity, context: context)
                 
-                localStats.hittingStats!.home_away.append(homeHittingStats)
+                localStats.hittingStats!.home_away.insert(homeHittingStats)
             } else if (stat.value == "away") {
-                let awayHittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, ab: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, rbi: stat.rbi, stolen_bases: stat.sb, obp: stat.obp, slg: stat.slg, ops: stat.ops, single: stat.s, double: stat.d, triple: stat.t, walks: stat.bb, intentional_walks: stat.ibb, hit_by_pitch: stat.hbp, caught_stealing: stat.cs, strike_outs: stat.ktotal, key: "Away")
+                let awayHittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, ab: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, rbi: stat.rbi, stolen_bases: stat.sb, obp: stat.obp, slg: stat.slg, ops: stat.ops, single: stat.s, double: stat.d, triple: stat.t, walks: stat.bb, intentional_walks: stat.ibb, hit_by_pitch: stat.hbp, caught_stealing: stat.cs, strike_outs: stat.ktotal, key: "Away", entity: statBaseEntity, context: context)
                 
-                localStats.hittingStats!.home_away.append(awayHittingStats)
+                localStats.hittingStats!.home_away.insert(awayHittingStats)
             }
         }
         
         for stat in overallStats.month {
-            let hittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, ab: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, rbi: stat.rbi, stolen_bases: stat.sb, obp: stat.obp, slg: stat.slg, ops: stat.ops, single: stat.s, double: stat.d, triple: stat.t, walks: stat.bb, intentional_walks: stat.ibb, hit_by_pitch: stat.hbp, caught_stealing: stat.cs, strike_outs: stat.ktotal, key: stat.value ?? "Month Error")
+            let hittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, ab: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, rbi: stat.rbi, stolen_bases: stat.sb, obp: stat.obp, slg: stat.slg, ops: stat.ops, single: stat.s, double: stat.d, triple: stat.t, walks: stat.bb, intentional_walks: stat.ibb, hit_by_pitch: stat.hbp, caught_stealing: stat.cs, strike_outs: stat.ktotal, key: stat.value ?? "Month Error", entity: statBaseEntity, context: context)
             
-            localStats.hittingStats!.month.append(hittingStats)
+            localStats.hittingStats!.month.insert(hittingStats)
         }
         
         for stat in overallStats.opponent {
-            let hittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, ab: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, rbi: stat.rbi, stolen_bases: stat.sb, obp: stat.obp, slg: stat.slg, ops: stat.ops, single: stat.s, double: stat.d, triple: stat.t, walks: stat.bb, intentional_walks: stat.ibb, hit_by_pitch: stat.hbp, caught_stealing: stat.cs, strike_outs: stat.ktotal, key: stat.name ?? "Month Error")
+            let hittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, ab: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, rbi: stat.rbi, stolen_bases: stat.sb, obp: stat.obp, slg: stat.slg, ops: stat.ops, single: stat.s, double: stat.d, triple: stat.t, walks: stat.bb, intentional_walks: stat.ibb, hit_by_pitch: stat.hbp, caught_stealing: stat.cs, strike_outs: stat.ktotal, key: stat.name ?? "Month Error", entity: statBaseEntity, context: context)
             
-            localStats.hittingStats!.byOpponent.append(hittingStats)
+            localStats.hittingStats!.byOpponent.insert(hittingStats)
         }
         
         return localStats
