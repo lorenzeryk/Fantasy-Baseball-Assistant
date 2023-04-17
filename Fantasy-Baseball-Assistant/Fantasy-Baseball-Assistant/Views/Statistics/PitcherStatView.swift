@@ -38,11 +38,14 @@ struct PitcherStatView: View {
             TableColumn("Loss") { stat in
                 Text("\(stat.loss)")
             }
+            TableColumn("Innings Pitched") { stat in
+                Text(String(format: "%0.1f", stat.ip_2))
+            }
             TableColumn("Hits") { stat in
                 Text("\(stat.h)")
             }
             TableColumn("ERA") { stat in
-                Text(String(format: "%0.3f", stat.era))
+                Text(String(format: "%0.2f", stat.era))
             }
             TableColumn("K") { stat in
                 Text("\(stat.ktotal)")
@@ -62,11 +65,14 @@ struct PitcherStatView: View {
             TableColumn("Loss") { stat in
                 Text("\(stat.loss)")
             }
+            TableColumn("Innings Pitched") { stat in
+                Text(String(format: "%0.1f", stat.ip_2))
+            }
             TableColumn("Hits") { stat in
                 Text("\(stat.h)")
             }
             TableColumn("ERA") { stat in
-                Text(String(format: "%0.3f", stat.era))
+                Text(String(format: "%0.2f", stat.era))
             }
             TableColumn("K") { stat in
                 Text("\(stat.ktotal)")

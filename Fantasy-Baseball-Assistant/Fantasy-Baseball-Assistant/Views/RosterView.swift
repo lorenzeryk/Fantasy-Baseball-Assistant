@@ -24,6 +24,7 @@ struct RosterView: View {
             
             stateManager.updateShowPlayerInfo(selectedPlayer: viewModel.roster.getPlayerByID(playerID: stateManager.selectedPlayerID!))
         }
+        Divider()
         Spacer()
         HittersTable()
         //TODO: cite from https://useyourloaf.com/blog/context-menus-for-tables/
@@ -36,6 +37,7 @@ struct RosterView: View {
     
     @ViewBuilder private func PitchersTable() -> some View {
         Text("Pitchers")
+            .padding()
         Table(viewModel.roster.pitchers, selection: $stateManager.selectedPlayerID) {
             TableColumn("Name") {
                 Text($0.first_name + " " + $0.last_name)
@@ -55,6 +57,7 @@ struct RosterView: View {
     
     @ViewBuilder private func HittersTable() -> some View {
         Text("Fielders")
+            .padding()
         Table(viewModel.roster.hitters, selection: $stateManager.selectedPlayerID) {
             TableColumn("Name") {
                 Text($0.first_name + " " + $0.last_name)

@@ -47,7 +47,7 @@ class RosterViewModel: NSObject, ObservableObject {
 
     func updateStats(player: Player) {
         Task.init {
-            if (player.last_stat_update.distance(to: Date()) > (60 * 60 * 24)) {
+            if ((player.hittingStats == nil && player.pitchingStats == nil) || player.last_stat_update.distance(to: Date()) > (60 * 60 * 24)) {
                 sleep(2)
                 guard let playerStats = await dataRequester.getPlayerStats(player, persistenceController: persistenceController) else {
                     print("Failed to retrieve stats for \(player.first_name) \(player.last_name)")
