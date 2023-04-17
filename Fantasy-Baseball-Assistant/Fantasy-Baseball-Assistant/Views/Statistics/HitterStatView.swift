@@ -59,6 +59,7 @@ struct HitterStatView: View {
         }
     }
     
+    @ViewBuilder
     private func advancedStatView() -> some View {
         Table(stats.selectedHittingStats) {
             TableColumn(stats.getKey()) { stat in
@@ -124,6 +125,7 @@ struct HitterStatView: View {
         }
     }
     
+    @ViewBuilder
     private func advancedStatViewSeason() -> some View {
         Table(stats.selectedHittingStats) {
             TableColumn("Singles") { stat in

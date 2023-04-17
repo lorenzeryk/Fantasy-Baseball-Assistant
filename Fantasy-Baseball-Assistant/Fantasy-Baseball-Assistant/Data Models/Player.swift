@@ -17,6 +17,7 @@ class Player: NSManagedObject, Identifiable {
     @NSManaged var primary_position_raw: Int16
     @NSManaged var team_raw: Int16
     @NSManaged var secondary_positions_raw: [Int]
+    @NSManaged var last_stat_update: Date
     @NSManaged var hittingStats: FielderStats?
     var pitchingStats: PitcherStats?
     
@@ -49,6 +50,7 @@ class Player: NSManagedObject, Identifiable {
         self.primary_position_raw = primary_position.rawValue
         self.secondary_positions_raw = []
         self.id = UUID()
+        self.last_stat_update = Date(timeIntervalSinceReferenceDate: 0) //initialize date to time 0
         if (secondary_positions != nil) {
             self.positions = secondary_positions!
         } else {

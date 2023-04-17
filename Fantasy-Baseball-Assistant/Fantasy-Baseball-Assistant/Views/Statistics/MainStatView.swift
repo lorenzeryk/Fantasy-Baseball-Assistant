@@ -29,12 +29,12 @@ struct MainStatView: View {
                 }
             }
             Spacer()
-            Toggle("Advanced", isOn: $statViewModel.displayAdvancedStats)
+            Toggle("Detailed", isOn: $statViewModel.displayAdvancedStats)
                 .toggleStyle(.switch)
         }
         Divider()
         if (stateManager.selectedPlayer != nil && stateManager.selectedPlayer!.isPitcher()) {
-            PitcherStatView()
+            PitcherStatView(stats: statViewModel)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else {
             HitterStatView(stats: statViewModel)

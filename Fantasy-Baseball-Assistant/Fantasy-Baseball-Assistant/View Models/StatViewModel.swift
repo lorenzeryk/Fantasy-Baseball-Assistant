@@ -84,6 +84,17 @@ class StatViewModel: ObservableObject {
         return ""
     }
     
+    func translateKey(stat: PitcherStatsBase) -> String {
+        if (selectedStatView == SelectedStatView.Month) {
+            return Month(rawValue: Int16(stat.key)!)!.text
+        }
+        if (selectedStatView == SelectedStatView.Opponent || selectedStatView == SelectedStatView.DayNight) {
+            return stat.key
+        }
+        
+        return ""
+    }
+    
     func getKey() -> String {
         if (selectedStatView == SelectedStatView.Month) {
             return "Month"

@@ -246,7 +246,7 @@ class DataRequester: ObservableObject {
             return nil
         }
         
-        let seasonPitchingStats: PitcherStatsBase = PitcherStatsBase(innings_pitched: seasonStats.ip_2, WAR: 0.0, win: seasonStats.win, loss: seasonStats.loss, ERA: seasonStats.era, games_pitched: seasonStats.play, games_started: seasonStats.start, saves: seasonStats.save, strikeouts: seasonStats.ktotal, whip: 0.0, key: nil)
+        let seasonPitchingStats: PitcherStatsBase = PitcherStatsBase(win: seasonStats.win, loss: seasonStats.loss, save: seasonStats.save, svo: seasonStats.svo, start: seasonStats.start, play: seasonStats.play, complete: seasonStats.complete, team_win: seasonStats.team_win, team_loss: seasonStats.team_loss, ip_2: seasonStats.ip_2, h: seasonStats.h, runs: seasonStats.runs, er: seasonStats.er, hr: seasonStats.hr, bb: seasonStats.bb, ibb: seasonStats.ibb, oba: seasonStats.oba, era: seasonStats.era, ktotal: seasonStats.ktotal, s: seasonStats.s, d: seasonStats.d, t: seasonStats.t, rbi: seasonStats.rbi, hbp: seasonStats.hbp, sb: seasonStats.sb, cs: seasonStats.cs, obp: seasonStats.obp, slg: seasonStats.slg, ops: seasonStats.ops, bf: seasonStats.bf)
         
         localStats.pitchingStats!.season = seasonPitchingStats
         

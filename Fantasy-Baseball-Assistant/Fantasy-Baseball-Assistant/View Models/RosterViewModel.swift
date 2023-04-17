@@ -40,20 +40,33 @@ class RosterViewModel: NSObject, ObservableObject {
         
         let player = Player(first_name: firstName, last_name: lastName, api_id: player_id, team: team, primary_position: position, secondary_positions: secondaryPositions, entity: playerDescription, context: persistenceController.container.viewContext)
         roster.addPlayerToRoster(player: player)
-        await updateStats(player: player)
+        updateStats(player: player)
         persistenceController.saveData()
         return true
     }
 
-    func updateStats(player: Player) async {
-        guard let playerStats = await dataRequester.getPlayerStats(player, persistenceController: persistenceController) else {
-            print("Failed to retrieve stats for \(player.first_name) \(player.last_name)")
-            return
+    func updateStats(player: Player) {
+        Task.init {
+            if (player.last_stat_update.distance(to: Date()) > (60 * 60 * 24)) {
+                sleep(2)
+                guard let playerStats = await dataRequester.getPlayerStats(player, persistenceController: persistenceController) else {
+                    print("Failed to retrieve stats for \(player.first_name) \(player.last_name)")
+                    return
+                }
+                
+                DispatchQueue.main.async { [self] in
+                    player.hittingStats = playerStats.hittingStats
+                    player.pitchingStats = playerStats.pitchingStats
+                    
+                    if (player.hittingStats != nil || player.pitchingStats != nil) {
+                        player.last_stat_update = Date()
+                    }
+                    persistenceController.saveData()
+                }
+            } else {
+                print("Stats not updated for \(player.first_name) \(player.last_name)")
+            }
         }
-        
-        player.hittingStats = playerStats.hittingStats
-        player.pitchingStats = playerStats.pitchingStats
-        persistenceController.saveData()
     }
     
     func deleteSelectedPlayer(_ playerID: Player.ID?) {
@@ -74,13 +87,8 @@ class RosterViewModel: NSObject, ObservableObject {
     func initializeData() {
         let savedPlayers = persistenceController.loadPlayers()
         roster.initializeRoster(players: savedPlayers)
-//        Task.init {
-//            for player in roster.players {
-//                sleep(2)
-//                Task.init {
-//                    await updateStats(player: player)
-//                }
-//            }
-//        }
+        for player in roster.players {
+            updateStats(player: player)
+        }
     }
 }
