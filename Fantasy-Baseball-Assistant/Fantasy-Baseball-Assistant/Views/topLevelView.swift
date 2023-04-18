@@ -10,12 +10,18 @@ import SwiftUI
 struct topLevelView: View {
     @StateObject var viewModel: RosterViewModel = RosterViewModel()
     @EnvironmentObject var stateManager: StateManager
+    @EnvironmentObject var dataRequester: DataRequester
+    @EnvironmentObject var persistenceController: PersistenceController
     
     var body: some View {
         NavigationView {
             List(viewModel.roster.players, id: \.self.id, selection: $stateManager.selectedPlayerID) { player in
                 Text(String("\(player.first_name) \(player.last_name), \(player.primary_position.abbreviation) \(player.team.abbreviation)"))
-            }.contextMenu(forSelectionType: Player.ID.self) { player in
+            }
+            .onAppear{
+                viewModel.initializeData(persistenceController: persistenceController, dataRequester: dataRequester)
+            }
+            .contextMenu(forSelectionType: Player.ID.self) { player in
                 
             } primaryAction: { player in
                 
@@ -35,6 +41,8 @@ struct topLevelView: View {
 struct HomeToolbar: ToolbarContent {
     @ObservedObject var viewModel: RosterViewModel
     @EnvironmentObject var stateManager: StateManager
+    @EnvironmentObject var dataRequester: DataRequester
+    @EnvironmentObject var persistenceController: PersistenceController
     
     var body: some ToolbarContent {
         ToolbarItem(placement: .navigation) {
@@ -72,7 +80,7 @@ struct HomeToolbar: ToolbarContent {
     }
     
     private func deletePlayer() {
-        viewModel.deleteSelectedPlayer(stateManager.selectedPlayerID)
+        viewModel.deleteSelectedPlayer(stateManager.selectedPlayerID, persistenceController: persistenceController)
     }
 }
 

@@ -12,15 +12,8 @@ import SwiftUI
 class RosterViewModel: NSObject, ObservableObject {
     @Published var roster: Roster = Roster()
     @Published var failedPlayerValidation = false
-    var persistenceController: PersistenceController = PersistenceController()
-    var dataRequester: DataRequester = DataRequester()
-    
-    override init() {
-        super.init()
-        initializeData()
-    }
-    
-    func addPlayer(firstName: String, lastName: String, position: PlayerPosition, team: Team, secondaryPositions: [PlayerPosition]?) async -> Bool {
+
+    func addPlayer(firstName: String, lastName: String, position: PlayerPosition, team: Team, secondaryPositions: [PlayerPosition]?, dataRequester: DataRequester, persistenceController: PersistenceController) async -> Bool {
         DispatchQueue.main.async { [self] in
             failedPlayerValidation = false
         }
@@ -40,12 +33,12 @@ class RosterViewModel: NSObject, ObservableObject {
         
         let player = Player(first_name: firstName, last_name: lastName, api_id: player_id, team: team, primary_position: position, secondary_positions: secondaryPositions, entity: playerDescription, context: persistenceController.container.viewContext)
         roster.addPlayerToRoster(player: player)
-        updateStats(player: player)
+        updateStats(player: player, dataRequester: dataRequester, persistenceController: persistenceController)
         persistenceController.saveData()
         return true
     }
 
-    func updateStats(player: Player) {
+    func updateStats(player: Player, dataRequester: DataRequester, persistenceController: PersistenceController) {
         Task.init {
             if ((player.hittingStats == nil && player.pitchingStats == nil) || player.last_stat_update.distance(to: Date()) > (60 * 60 * 24)) {
                 sleep(2)
@@ -69,7 +62,7 @@ class RosterViewModel: NSObject, ObservableObject {
         }
     }
     
-    func deleteSelectedPlayer(_ playerID: Player.ID?) {
+    func deleteSelectedPlayer(_ playerID: Player.ID?, persistenceController: PersistenceController) {
         guard playerID != nil else {
             print("No player selected to delete")
             return
@@ -84,11 +77,13 @@ class RosterViewModel: NSObject, ObservableObject {
         
     }
     
-    func initializeData() {
-        let savedPlayers = persistenceController.loadPlayers()
-        roster.initializeRoster(players: savedPlayers)
-        for player in roster.players {
-            updateStats(player: player)
+    func initializeData(persistenceController: PersistenceController, dataRequester: DataRequester) {
+        if (roster.players.isEmpty) {
+            let savedPlayers = persistenceController.loadPlayers()
+            roster.initializeRoster(players: savedPlayers)
+            for player in roster.players {
+                updateStats(player: player, dataRequester: dataRequester, persistenceController: persistenceController)
+            }
         }
     }
 }

@@ -10,6 +10,8 @@ import SwiftUI
 struct CreatePlayer: View {
     @EnvironmentObject var viewModel: RosterViewModel
     @EnvironmentObject var stateManager: StateManager
+    @EnvironmentObject var dataRequester: DataRequester
+    @EnvironmentObject var persistenceController: PersistenceController
     
     @State var createPlayer: CreatePlayerViewModel = CreatePlayerViewModel()
     @State var first_name: String = ""
@@ -84,7 +86,7 @@ struct CreatePlayer: View {
     private func submitCreatedPlayer() {
         let positions = createPlayer.createSecondaryPositionArray(selectedPrimary: selectedPosition)
         Task.init {
-            let playerStatus = await viewModel.addPlayer(firstName: first_name, lastName: last_name, position: selectedPosition, team: selectedTeam, secondaryPositions: positions)
+            let playerStatus = await viewModel.addPlayer(firstName: first_name, lastName: last_name, position: selectedPosition, team: selectedTeam, secondaryPositions: positions, dataRequester: dataRequester, persistenceController: persistenceController)
             if (playerStatus) {
                 stateManager.cancelCreatingPlayer()
             }

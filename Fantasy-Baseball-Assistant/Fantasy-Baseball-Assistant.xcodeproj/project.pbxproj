@@ -29,6 +29,7 @@
 		A519181729D6892E00410DB3 /* Fantasy_Baseball_AssistantUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A519181629D6892E00410DB3 /* Fantasy_Baseball_AssistantUITestsLaunchTests.swift */; };
 		A51D633629DA9FCD002DE5B7 /* RosterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51D633529DA9FCD002DE5B7 /* RosterViewModel.swift */; };
 		A51D633829DABE72002DE5B7 /* RosterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51D633729DABE72002DE5B7 /* RosterView.swift */; };
+		A5B5916729EE635800ADADDF /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B5916629EE635800ADADDF /* Preferences.swift */; };
 		A5CF9FA229DB614A00432079 /* PlayerPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5048C0829D6A48F00F63E94 /* PlayerPosition.swift */; };
 		A5CF9FA329DB614B00432079 /* PlayerPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5048C0829D6A48F00F63E94 /* PlayerPosition.swift */; };
 		A5CF9FA429DB614E00432079 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5048C0A29D6A5EF00F63E94 /* Team.swift */; };
@@ -123,6 +124,7 @@
 		A519181629D6892E00410DB3 /* Fantasy_Baseball_AssistantUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fantasy_Baseball_AssistantUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A51D633529DA9FCD002DE5B7 /* RosterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RosterViewModel.swift; path = "Fantasy-Baseball-Assistant/View Models/RosterViewModel.swift"; sourceTree = SOURCE_ROOT; };
 		A51D633729DABE72002DE5B7 /* RosterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RosterView.swift; sourceTree = "<group>"; };
+		A5B5916629EE635800ADADDF /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		A5CF9FBD29DB61FD00432079 /* RosterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RosterTest.swift; sourceTree = "<group>"; };
 		A5CF9FC129DB664100432079 /* PlayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTests.swift; sourceTree = "<group>"; };
 		A5CF9FC329DB677300432079 /* PositionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionTests.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				A5048C1A29D6ACA000F63E94 /* topLevelView.swift */,
 				A51D633729DABE72002DE5B7 /* RosterView.swift */,
 				A5CF9FCA29DBD3F700432079 /* CreatePlayer.swift */,
+				A5B5916629EE635800ADADDF /* Preferences.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -490,6 +493,7 @@
 				A5FACA7F29E927EA0041CA2C /* FielderStats.swift in Sources */,
 				A51D633829DABE72002DE5B7 /* RosterView.swift in Sources */,
 				A5048C1729D6A91500F63E94 /* Player.swift in Sources */,
+				A5B5916729EE635800ADADDF /* Preferences.swift in Sources */,
 				A5048C1529D6A8FD00F63E94 /* Roster.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

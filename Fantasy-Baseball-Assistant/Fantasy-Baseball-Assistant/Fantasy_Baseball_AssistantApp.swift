@@ -20,5 +20,9 @@ struct Fantasy_Baseball_AssistantApp: App {
                 .environmentObject(dataRequester)
                 .environmentObject(persistenceController)
         }
+        Settings {
+            Preferences()
+                .environmentObject(dataRequester)
+        }
     }
 }
