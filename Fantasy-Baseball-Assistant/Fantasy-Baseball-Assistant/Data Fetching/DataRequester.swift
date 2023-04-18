@@ -7,43 +7,12 @@
 
 import Foundation
 import CoreData
+import SwiftUI
 
 class DataRequester: ObservableObject {
     let base_url = "https://api.sportradar.com/mlb/trial/v7/en"
 
-    var api_key: String = ""
-    
-    init() {
-        api_key = retrieveAPIKey()
-    }
-    
-    private func retrieveAPIKey() -> String {
-        let keychainItem = [
-            kSecClass: kSecClassGenericPassword,
-            kSecAttrAccount: "FantasyBaseballAPIKey",
-            kSecAttrService: "FantasyBaseballAPIKey",
-            kSecReturnData: true
-        ] as [CFString : Any] as CFDictionary
-
-        var ref: AnyObject?
-        
-        //TODO: handle error
-        guard SecItemCopyMatching(keychainItem, &ref) == 0 else {
-            print("Failed to retrieve api key")
-            return ""
-        }
-        
-        guard let key_data = ref as? Data else {
-            print("Failed to get data")
-            return ""
-        }
-        
-        guard let key = String(data: key_data, encoding: .utf8) else {
-            print("Failed to convert key to string")
-            return ""
-        }
-        return key
-    }
+    @AppStorage("api_key") var api_key: String = ""
     
     func validatePlayer(first_name: String, last_name: String, team: Team) async -> String? {
         let returnedPlayers: ReturnedTeamProfile? = await getTeamProfilePlayers(team: team)
