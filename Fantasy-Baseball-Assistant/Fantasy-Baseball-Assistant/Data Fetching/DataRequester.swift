@@ -222,7 +222,7 @@ class DataRequester: ObservableObject {
         }
         
         for stat in overallStats.opponent {
-            let hittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, ab: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, rbi: stat.rbi, stolen_bases: stat.sb, obp: stat.obp, slg: stat.slg, ops: stat.ops, single: stat.s, double: stat.d, triple: stat.t, walks: stat.bb, intentional_walks: stat.ibb, hit_by_pitch: stat.hbp, caught_stealing: stat.cs, strike_outs: stat.ktotal, key: stat.name ?? "Month Error", entity: statBaseEntity, context: context)
+            let hittingStats: FielderStatsBase = FielderStatsBase(batting_average: Double(stat.avg) ?? 0.0, ab: stat.ab, hits: stat.h, homeruns: stat.hr, runs: stat.runs, rbi: stat.rbi, stolen_bases: stat.sb, obp: stat.obp, slg: stat.slg, ops: stat.ops, single: stat.s, double: stat.d, triple: stat.t, walks: stat.bb, intentional_walks: stat.ibb, hit_by_pitch: stat.hbp, caught_stealing: stat.cs, strike_outs: stat.ktotal, key: stat.name ?? "Name Error", entity: statBaseEntity, context: context)
             
             localStats.hittingStats!.byOpponent.insert(hittingStats)
         }
@@ -246,7 +246,43 @@ class DataRequester: ObservableObject {
             return nil
         }
         
-        let seasonPitchingStats: PitcherStatsBase = PitcherStatsBase(win: seasonStats.win, loss: seasonStats.loss, save: seasonStats.save, svo: seasonStats.svo, start: seasonStats.start, play: seasonStats.play, complete: seasonStats.complete, team_win: seasonStats.team_win, team_loss: seasonStats.team_loss, ip_2: seasonStats.ip_2, h: seasonStats.h, runs: seasonStats.runs, er: seasonStats.er, hr: seasonStats.hr, bb: seasonStats.bb, ibb: seasonStats.ibb, oba: seasonStats.oba, era: seasonStats.era, ktotal: seasonStats.ktotal, s: seasonStats.s, d: seasonStats.d, t: seasonStats.t, rbi: seasonStats.rbi, hbp: seasonStats.hbp, sb: seasonStats.sb, cs: seasonStats.cs, obp: seasonStats.obp, slg: seasonStats.slg, ops: seasonStats.ops, bf: seasonStats.bf)
+        let seasonPitchingStats: PitcherStatsBase = PitcherStatsBase(win: seasonStats.win ?? 0, loss: seasonStats.loss ?? 0, ip_2: seasonStats.ip_2 ?? 0.0, h: seasonStats.h, era: seasonStats.era ?? 0.0, ktotal: seasonStats.ktotal, bb: seasonStats.bb, hr: seasonStats.hr, oba: seasonStats.oba, obp: seasonStats.obp ?? 0.0, slg: seasonStats.slg ?? 0.0, ops: seasonStats.ops ?? 0.0, save: seasonStats.save ?? 0, svo: seasonStats.svo ?? 0, play: seasonStats.play ?? 0)
+        
+        for stat in overallStats.day_night {
+            if (stat.value == "day") {
+                let dayHittingStats: PitcherStatsBase = PitcherStatsBase(win: stat.win ?? 0, loss: stat.loss ?? 0, ip_2: stat.ip_2 ?? 0.0, h: stat.h, era: stat.era ?? 0.0, ktotal: stat.ktotal, bb: stat.bb, hr: stat.hr, oba: stat.oba, obp: stat.obp ?? 0.0, slg: stat.slg ?? 0.0, ops: stat.ops ?? 0.0, save: stat.save ?? 0, svo: stat.svo ?? 0, key: "Day", play: stat.play ?? 0)
+                
+                localStats.pitchingStats!.day_night.append(dayHittingStats)
+            } else if (stat.value == "night") {
+                let nightHittingStats: PitcherStatsBase = PitcherStatsBase(win: stat.win ?? 0, loss: stat.loss ?? 0, ip_2: stat.ip_2 ?? 0.0, h: stat.h, era: stat.era ?? 0.0, ktotal: stat.ktotal, bb: stat.bb, hr: stat.hr, oba: stat.oba, obp: stat.obp ?? 0.0, slg: stat.slg ?? 0.0, ops: stat.ops ?? 0.0, save: stat.save ?? 0, svo: stat.svo ?? 0, key: "Night", play: stat.play ?? 0)
+                
+                localStats.pitchingStats!.day_night.append(nightHittingStats)
+            }
+        }
+        
+        for stat in overallStats.home_away {
+            if (stat.value == "home") {
+                let homeHittingStats: PitcherStatsBase = PitcherStatsBase(win: stat.win ?? 0, loss: stat.loss ?? 0, ip_2: stat.ip_2 ?? 0.0, h: stat.h, era: stat.era ?? 0.0, ktotal: stat.ktotal, bb: stat.bb, hr: stat.hr, oba: stat.oba, obp: stat.obp ?? 0.0, slg: stat.slg ?? 0.0, ops: stat.ops ?? 0.0, save: stat.save ?? 0, svo: stat.svo ?? 0, key: "Home", play: stat.play ?? 0)
+                
+                localStats.pitchingStats!.home_away.append(homeHittingStats)
+            } else if (stat.value == "away") {
+                let nightHittingStats: PitcherStatsBase = PitcherStatsBase(win: stat.win ?? 0, loss: stat.loss ?? 0, ip_2: stat.ip_2 ?? 0.0, h: stat.h, era: stat.era ?? 0.0, ktotal: stat.ktotal, bb: stat.bb, hr: stat.hr, oba: stat.oba, obp: stat.obp ?? 0.0, slg: stat.slg ?? 0.0, ops: stat.ops ?? 0.0, save: stat.save ?? 0, svo: stat.svo ?? 0, key: "Away", play: stat.play ?? 0)
+                
+                localStats.pitchingStats!.home_away.append(nightHittingStats)
+            }
+        }
+        
+        for stat in overallStats.month {
+            let pitchingStats: PitcherStatsBase = PitcherStatsBase(win: stat.win ?? 0, loss: stat.loss ?? 0, ip_2: stat.ip_2 ?? 0.0, h: stat.h, era: stat.era ?? 0.0, ktotal: stat.ktotal, bb: stat.bb, hr: stat.hr, oba: stat.oba, obp: stat.obp ?? 0.0, slg: stat.slg ?? 0.0, ops: stat.ops ?? 0.0, save: stat.save ?? 0, svo: stat.svo ?? 0, key: stat.value ?? "Month Error", play: stat.play ?? 0)
+            
+            localStats.pitchingStats!.month.append(pitchingStats)
+        }
+        
+        for stat in overallStats.opponent {
+            let pitchingStats: PitcherStatsBase = PitcherStatsBase(win: stat.win ?? 0, loss: stat.loss ?? 0, ip_2: stat.ip_2 ?? 0.0, h: stat.h, era: stat.era ?? 0.0, ktotal: stat.ktotal, bb: stat.bb, hr: stat.hr, oba: stat.oba, obp: stat.obp ?? 0.0, slg: stat.slg ?? 0.0, ops: stat.ops ?? 0.0, save: stat.save ?? 0, svo: stat.svo ?? 0, key: stat.name ?? "Name Error", play: stat.play ?? 0)
+            
+            localStats.pitchingStats!.byOpponent.append(pitchingStats)
+        }
         
         localStats.pitchingStats!.season = seasonPitchingStats
         

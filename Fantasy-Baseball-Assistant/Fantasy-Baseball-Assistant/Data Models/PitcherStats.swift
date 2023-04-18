@@ -11,5 +11,6 @@ class PitcherStats {
     var season: PitcherStatsBase = PitcherStatsBase()
     var month: [PitcherStatsBase] = []
     var day_night: [PitcherStatsBase] = []
+    var home_away: [PitcherStatsBase] = []
     var byOpponent: [PitcherStatsBase] = []
 }

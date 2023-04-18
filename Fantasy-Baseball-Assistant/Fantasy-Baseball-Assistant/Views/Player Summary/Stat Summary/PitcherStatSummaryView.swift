@@ -42,8 +42,8 @@ struct PitcherStatSummaryView: View {
     
     @ViewBuilder private func secondSection() -> some View {
         VStack {
-            Text("Games")
-            Text(String(player.pitchingStats!.season.play))
+            Text("Innings Pitched")
+            Text(String(format: "%.1f", player.pitchingStats!.season.ip_2))
         }
         VStack {
             Text("Saves")
@@ -57,8 +57,8 @@ struct PitcherStatSummaryView: View {
     
     @ViewBuilder private func thirdSection() -> some View {
         VStack {
-            Text("Innings Pitched")
-            Text(String(format: "%.1f", player.pitchingStats!.season.ip_2))
+            Text("WHIP")
+            Text(String(format: "%.2f", player.pitchingStats!.season.whip))
         }
         VStack {
             Text("Strikeouts")
