@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22C65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="FielderStats" representedClassName="FielderStats" syncable="YES">
-        <relationship name="byOpponent" toMany="YES" deletionRule="Nullify" destinationEntity="FielderStatsBase"/>
-        <relationship name="day_night" toMany="YES" deletionRule="Nullify" destinationEntity="FielderStatsBase"/>
-        <relationship name="home_away" toMany="YES" deletionRule="Nullify" destinationEntity="FielderStatsBase"/>
-        <relationship name="month" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FielderStatsBase"/>
-        <relationship name="season" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FielderStatsBase"/>
+        <relationship name="byOpponent" toMany="YES" deletionRule="Cascade" destinationEntity="FielderStatsBase"/>
+        <relationship name="day_night" toMany="YES" deletionRule="Cascade" destinationEntity="FielderStatsBase"/>
+        <relationship name="home_away" toMany="YES" deletionRule="Cascade" destinationEntity="FielderStatsBase"/>
+        <relationship name="month" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="FielderStatsBase"/>
+        <relationship name="season" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="FielderStatsBase"/>
     </entity>
     <entity name="FielderStatsBase" representedClassName="FielderStatsBase" syncable="YES">
         <attribute name="ab" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -28,6 +28,31 @@
         <attribute name="triple" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="walks" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
+    <entity name="PitcherStats" representedClassName="PitcherStats" syncable="YES">
+        <relationship name="byOpponent" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PitcherStatsBase"/>
+        <relationship name="day_night" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PitcherStatsBase"/>
+        <relationship name="home_away" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PitcherStatsBase"/>
+        <relationship name="month" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PitcherStatsBase"/>
+        <relationship name="season" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PitcherStatsBase"/>
+    </entity>
+    <entity name="PitcherStatsBase" representedClassName="PitcherStatsBase" syncable="YES">
+        <attribute name="bb" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="era" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="h" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="hr" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="ip_2" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="key" optional="YES" attributeType="String"/>
+        <attribute name="ktotal" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="loss" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="oba" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="obp" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="ops" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="play" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="save" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="slg" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="svo" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="win" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
     <entity name="Player" representedClassName="Player" syncable="YES">
         <attribute name="api_id" attributeType="String"/>
         <attribute name="first_name" attributeType="String"/>
@@ -39,5 +64,6 @@
         <attribute name="stat_update" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="team_raw" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="hittingStats" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="FielderStats"/>
+        <relationship name="pitchingStats" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PitcherStats"/>
     </entity>
 </model>

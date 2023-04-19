@@ -47,7 +47,7 @@ class RosterViewModel: NSObject, ObservableObject {
                     return
                 }
                 
-                DispatchQueue.main.async { [self] in
+                DispatchQueue.main.async {
                     player.hittingStats = playerStats.hittingStats
                     player.pitchingStats = playerStats.pitchingStats
                     

@@ -36,26 +36,26 @@ class FielderStatsBase: NSManagedObject, Identifiable {
         return NSFetchRequest<FielderStatsBase>(entityName: "FielderStatsBase")
     }
     
-    init(batting_average: Double, ab: Int, hits: Int, homeruns: Int, runs: Int, rbi: Int, stolen_bases: Int, obp: Double, slg: Double, ops: Double, single: Int, double: Int, triple: Int, walks: Int, intentional_walks: Int, hit_by_pitch: Int, caught_stealing: Int, strike_outs: Int, key: String = "", entity: NSEntityDescription, context: NSManagedObjectContext?) {
+    init(batting_average: String?, ab: Int?, hits: Int?, homeruns: Int?, runs: Int?, rbi: Int?, stolen_bases: Int?, obp: Double?, slg: Double?, ops: Double?, single: Int?, double: Int?, triple: Int?, walks: Int?, intentional_walks: Int?, hit_by_pitch: Int?, caught_stealing: Int?, strike_outs: Int?, key: String = "", entity: NSEntityDescription, context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
-        self.batting_average = batting_average
-        self.ab = Int16(ab)
-        self.hits = Int16(hits)
-        self.homeruns = Int16(homeruns)
-        self.runs = Int16(runs)
-        self.rbi = Int16(rbi)
-        self.stolen_bases = Int16(stolen_bases)
-        self.obp = obp
-        self.slg = slg
-        self.ops = ops
-        self.single = Int16(single)
-        self.double = Int16(double)
-        self.triple = Int16(triple)
-        self.walks = Int16(walks)
-        self.intentional_walks = Int16(intentional_walks)
-        self.hit_by_pitch = Int16(hit_by_pitch)
-        self.caught_stealing = Int16(caught_stealing)
-        self.strike_outs = Int16(strike_outs)
+        self.batting_average = Double(batting_average ?? "") ?? 0.0
+        self.ab = Int16(ab ?? 0)
+        self.hits = Int16(hits ?? 0)
+        self.homeruns = Int16(homeruns ?? 0)
+        self.runs = Int16(runs ?? 0)
+        self.rbi = Int16(rbi ?? 0)
+        self.stolen_bases = Int16(stolen_bases ?? 0)
+        self.obp = obp ?? 0.0
+        self.slg = slg ?? 0.0
+        self.ops = ops ?? 0.0
+        self.single = Int16(single ?? 0)
+        self.double = Int16(double ?? 0)
+        self.triple = Int16(triple ?? 0)
+        self.walks = Int16(walks ?? 0)
+        self.intentional_walks = Int16(intentional_walks ?? 0)
+        self.hit_by_pitch = Int16(hit_by_pitch ?? 0)
+        self.caught_stealing = Int16(caught_stealing ?? 0)
+        self.strike_outs = Int16(strike_outs ?? 0)
         self.key = key
     }
     

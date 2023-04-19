@@ -42,50 +42,50 @@ struct Splits: Codable {
 }
 
 struct Hitting: Codable {
-    var overall: [OverallHitting]
+    var overall: [OverallHitting]?
 }
 
 struct Pitching: Codable {
-    var overall: [OverallPitching]
+    var overall: [OverallPitching]?
 }
 
 struct OverallPitching: Codable {
-    var total: [PitchingStats]
-    var day_night: [PitchingStats]
-    var month: [PitchingStats]
-    var home_away: [PitchingStats]
-    var hitter_hand: [PitchingStats]
-    var opponent: [PitchingStats]
+    var total: [PitchingStats]?
+    var day_night: [PitchingStats]?
+    var month: [PitchingStats]?
+    var home_away: [PitchingStats]?
+    var hitter_hand: [PitchingStats]?
+    var opponent: [PitchingStats]?
 }
 
 struct OverallHitting: Codable {
-    var total: [HittingStats]
-    var day_night: [HittingStats]
-    var month: [HittingStats]
-    var home_away: [HittingStats]
-    var pitcher_hand: [HittingStats]
-    var opponent: [HittingStats]
+    var total: [HittingStats]?
+    var day_night: [HittingStats]?
+    var month: [HittingStats]?
+    var home_away: [HittingStats]?
+    var pitcher_hand: [HittingStats]?
+    var opponent: [HittingStats]?
 }
 
 struct HittingStats: Codable {
-    var ab: Int //
-    var runs: Int //
-    var s: Int //single
-    var d: Int //double
-    var t: Int //triple
-    var hr: Int //
-    var rbi: Int //
-    var bb: Int //
-    var ibb: Int //
-    var hbp: Int //
-    var sb: Int //
-    var cs: Int //
-    var obp: Double //
-    var slg: Double //
-    var ops: Double //
-    var h: Int //
-    var ktotal: Int //
-    var avg: String
+    var ab: Int?
+    var runs: Int?
+    var s: Int?
+    var d: Int?
+    var t: Int?
+    var hr: Int?
+    var rbi: Int?
+    var bb: Int?
+    var ibb: Int?
+    var hbp: Int?
+    var sb: Int?
+    var cs: Int?
+    var obp: Double?
+    var slg: Double?
+    var ops: Double?
+    var h: Int?
+    var ktotal: Int?
+    var avg: String?
     var value: String?
     var name: String?
 }
@@ -97,12 +97,12 @@ struct PitchingStats: Codable {
     var svo: Int?
     var play: Int?
     var ip_2: Double?
-    var h: Int
-    var hr: Int
-    var bb: Int
-    var oba: Double
+    var h: Int?
+    var hr: Int?
+    var bb: Int?
+    var oba: Double?
     var era: Double?
-    var ktotal: Int
+    var ktotal: Int?
     var obp: Double?
     var slg: Double?
     var ops: Double?

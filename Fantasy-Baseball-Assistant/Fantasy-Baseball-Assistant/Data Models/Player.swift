@@ -19,7 +19,7 @@ class Player: NSManagedObject, Identifiable {
     @NSManaged var secondary_positions_raw: [Int]
     @NSManaged var last_stat_update: Date
     @NSManaged var hittingStats: FielderStats?
-    var pitchingStats: PitcherStats?
+    @NSManaged var pitchingStats: PitcherStats?
     
     var positions: [PlayerPosition] = []
     
