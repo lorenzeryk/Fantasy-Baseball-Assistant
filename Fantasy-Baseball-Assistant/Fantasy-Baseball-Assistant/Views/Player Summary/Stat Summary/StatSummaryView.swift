@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StatSummaryView: View {
-    //TODO: Determine solution to have stats update when player stats update
+    #warning ("TODO: Determine solution to have stats update when player stats update")
     @ObservedObject var player: Player
     
     var body: some View {

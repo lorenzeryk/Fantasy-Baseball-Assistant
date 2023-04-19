@@ -19,7 +19,7 @@ class RosterViewModel: NSObject, ObservableObject {
         }
         
         guard let player_id = await dataRequester.validatePlayer(first_name: firstName, last_name: lastName, team: team) else {
-            //TODO: cite from https://developer.apple.com/forums/thread/718270
+            #warning ("TODO: cite from https://developer.apple.com/forums/thread/718270")
             DispatchQueue.main.async { [self] in
                 failedPlayerValidation = true
             }

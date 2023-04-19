@@ -15,9 +15,9 @@ struct RosterView: View {
         RosterTables()
     }
     
+#warning ("TODO: cite from https://useyourloaf.com/blog/context-menus-for-tables/")
     @ViewBuilder private func RosterTables() -> some View {
         PitchersTable()
-        //TODO: cite from https://useyourloaf.com/blog/context-menus-for-tables/
         .contextMenu(forSelectionType: Player.ID.self) { player in
             
         } primaryAction: { player in
@@ -27,7 +27,6 @@ struct RosterView: View {
         Divider()
         Spacer()
         HittersTable()
-        //TODO: cite from https://useyourloaf.com/blog/context-menus-for-tables/
         .contextMenu(forSelectionType: Player.ID.self) { player in
 
         } primaryAction: { player in

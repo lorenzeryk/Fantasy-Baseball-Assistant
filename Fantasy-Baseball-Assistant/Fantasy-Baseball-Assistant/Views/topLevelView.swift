@@ -84,7 +84,7 @@ struct HomeToolbar: ToolbarContent {
     }
 }
 
-//TODO: cite from https://sarunw.com/posts/how-to-toggle-sidebar-in-macos/
+#warning ("TODO: cite from https://sarunw.com/posts/how-to-toggle-sidebar-in-macos/")
 private func toggleSidebar() {
     NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
 }
