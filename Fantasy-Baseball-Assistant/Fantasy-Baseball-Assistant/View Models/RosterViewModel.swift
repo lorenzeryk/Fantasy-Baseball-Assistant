@@ -18,7 +18,7 @@ class RosterViewModel: NSObject, ObservableObject {
             failedPlayerValidation = false
         }
         
-        guard let player_id = await dataRequester.validatePlayer(first_name: firstName, last_name: lastName, team: team) else {
+        guard let player_id = await dataRequester.validatePlayer(first_name: firstName, last_name: lastName, team: team, primary_position: position.abbreviation) else {
             #warning ("TODO: cite from https://developer.apple.com/forums/thread/718270")
             DispatchQueue.main.async { [self] in
                 failedPlayerValidation = true
@@ -31,20 +31,29 @@ class RosterViewModel: NSObject, ObservableObject {
             return false
         }
         
-        let player = Player(first_name: firstName, last_name: lastName, api_id: player_id, team: team, primary_position: position, secondary_positions: secondaryPositions, entity: playerDescription, context: persistenceController.container.viewContext)
-        roster.addPlayerToRoster(player: player)
-        updateStats(player: player, dataRequester: dataRequester, persistenceController: persistenceController)
-        persistenceController.saveData()
+        DispatchQueue.main.async {
+            let player = Player(first_name: firstName, last_name: lastName, api_id: player_id, team: team, primary_position: position, secondary_positions: secondaryPositions, entity: playerDescription, context: persistenceController.container.viewContext)
+            self.roster.addPlayerToRoster(player: player)
+            persistenceController.saveData()
+            Task.init {
+                sleep(2)
+                self.updateStats(player: player, dataRequester: dataRequester, persistenceController: persistenceController)
+            }
+        }
+        
+        
         return true
     }
 
     func updateStats(player: Player, dataRequester: DataRequester, persistenceController: PersistenceController) {
         Task.init {
             if ((player.hittingStats == nil && player.pitchingStats == nil) || player.last_stat_update.distance(to: Date()) > (60 * 60 * 24)) {
+                print("Starting call to data requester for stats")
                 guard let playerStats = await dataRequester.getPlayerStats(player, persistenceController: persistenceController) else {
                     print("Failed to retrieve stats for \(player.first_name) \(player.last_name)")
                     return
                 }
+                print("Finished call to data requester for stats")
                 
                 DispatchQueue.main.async {
                     player.hittingStats = playerStats.hittingStats

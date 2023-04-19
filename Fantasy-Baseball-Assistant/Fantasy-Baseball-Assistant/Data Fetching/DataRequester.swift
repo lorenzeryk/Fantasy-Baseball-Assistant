@@ -14,7 +14,7 @@ class DataRequester: ObservableObject {
 
     @AppStorage("api_key") var api_key: String = ""
     
-    func validatePlayer(first_name: String, last_name: String, team: Team) async -> String? {
+    func validatePlayer(first_name: String, last_name: String, team: Team, primary_position: String) async -> String? {
         let returnedPlayers: ReturnedTeamProfile? = await getTeamProfilePlayers(team: team)
         
         guard let players = returnedPlayers?.players else {
@@ -28,7 +28,7 @@ class DataRequester: ObservableObject {
         }
         
         for player in players {
-            if ((player.first_name == first_name || player.preferred_name == first_name) && player.last_name == last_name) {
+            if ((player.first_name == first_name || player.preferred_name == first_name) && player.last_name == last_name && player.primary_position == primary_position) {
                 print("Player found")
                 return player.id
             }
