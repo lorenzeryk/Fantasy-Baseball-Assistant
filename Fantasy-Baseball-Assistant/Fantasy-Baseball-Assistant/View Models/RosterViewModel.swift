@@ -41,7 +41,6 @@ class RosterViewModel: NSObject, ObservableObject {
     func updateStats(player: Player, dataRequester: DataRequester, persistenceController: PersistenceController) {
         Task.init {
             if ((player.hittingStats == nil && player.pitchingStats == nil) || player.last_stat_update.distance(to: Date()) > (60 * 60 * 24)) {
-                sleep(2)
                 guard let playerStats = await dataRequester.getPlayerStats(player, persistenceController: persistenceController) else {
                     print("Failed to retrieve stats for \(player.first_name) \(player.last_name)")
                     return
@@ -81,8 +80,11 @@ class RosterViewModel: NSObject, ObservableObject {
         if (roster.players.isEmpty) {
             let savedPlayers = persistenceController.loadPlayers()
             roster.initializeRoster(players: savedPlayers)
-            for player in roster.players {
-                updateStats(player: player, dataRequester: dataRequester, persistenceController: persistenceController)
+            Task.init {
+                for player in roster.players {
+                    sleep(2)
+                    updateStats(player: player, dataRequester: dataRequester, persistenceController: persistenceController)
+                }
             }
         }
     }
