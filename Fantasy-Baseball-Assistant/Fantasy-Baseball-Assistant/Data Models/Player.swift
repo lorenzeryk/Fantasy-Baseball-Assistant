@@ -81,6 +81,31 @@ class Player: NSManagedObject, Identifiable {
         }
     }
     
+    func updateStats(dataRequester: DataRequester, persistenceController: PersistenceController) {
+        Task.init {
+            if ((hittingStats == nil && pitchingStats == nil) || last_stat_update.distance(to: Date()) > (60 * 60 * 24)) {
+                print("Starting call to data requester for stats")
+                guard let playerStats = await dataRequester.getPlayerStats(self, persistenceController: persistenceController) else {
+                    print("Failed to retrieve stats for \(first_name) \(last_name)")
+                    return
+                }
+                print("Finished call to data requester for stats")
+                
+                DispatchQueue.main.async {
+                    self.hittingStats = playerStats.hittingStats
+                    self.pitchingStats = playerStats.pitchingStats
+                    
+                    if (self.hittingStats != nil || self.pitchingStats != nil) {
+                        self.last_stat_update = Date()
+                    }
+                    persistenceController.saveData()
+                }
+            } else {
+                print("Stats not updated for \(first_name) \(last_name)")
+            }
+        }
+    }
+    
     static func == (lhs: Player, rhs: Player) -> Bool {
         return lhs.id == rhs.id
     }

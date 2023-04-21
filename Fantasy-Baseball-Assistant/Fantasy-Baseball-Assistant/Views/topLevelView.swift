@@ -35,6 +35,10 @@ struct topLevelView: View {
         }.toolbar {
             HomeToolbar(viewModel: viewModel)
         }
+        .onAppear {
+            stateManager.dataRequester = dataRequester
+            stateManager.persistenceController = persistenceController
+        }
     }
 }
 

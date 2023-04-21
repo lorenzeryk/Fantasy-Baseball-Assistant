@@ -37,37 +37,12 @@ class RosterViewModel: NSObject, ObservableObject {
             persistenceController.saveData()
             Task.init {
                 sleep(2)
-                self.updateStats(player: player, dataRequester: dataRequester, persistenceController: persistenceController)
+                player.updateStats(dataRequester: dataRequester, persistenceController: persistenceController)
             }
         }
         
         
         return true
-    }
-
-    func updateStats(player: Player, dataRequester: DataRequester, persistenceController: PersistenceController) {
-        Task.init {
-            if ((player.hittingStats == nil && player.pitchingStats == nil) || player.last_stat_update.distance(to: Date()) > (60 * 60 * 24)) {
-                print("Starting call to data requester for stats")
-                guard let playerStats = await dataRequester.getPlayerStats(player, persistenceController: persistenceController) else {
-                    print("Failed to retrieve stats for \(player.first_name) \(player.last_name)")
-                    return
-                }
-                print("Finished call to data requester for stats")
-                
-                DispatchQueue.main.async {
-                    player.hittingStats = playerStats.hittingStats
-                    player.pitchingStats = playerStats.pitchingStats
-                    
-                    if (player.hittingStats != nil || player.pitchingStats != nil) {
-                        player.last_stat_update = Date()
-                    }
-                    persistenceController.saveData()
-                }
-            } else {
-                print("Stats not updated for \(player.first_name) \(player.last_name)")
-            }
-        }
     }
     
     func deleteSelectedPlayer(_ playerID: Player.ID?, persistenceController: PersistenceController) {
@@ -92,7 +67,7 @@ class RosterViewModel: NSObject, ObservableObject {
             Task.init {
                 for player in roster.players {
                     sleep(2)
-                    updateStats(player: player, dataRequester: dataRequester, persistenceController: persistenceController)
+                    player.updateStats(dataRequester: dataRequester, persistenceController: persistenceController)
                 }
             }
         }

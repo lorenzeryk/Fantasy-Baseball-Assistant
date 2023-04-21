@@ -8,10 +8,19 @@
 import Foundation
 
 class StateManager: ObservableObject {
+    var dataRequester: DataRequester?
+    var persistenceController: PersistenceController?
+    
     @Published var showPlayerInfo = false
     @Published var displayCreatePlayerView = false
     @Published var failedPlayerValidation = false
-    @Published var selectedPlayer: Player?
+    @Published var selectedPlayer: Player? {
+        didSet {
+            if (selectedPlayer != nil && dataRequester != nil && persistenceController != nil) {
+                selectedPlayer!.updateStats(dataRequester: dataRequester!, persistenceController: persistenceController!)
+            }
+        }
+    }
     @Published var selectedPlayerID: Player.ID? = nil {
         didSet {
             if (selectedPlayerID == nil) {

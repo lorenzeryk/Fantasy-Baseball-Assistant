@@ -292,7 +292,6 @@
 				A51917FA29D6892D00410DB3 /* ContentView.swift */,
 				A51917FC29D6892E00410DB3 /* Assets.xcassets */,
 				A519180129D6892E00410DB3 /* Fantasy_Baseball_Assistant.entitlements */,
-				A5FACA4129E2A5E30041CA2C /* Persistence.swift */,
 				A51917FE29D6892E00410DB3 /* Preview Content */,
 				A5FACA4529E2A6790041CA2C /* FantasyBaseballAssistant.xcdatamodeld */,
 			);
@@ -348,6 +347,7 @@
 			isa = PBXGroup;
 			children = (
 				A5FACA7829E736670041CA2C /* StateManager.swift */,
+				A5FACA4129E2A5E30041CA2C /* Persistence.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -735,6 +735,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "CSCI598.Fantasy-Baseball-Assistant";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -761,6 +762,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "CSCI598.Fantasy-Baseball-Assistant";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
