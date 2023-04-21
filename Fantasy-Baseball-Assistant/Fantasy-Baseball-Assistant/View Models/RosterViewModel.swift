@@ -13,7 +13,7 @@ class RosterViewModel: NSObject, ObservableObject {
     @Published var roster: Roster = Roster()
     @Published var failedPlayerValidation = false
 
-    func addPlayer(firstName: String, lastName: String, position: PlayerPosition, team: Team, secondaryPositions: [PlayerPosition]?, dataRequester: DataRequester, persistenceController: PersistenceController) async -> Bool {
+    func addPlayer(firstName: String, lastName: String, position: PlayerPosition, team: Team, secondaryPositions: [PlayerPosition]?, dataRequester: DataRequester, persistenceController: PersistenceController) async -> (Bool, String?) {
         DispatchQueue.main.async { [self] in
             failedPlayerValidation = false
         }
@@ -23,12 +23,12 @@ class RosterViewModel: NSObject, ObservableObject {
             DispatchQueue.main.async { [self] in
                 failedPlayerValidation = true
             }
-            return false
+            return (false, "Failed to validate player")
         }
 
         guard let playerDescription = persistenceController.getDescription(entityName: "Player") else {
             print("Failed to get player description")
-            return false
+            return (false, "Internal Error")
         }
         
         DispatchQueue.main.async {
@@ -41,8 +41,7 @@ class RosterViewModel: NSObject, ObservableObject {
             }
         }
         
-        
-        return true
+        return (true, nil)
     }
     
     func deleteSelectedPlayer(_ playerID: Player.ID?, persistenceController: PersistenceController) {

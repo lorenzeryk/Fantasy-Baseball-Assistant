@@ -108,7 +108,7 @@ enum Team: Int16, CaseIterable {
         case .Rangers: return "Texas Rangers"
         case .BlueJays: return "Toronto Blue Jays"
         case .Nationals: return "Washington Nationals"
-        case .None: return "None"
+        case .None: return ""
         }
     }
     

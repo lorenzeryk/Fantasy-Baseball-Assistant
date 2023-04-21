@@ -19,6 +19,12 @@ struct CreatePlayer: View {
     @State var selectedPosition: PlayerPosition = PlayerPosition.None
     @State var selectedTeam = Team.None
     
+    @State var failureMessage: String = ""
+    @State var firstNameBorderColor: Color = Color.clear
+    @State var lastNameBorderColor: Color = Color.clear
+    @State var positionBorderColor: Color = Color.clear
+    @State var teamBorderColor: Color = Color.clear
+    
     var body: some View {
         VStack {
             getName()
@@ -32,14 +38,16 @@ struct CreatePlayer: View {
     }
     
     @ViewBuilder private func getName() -> some View {
-        HStack {
+        VStack {
             HStack {
                 Text("First Name:")
                 TextField("First Name", text: $first_name)
+                    .border(firstNameBorderColor)
             }
             HStack {
                 Text("Last Name:")
                 TextField("Last Name", text: $last_name)
+                    .border(lastNameBorderColor)
             }
         }
     }
@@ -48,7 +56,7 @@ struct CreatePlayer: View {
         HStack {
             Spacer()
             if (viewModel.failedPlayerValidation) {
-                Text("Failed to validate player")
+                Text(failureMessage)
                     .foregroundColor(.red)
             }
             Button("Submit") {
@@ -61,15 +69,27 @@ struct CreatePlayer: View {
     }
     
     @ViewBuilder private func enumPickers() -> some View {
-        Picker("Primary Position", selection: $selectedPosition) {
-            ForEach(PlayerPosition.allCases, id: \.self) { position in
-                Text(position.fullText)
+        HStack {
+            Text("Primary Position:")
+            Picker("Primary Position", selection: $selectedPosition) {
+                ForEach(PlayerPosition.allCases, id: \.self) { position in
+                    Text(position.fullText)
+                    
+                }
             }
+            .border(positionBorderColor)
+            .labelsHidden()
         }
-        Picker("Team", selection: $selectedTeam) {
-            ForEach(Team.allCases, id: \.self) { team in
-                Text(team.fullText)
+        
+        HStack {
+            Text("Team:")
+            Picker("Team", selection: $selectedTeam) {
+                ForEach(Team.allCases, id: \.self) { team in
+                    Text(team.fullText)
+                }
             }
+            .border(teamBorderColor)
+            .labelsHidden()
         }
     }
     
@@ -85,16 +105,48 @@ struct CreatePlayer: View {
     
     private func submitCreatedPlayer() {
         let positions = createPlayer.createSecondaryPositionArray(selectedPrimary: selectedPosition)
-        Task.init {
-            let playerStatus = await viewModel.addPlayer(firstName: first_name, lastName: last_name, position: selectedPosition, team: selectedTeam, secondaryPositions: positions, dataRequester: dataRequester, persistenceController: persistenceController)
-            if (playerStatus) {
-                stateManager.cancelCreatingPlayer()
+        
+        if (first_name == "" || last_name == "" || selectedPosition == PlayerPosition.None || selectedTeam == Team.None) {
+            failureMessage = "All required fields must be populated"
+            viewModel.failedPlayerValidation = true
+            setBorderColors()
+        } else {
+            Task.init {
+                let (playerStatus, errorMessage) = await viewModel.addPlayer(firstName: first_name, lastName: last_name, position: selectedPosition, team: selectedTeam, secondaryPositions: positions, dataRequester: dataRequester, persistenceController: persistenceController)
+                if (playerStatus) {
+                    stateManager.cancelCreatingPlayer()
+                } else {
+                    failureMessage = errorMessage ?? "Internal Error"
+                }
             }
         }
     }
     
     private func cancelCreatingPlayer() {
         stateManager.cancelCreatingPlayer()
+    }
+    
+    private func setBorderColors() {
+        if (first_name == "") {
+            firstNameBorderColor = Color.red
+        } else {
+            firstNameBorderColor = Color.clear
+        }
+        if (last_name == "") {
+            lastNameBorderColor = Color.red
+        } else {
+            lastNameBorderColor = Color.clear
+        }
+        if (selectedPosition == PlayerPosition.None) {
+            positionBorderColor = Color.red
+        } else {
+            positionBorderColor = Color.clear
+        }
+        if (selectedTeam == Team.None) {
+            teamBorderColor = Color.red
+        } else {
+            teamBorderColor = Color.clear
+        }
     }
 }
 

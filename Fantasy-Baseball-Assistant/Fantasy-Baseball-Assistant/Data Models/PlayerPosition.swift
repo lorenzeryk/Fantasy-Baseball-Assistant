@@ -48,7 +48,7 @@ enum PlayerPosition: Int16, CaseIterable {
         case .Left: return "Left Field"
         case .Center: return "Center Field"
         case .Right: return "Right Field"
-        case .None: return "No Position"
+        case .None: return ""
         }
     }
 }
