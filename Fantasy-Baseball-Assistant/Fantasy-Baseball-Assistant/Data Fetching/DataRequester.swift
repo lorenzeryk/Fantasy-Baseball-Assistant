@@ -37,41 +37,6 @@ class DataRequester: ObservableObject {
         return nil
     }
     
-    private func getTeamProfilePlayers(team: Team, _ completion: @escaping (_ data: ReturnedTeamProfile?) -> Void) {
-        let full_url = "\(base_url)/teams/\(team.teamID)/profile.json?api_key=\(api_key)"
-        guard let url = URL(string: full_url) else {
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("Error requesting team profile for \(team): \(error)")
-                completion(nil)
-            }
-
-            if let data = data {
-            #warning ("TODO: cite from https:benscheirman.com/2017/06/swift-json.html")
-                if let players = try? JSONDecoder().decode(ReturnedTeamProfile.self, from: data) {
-                    completion(players)
-                    return
-                }
-                completion(nil)
-            }
-        }.resume()
-    }
-    
-    #warning ("TODO: cite from https://www.hackingwithswift.com/quick-start/concurrency/how-to-use-continuations-to-convert-completion-handlers-into-async-functions")
-    private func getTeamProfilePlayers(team: Team) async -> ReturnedTeamProfile? {
-        await withCheckedContinuation { continuation in
-            getTeamProfilePlayers(team: team) { players in
-                continuation.resume(returning: players)
-            }
-        }
-    }
-    
     func getPlayerStats(_ player: Player, persistenceController: PersistenceController) async -> Stats? {
         guard let returnedStats = await fetchStats(player: player) else {
             print("No stats returned")
@@ -88,44 +53,90 @@ class DataRequester: ObservableObject {
         return nil
     }
     
-    private func fetchStats(player: Player, _ completion: @escaping (_ data: ReturnedStats?) -> Void) {
-        print("Attempting to fetch stats for \(player.first_name) \(player.last_name)")
-        let full_url = "\(base_url)/seasons/2023/REG/teams/\(player.team.teamID)/splits.json?api_key=\(api_key)"
-        guard let url = URL(string: full_url) else {
-            print("Failed to convert URL")
-            return
+    private func getTeamProfilePlayers(team: Team) async -> ReturnedTeamProfile? {
+        let fetchProfileTask = Task { () -> ReturnedTeamProfile? in
+            let full_url = "\(base_url)/teams/\(team.teamID)/profile.json?api_key=\(api_key)"
+            guard let url = URL(string: full_url) else {
+                return nil
+            }
+
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            
+            let data: Data
+            let response: URLResponse
+            
+            do {
+                (data, response) = try await URLSession.shared.data(from: url)
+            } catch {
+                print("Error requesting team profile for \(team): \(error)")
+                return nil
+            }
+
+            let httpResponse = response as? HTTPURLResponse
+            if (httpResponse?.statusCode != 200) {
+                print("Recieved \(httpResponse?.statusCode ?? 0) from server")
+                return nil
+            }
+            
+            do {
+                return try JSONDecoder().decode(ReturnedTeamProfile.self, from: data)
+            } catch {
+                print("Failed to convert JSON")
+                return nil
+            }
         }
         
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("Error requesting stats for \(player): \(error)")
-                completion(nil)
-            }
-
-            if let data = data {
-                print(data)
-                do {
-                    let playerStats = try JSONDecoder().decode(ReturnedStats.self, from: data)
-                    completion(playerStats)
-                    return
-                } catch {
-                    print("Failed to convert JSON")
-                    print(error)
-                    completion(nil)
-                    return
-                }
-            }
-        }.resume()
+        do {
+            return try await fetchProfileTask.result.get()
+        } catch {
+            return nil
+        }
     }
     
     private func fetchStats(player: Player) async -> ReturnedStats? {
-        await withCheckedContinuation { continuation in
-            fetchStats(player: player) { stats in
-                continuation.resume(returning: stats)
+        print("Attempting to fetch stats for \(player.first_name) \(player.last_name)")
+        
+        
+        let fetchPlayerStatsTask = Task { () -> ReturnedStats? in
+            let full_url = "\(base_url)/seasons/2023/REG/teams/\(player.team.teamID)/splits.json?api_key=\(api_key)"
+            guard let url = URL(string: full_url) else {
+                print("Failed to convert URL")
+                return nil
             }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            
+            let data: Data
+            let response: URLResponse
+            
+            do {
+                (data, response) = try await URLSession.shared.data(from: url)
+            } catch {
+                print("Error requesting stats for \(player.first_name) \(player.last_name)")
+                return nil
+            }
+            
+            let httpResponse = response as? HTTPURLResponse
+            if (httpResponse?.statusCode != 200) {
+                print("Recieved \(httpResponse?.statusCode ?? 0) from server")
+                return nil
+            }
+            
+            do {
+                return try JSONDecoder().decode(ReturnedStats.self, from: data)
+            } catch {
+                print("Failed to convert json")
+                print(error)
+                return nil
+            }
+        }
+        
+        do {
+            return try await fetchPlayerStatsTask.result.get()
+        } catch {
+            return nil
         }
     }
     
