@@ -9,8 +9,13 @@ import SwiftUI
 
 struct MatchupView: View {
     var body: some View {
-        Text("Next Game Details")
-            .font(.system(size: 32))
+        VStack {
+            Text("Matchup Today")
+                .font(.system(size: 32))
+            Text("Opponent: Los Angeles Dodgers")
+            Text("Start Time: 6:40PM")
+            Text("Status: Starting")
+        }
     }
 }
 

@@ -39,7 +39,9 @@ enum Team: Int16, CaseIterable {
     case Rangers = 28
     case BlueJays = 29
     case Nationals = 30
-    
+}
+
+extension Team {
     var abbreviation: String {
         switch self {
         case .Diamondbacks: return "ARI"

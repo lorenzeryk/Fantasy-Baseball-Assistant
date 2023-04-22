@@ -1,3 +1,10 @@
+//
+//  PlayerStatStructs.swift
+//  Fantasy-Baseball-Assistant
+//
+//  Created by Eryk Lorenz on 4/22/23.
+//
+
 /*
 Copyright (c) 2023 Swift Models Generated from JSON powered by http://www.json4swift.com
 
@@ -12,18 +19,6 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 */
 
 import Foundation
-
-struct RequestedPlayer: Codable {
-    var first_name: String
-    var preferred_name: String
-    var last_name: String
-    var primary_position: String
-    var id: String
-}
-
-struct ReturnedTeamProfile: Codable {
-    var players: [RequestedPlayer]
-}
 
 struct ReturnedStats: Codable {
     var players: [PlayerStats]

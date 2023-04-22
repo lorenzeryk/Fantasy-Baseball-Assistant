@@ -36,6 +36,11 @@ class FielderStatsBase: NSManagedObject, Identifiable {
         return NSFetchRequest<FielderStatsBase>(entityName: "FielderStatsBase")
     }
     
+    @objc
+    private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+    }
+    
     init(batting_average: String?, ab: Int?, hits: Int?, homeruns: Int?, runs: Int?, rbi: Int?, stolen_bases: Int?, obp: Double?, slg: Double?, ops: Double?, single: Int?, double: Int?, triple: Int?, walks: Int?, intentional_walks: Int?, hit_by_pitch: Int?, caught_stealing: Int?, strike_outs: Int?, key: String = "", entity: NSEntityDescription, context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
         self.batting_average = Double(batting_average ?? "") ?? 0.0
@@ -80,10 +85,5 @@ class FielderStatsBase: NSManagedObject, Identifiable {
         self.caught_stealing = 0
         self.strike_outs = 0
         self.key = ""
-    }
-    
-    @objc
-    private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertInto: context)
     }
 }

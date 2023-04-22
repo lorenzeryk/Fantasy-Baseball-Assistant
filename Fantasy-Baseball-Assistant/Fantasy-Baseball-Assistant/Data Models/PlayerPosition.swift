@@ -20,6 +20,9 @@ enum PlayerPosition: Int16, CaseIterable {
     case Center = 9
     case Right = 10
     
+}
+
+extension PlayerPosition {
     var abbreviation: String {
         switch self {
         case .RP: return "RP"

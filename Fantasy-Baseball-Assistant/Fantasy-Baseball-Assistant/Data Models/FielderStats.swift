@@ -20,6 +20,11 @@ class FielderStats: NSManagedObject {
         return NSFetchRequest<FielderStats>(entityName: "FielderStats")
     }
     
+    @objc
+    private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+    }
+    
     init(entity: NSEntityDescription, baseStatEntity: NSEntityDescription, context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
         season = FielderStatsBase(entity: baseStatEntity, context: context)
@@ -27,10 +32,5 @@ class FielderStats: NSManagedObject {
         day_night = Set<FielderStatsBase>()
         byOpponent = Set<FielderStatsBase>()
         home_away = Set<FielderStatsBase>()
-    }
-    
-    @objc
-    private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertInto: context)
     }
 }
