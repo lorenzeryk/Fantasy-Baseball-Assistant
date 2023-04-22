@@ -23,8 +23,7 @@ struct PitcherStatSummaryView: View {
             Text("No pitching stats found")
         }
     }
-    
-    #warning ("TODO: change func names")
+
     @ViewBuilder private func firstSection() -> some View {
         VStack {
             Text("Win")

@@ -8,7 +8,6 @@
 import Foundation
 
 class StatViewModel: ObservableObject {
-#warning ("TODO: determine solution to have stats view update stats when player stats update")
     var currentPlayer: Player?
     var selectedStatView: SelectedStatView = SelectedStatView.Season {
         didSet {
@@ -24,6 +23,7 @@ class StatViewModel: ObservableObject {
         currentPlayer = nil
         selectedHittingStats = []
         selectedPitchingStats = []
+        registerForNotification()
     }
     
     init(player: Player?) {
@@ -31,9 +31,10 @@ class StatViewModel: ObservableObject {
         selectedHittingStats = []
         selectedPitchingStats = []
         updateSelectedStats()
+        registerForNotification()
     }
     
-    private func updateSelectedStats() {
+    @objc private func updateSelectedStats() {
         guard currentPlayer != nil else {
             return
         }
@@ -107,6 +108,10 @@ class StatViewModel: ObservableObject {
         }
         
         return ""
+    }
+    
+    func registerForNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateSelectedStats), name: .statsUpdated, object: nil)
     }
 }
 

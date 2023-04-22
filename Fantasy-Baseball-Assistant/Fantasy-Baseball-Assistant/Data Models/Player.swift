@@ -97,6 +97,8 @@ class Player: NSManagedObject, Identifiable {
                     
                     if (self.hittingStats != nil || self.pitchingStats != nil) {
                         self.last_stat_update = Date()
+                        
+                        NotificationCenter.default.post(Notification(name: .statsUpdated))
                     }
                     persistenceController.saveData()
                 }

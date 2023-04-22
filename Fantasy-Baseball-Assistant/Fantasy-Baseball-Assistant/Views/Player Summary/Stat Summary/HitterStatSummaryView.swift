@@ -23,8 +23,7 @@ struct HitterStatSummaryView: View {
             }
         }
     }
-    
-    #warning ("TODO: change func names")
+
     @ViewBuilder private func firstSection() -> some View {
         VStack {
             Text("AB")
