@@ -15,21 +15,39 @@ struct topLevelView: View {
     
     var body: some View {
         NavigationView {
-            List(viewModel.roster.players, id: \.self.id, selection: $stateManager.selectedPlayerID) { player in
-                Text(String("\(player.first_name) \(player.last_name), \(player.primary_position.abbreviation) \(player.team.abbreviation)"))
-            }
-            .onAppear{
-                viewModel.initializeData(persistenceController: persistenceController, dataRequester: dataRequester)
-            }
-            .contextMenu(forSelectionType: Player.ID.self) { player in
-                
-            } primaryAction: { player in
-                
-                stateManager.updateShowPlayerInfo(selectedPlayer: viewModel.roster.getPlayerByID(playerID: stateManager.selectedPlayerID!))
-            }
+            VStack {
+                Text("Pitchers")
+                List(viewModel.roster.pitchers, id: \.self.id, selection: $stateManager.selectedPlayerID) { player in
+                    Text(String("\(player.first_name) \(player.last_name), \(player.primary_position.abbreviation) \(player.team.abbreviation)"))
+                }
+                .onAppear{
+                    viewModel.initializeData(persistenceController: persistenceController, dataRequester: dataRequester)
+                }
+                .contextMenu(forSelectionType: Player.ID.self) { player in
+                    
+                } primaryAction: { player in
+                    
+                    stateManager.updateShowPlayerInfo(selectedPlayer: viewModel.roster.getPlayerByID(playerID: stateManager.selectedPlayerID!))
+                }
                 .listStyle(.sidebar)
                 .navigationTitle("Roster")
-            
+                
+                Text("Hitters")
+                List(viewModel.roster.hitters, id: \.self.id, selection: $stateManager.selectedPlayerID) { player in
+                    Text(String("\(player.first_name) \(player.last_name), \(player.primary_position.abbreviation) \(player.team.abbreviation)"))
+                }
+                .onAppear{
+                    viewModel.initializeData(persistenceController: persistenceController, dataRequester: dataRequester)
+                }
+                .contextMenu(forSelectionType: Player.ID.self) { player in
+                    
+                } primaryAction: { player in
+                    
+                    stateManager.updateShowPlayerInfo(selectedPlayer: viewModel.roster.getPlayerByID(playerID: stateManager.selectedPlayerID!))
+                }
+                .listStyle(.sidebar)
+                .navigationTitle("Roster")
+            }
             CenterView()
                 .environmentObject(viewModel)
         }.toolbar {

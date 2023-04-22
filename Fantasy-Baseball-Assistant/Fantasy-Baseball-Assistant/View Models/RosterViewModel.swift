@@ -14,16 +14,25 @@ class RosterViewModel: NSObject, ObservableObject {
     @Published var failedPlayerValidation = false
 
     func addPlayer(firstName: String, lastName: String, position: PlayerPosition, team: Team, secondaryPositions: [PlayerPosition]?, dataRequester: DataRequester, persistenceController: PersistenceController) async -> (Bool, String?) {
-        DispatchQueue.main.async { [self] in
+        await MainActor.run() {
             failedPlayerValidation = false
         }
         
         guard let player_id = await dataRequester.validatePlayer(first_name: firstName, last_name: lastName, team: team, primary_position: position.abbreviation) else {
-            #warning ("TODO: cite from https://developer.apple.com/forums/thread/718270")
-            DispatchQueue.main.async { [self] in
+            await MainActor.run {
                 failedPlayerValidation = true
             }
+            
             return (false, "Failed to validate player")
+        }
+        
+        guard checkForDuplicatePlayer(playerID: player_id) == false else {
+            print("Duplicate player found")
+            await MainActor.run {
+                failedPlayerValidation = true
+            }
+            
+            return (false, "Player is already addded")
         }
 
         guard let playerDescription = persistenceController.getDescription(entityName: "Player") else {
@@ -31,14 +40,16 @@ class RosterViewModel: NSObject, ObservableObject {
             return (false, "Internal Error")
         }
         
-        DispatchQueue.main.async {
-            let player = Player(first_name: firstName, last_name: lastName, api_id: player_id, team: team, primary_position: position, secondary_positions: secondaryPositions, entity: playerDescription, context: persistenceController.container.viewContext)
+        let player = Player(first_name: firstName, last_name: lastName, api_id: player_id, team: team, primary_position: position, secondary_positions: secondaryPositions, entity: playerDescription, context: persistenceController.container.viewContext)
+
+        await MainActor.run() {
             self.roster.addPlayerToRoster(player: player)
             persistenceController.saveData()
-            Task.init {
-                sleep(2)
-                player.updateStats(dataRequester: dataRequester, persistenceController: persistenceController)
-            }
+        }
+        
+        Task.init {
+            sleep(2)
+            player.updateStats(dataRequester: dataRequester, persistenceController: persistenceController)
         }
         
         return (true, nil)
@@ -70,5 +81,14 @@ class RosterViewModel: NSObject, ObservableObject {
                 }
             }
         }
+    }
+    
+    private func checkForDuplicatePlayer(playerID: String) -> Bool {
+        for player in roster.players {
+            if player.api_id == playerID {
+                return true
+            }
+        }
+        return false
     }
 }

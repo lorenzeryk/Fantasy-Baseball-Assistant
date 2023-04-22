@@ -91,7 +91,7 @@ class Player: NSManagedObject, Identifiable {
                 }
                 print("Finished call to data requester for stats")
                 
-                DispatchQueue.main.async {
+                await MainActor.run() {
                     self.hittingStats = playerStats.hittingStats
                     self.pitchingStats = playerStats.pitchingStats
                     
