@@ -36,9 +36,6 @@ struct topLevelView: View {
                 List(viewModel.roster.hitters, id: \.self.id, selection: $stateManager.selectedPlayerID) { player in
                     Text(String("\(player.first_name) \(player.last_name), \(player.primary_position.abbreviation) \(player.team.abbreviation)"))
                 }
-                .onAppear{
-                    viewModel.initializeData(persistenceController: persistenceController, dataRequester: dataRequester)
-                }
                 .contextMenu(forSelectionType: Player.ID.self) { player in
                     
                 } primaryAction: { player in

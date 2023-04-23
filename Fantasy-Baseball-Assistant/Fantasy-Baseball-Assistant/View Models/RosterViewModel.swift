@@ -85,7 +85,7 @@ class RosterViewModel: NSObject, ObservableObject {
     
     private func checkForDuplicatePlayer(playerID: String) -> Bool {
         for player in roster.players {
-            if player.api_id == playerID {
+            if (player.api_id == playerID) {
                 return true
             }
         }
