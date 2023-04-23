@@ -66,4 +66,21 @@ class PersistenceController: ObservableObject {
             return []
         }
     }
+    
+    func loadMatchupsForDate(_ date: Date) -> [Matchup] {
+        let fetchRequest: NSFetchRequest<Matchup> = Matchup.fetchRequest()
+        let startDate = Calendar.current.startOfDay(for: date)
+        var components = DateComponents()
+        components.day = 1
+        components.second = -1
+        let endDate =  Calendar.current.date(byAdding: components, to: startDate)!
+        fetchRequest.predicate = NSPredicate (
+            format: "date >= %@ AND date <= %@", startDate as NSDate, endDate as NSDate
+        )
+        do {
+            return try container.viewContext.fetch(fetchRequest)
+        } catch {
+            return []
+        }
+    }
 }

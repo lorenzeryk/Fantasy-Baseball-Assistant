@@ -9,6 +9,8 @@ import SwiftUI
 
 struct PlayerSummaryView: View {
     @ObservedObject var selectedPlayer: Player
+    @EnvironmentObject var dataRequester: DataRequester
+    @EnvironmentObject var persistenceController: PersistenceController
     
     var body: some View {
         HStack {
@@ -18,7 +20,7 @@ struct PlayerSummaryView: View {
                 StatSummaryView(player: selectedPlayer)
                     .frame(maxWidth: .infinity)
                 Divider()
-                MatchupView()
+                MatchupView(viewModel: MatchupViewModel(dataRequester: dataRequester, persistenceController: persistenceController, selectedPlayer: selectedPlayer))
             }
         }
     }

@@ -28,6 +28,14 @@
         <attribute name="triple" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="walks" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
+    <entity name="Matchup" representedClassName="Matchup" syncable="YES">
+        <attribute name="away_team_raw" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="home_team_raw" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="away_team_info" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TeamMatchupData"/>
+        <relationship name="home_team_info" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TeamMatchupData"/>
+        <relationship name="weather" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WeatherInfo"/>
+    </entity>
     <entity name="PitcherStats" representedClassName="PitcherStats" syncable="YES">
         <relationship name="byOpponent" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PitcherStatsBase"/>
         <relationship name="day_night" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PitcherStatsBase"/>
@@ -65,5 +73,15 @@
         <attribute name="team_raw" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="hittingStats" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="FielderStats"/>
         <relationship name="pitchingStats" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PitcherStats"/>
+    </entity>
+    <entity name="TeamMatchupData" representedClassName="TeamMatchupData" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="loss" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="startingPlayers" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="win" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="WeatherInfo" representedClassName="WeatherInfo" syncable="YES">
+        <attribute name="condition" optional="YES" attributeType="String"/>
+        <attribute name="temp" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
 </model>

@@ -149,4 +149,13 @@ extension Team {
         case .None: return ""
         }
     }
+    
+    func getTeamFromID(_ id: String) -> Team {
+        for team in Team.allCases {
+            if (id == team.teamID) {
+                return team
+            }
+        }
+        return Team.None
+    }
 }

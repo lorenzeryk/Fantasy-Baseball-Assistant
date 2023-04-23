@@ -31,7 +31,7 @@ struct MainStatView: View {
             Spacer()
             Toggle("Detailed", isOn: $statViewModel.displayAdvancedStats)
                 .toggleStyle(.switch)
-        }
+        } .padding()
         Divider()
         if (stateManager.selectedPlayer != nil && stateManager.selectedPlayer!.isPitcher()) {
             PitcherStatView(stats: statViewModel)
