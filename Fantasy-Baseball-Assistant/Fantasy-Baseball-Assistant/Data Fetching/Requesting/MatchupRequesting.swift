@@ -53,6 +53,12 @@ extension DataRequester {
             let httpResponse = response as? HTTPURLResponse
             if (httpResponse?.statusCode != 200) {
                 print("Recieved \(httpResponse?.statusCode ?? 0) from server")
+                if let errorCode = httpResponse?.value(forHTTPHeaderField: "X-Mashery-Error-Code") as? String {
+                    if (errorCode == "ERR_403_DEVELOPER_OVER_QPS") {
+                        print("Initiate retry")
+                        throw responseError.overQPS
+                    }
+                }
                 return nil
             }
             
@@ -64,11 +70,18 @@ extension DataRequester {
             }
         }
         
-        do {
-            return try await matchupFetchTask.result.get()
-        } catch {
-            return nil
+        for _ in 0..<num_retries {
+            do {
+                return try await matchupFetchTask.result.get()
+            } catch responseError.overQPS {
+                let sleepTime = Int.random(in: min_sleep_retry...max_sleep_retry)
+                print("Retry fetching matchup data in \(sleepTime)")
+                sleep(UInt32(sleepTime))
+            } catch {
+                return nil
+            }
         }
+        return nil
     }
     
     private func getCurrentDate() -> String {

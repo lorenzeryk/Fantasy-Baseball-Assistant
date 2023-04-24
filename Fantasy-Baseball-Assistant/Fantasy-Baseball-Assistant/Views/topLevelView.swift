@@ -99,7 +99,9 @@ struct HomeToolbar: ToolbarContent {
     }
     
     private func deletePlayer() {
-        viewModel.deleteSelectedPlayer(stateManager.selectedPlayerID, persistenceController: persistenceController)
+        if viewModel.deleteSelectedPlayer(stateManager.selectedPlayerID, persistenceController: persistenceController) == true {
+            stateManager.clearSelection()
+        }
     }
 }
 

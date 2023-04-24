@@ -55,19 +55,19 @@ class RosterViewModel: NSObject, ObservableObject {
         return (true, nil)
     }
     
-    func deleteSelectedPlayer(_ playerID: Player.ID?, persistenceController: PersistenceController) {
+    func deleteSelectedPlayer(_ playerID: Player.ID?, persistenceController: PersistenceController) -> Bool {
         guard playerID != nil else {
             print("No player selected to delete")
-            return
+            return false
         }
 
         roster.deletePlayerByID(playerID: playerID!)
         
         guard persistenceController.deletePlayerByID(playerID!) == true else {
             print("Failed to delete player from core data")
-            return
+            return false
         }
-        
+        return true
     }
     
     func initializeData(persistenceController: PersistenceController, dataRequester: DataRequester) {
