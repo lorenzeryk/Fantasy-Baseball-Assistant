@@ -34,10 +34,10 @@ struct MainStatView: View {
         } .padding()
         Divider()
         if (stateManager.selectedPlayer != nil && stateManager.selectedPlayer!.isPitcher()) {
-            PitcherStatView(stats: statViewModel)
+            PitcherStatView(stats: statViewModel, sortOrder: $statViewModel.pitchingSortOrder)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else {
-            HitterStatView(stats: statViewModel)
+            HitterStatView(stats: statViewModel, sortOrder: $statViewModel.hittingSortOrder)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }

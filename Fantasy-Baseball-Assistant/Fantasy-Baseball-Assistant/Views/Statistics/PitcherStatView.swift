@@ -9,7 +9,8 @@ import SwiftUI
 
 struct PitcherStatView: View {
     @ObservedObject var stats: StatViewModel
-    
+    @Binding var sortOrder: [KeyPathComparator<PitcherStatsBase>]
+
     var body: some View {
         if (stats.displayAdvancedStats) {
             if (stats.selectedStatView == SelectedStatView.Season) {
@@ -28,29 +29,29 @@ struct PitcherStatView: View {
     
     @ViewBuilder
     private func basicStatView() -> some View {
-        Table(stats.selectedPitchingStats) {
-            TableColumn(stats.getKey()) { stat in
+        Table(stats.selectedPitchingStats, sortOrder: $sortOrder) {
+            TableColumn(stats.getKey(), value: \.key) { stat in
                 Text(stats.translateKey(stat: stat))
             }
-            TableColumn("Win") { stat in
+            TableColumn("Win", value: \.win) { stat in
                 Text("\(stat.win)")
             }
-            TableColumn("Loss") { stat in
+            TableColumn("Loss", value: \.loss) { stat in
                 Text("\(stat.loss)")
             }
-            TableColumn("Innings Pitched") { stat in
+            TableColumn("Innings Pitched", value: \.ip_2) { stat in
                 Text(String(format: "%0.1f", stat.ip_2))
             }
-            TableColumn("Hits") { stat in
+            TableColumn("Hits", value: \.h) { stat in
                 Text("\(stat.h)")
             }
-            TableColumn("ERA") { stat in
+            TableColumn("ERA", value: \.era) { stat in
                 Text(String(format: "%0.2f", stat.era))
             }
-            TableColumn("K") { stat in
+            TableColumn("K", value: \.ktotal) { stat in
                 Text("\(stat.ktotal)")
             }
-            TableColumn("BB") { stat in
+            TableColumn("BB", value: \.bb) { stat in
                 Text("\(stat.bb)")
             }
         }
@@ -85,29 +86,29 @@ struct PitcherStatView: View {
     
     @ViewBuilder
     func advancedStatView() -> some View {
-        Table(stats.selectedPitchingStats) {
-            TableColumn(stats.getKey()) { stat in
+        Table(stats.selectedPitchingStats, sortOrder: $sortOrder) {
+            TableColumn(stats.getKey(), value: \.key) { stat in
                 Text(stats.translateKey(stat: stat))
             }
-            TableColumn("HR") { stat in
+            TableColumn("HR", value: \.hr) { stat in
                 Text("\(stat.hr)")
             }
-            TableColumn("OBA") { stat in
+            TableColumn("OBA", value: \.oba) { stat in
                 Text(String(format: "%0.3f", stat.oba))
             }
-            TableColumn("OBP") { stat in
+            TableColumn("OBP", value: \.obp) { stat in
                 Text(String(format: "%0.3f", stat.obp))
             }
-            TableColumn("SLG") { stat in
+            TableColumn("SLG", value: \.slg) { stat in
                 Text(String(format: "%0.3f", stat.slg))
             }
-            TableColumn("OPS") { stat in
+            TableColumn("OPS", value: \.ops) { stat in
                 Text(String(format: "%0.3f", stat.ops))
             }
-            TableColumn("Saves") { stat in
+            TableColumn("Saves", value: \.save) { stat in
                 Text("\(stat.save)")
             }
-            TableColumn("Save Opportunities") { stat in
+            TableColumn("Save Opportunities", value: \.svo) { stat in
                 Text("\(stat.svo)")
             }
         }

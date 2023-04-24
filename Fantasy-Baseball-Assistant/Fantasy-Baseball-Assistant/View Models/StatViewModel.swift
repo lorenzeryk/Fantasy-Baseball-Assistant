@@ -15,8 +15,22 @@ class StatViewModel: ObservableObject {
         }
     }
     
+    @Published var hittingSortOrder: [KeyPathComparator<FielderStatsBase>] = [
+        .init(\.key, order: .forward)] {
+            didSet {
+                updateSelectedStats()
+            }
+        }
     @Published var selectedHittingStats: [FielderStatsBase]
+    
+    @Published var pitchingSortOrder: [KeyPathComparator<PitcherStatsBase>] = [
+        .init(\.key, order: .forward)] {
+            didSet {
+                updateSelectedStats()
+            }
+        }
     @Published var selectedPitchingStats: [PitcherStatsBase]
+    
     @Published var displayAdvancedStats = false
     
     init() {
@@ -55,6 +69,7 @@ class StatViewModel: ObservableObject {
             case .Opponent:
                 selectedPitchingStats.append(contentsOf: currentPlayer!.pitchingStats!.byOpponent)
             }
+            selectedPitchingStats.sort(using: pitchingSortOrder)
         } else {
             guard currentPlayer!.hittingStats != nil else {
                 return
@@ -71,6 +86,7 @@ class StatViewModel: ObservableObject {
             case .Opponent:
                 selectedHittingStats.append(contentsOf: currentPlayer!.hittingStats!.byOpponent)
             }
+            selectedHittingStats.sort(using: hittingSortOrder)
         }
     }
     

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HitterStatView: View {
     @ObservedObject var stats: StatViewModel
+    @Binding var sortOrder: [KeyPathComparator<FielderStatsBase>]
     
     var body: some View {
         if (stats.displayAdvancedStats) {
@@ -28,32 +29,32 @@ struct HitterStatView: View {
     
     @ViewBuilder
     private func basicStatView() -> some View {
-        Table(stats.selectedHittingStats) {
-            TableColumn(stats.getKey()) { stat in
+        Table(stats.selectedHittingStats, sortOrder: $sortOrder) {
+            TableColumn(stats.getKey(), value: \.key) { stat in
                 Text(stats.translateKey(stat: stat))
             }
-            TableColumn("Average") { stat in
+            TableColumn("Average", value: \.batting_average) { stat in
                 Text(String(format: "%0.3f", stat.batting_average))
             }
-            TableColumn("Hits") { stat in
+            TableColumn("Hits", value: \.hits) { stat in
                 Text("\(stat.hits)")
             }
-            TableColumn("Homeruns") { stat in
+            TableColumn("Homeruns", value: \.homeruns) { stat in
                 Text("\(stat.homeruns)")
             }
-            TableColumn("Runs") { stat in
+            TableColumn("Runs", value: \.runs) { stat in
                 Text("\(stat.runs)")
             }
-            TableColumn("RBI") { stat in
+            TableColumn("RBI", value: \.rbi) { stat in
                 Text("\(stat.rbi)")
             }
-            TableColumn("K") { stat in
+            TableColumn("K", value: \.strike_outs) { stat in
                 Text("\(stat.strike_outs)")
             }
-            TableColumn("SB") { stat in
+            TableColumn("SB", value: \.stolen_bases) { stat in
                 Text("\(stat.stolen_bases)")
             }
-            TableColumn("CS") { stat in
+            TableColumn("CS", value: \.caught_stealing) { stat in
                 Text("\(stat.caught_stealing)")
             }
         }
@@ -61,35 +62,35 @@ struct HitterStatView: View {
     
     @ViewBuilder
     private func advancedStatView() -> some View {
-        Table(stats.selectedHittingStats) {
-            TableColumn(stats.getKey()) { stat in
+        Table(stats.selectedHittingStats, sortOrder: $sortOrder) {
+            TableColumn(stats.getKey(), value: \.key) { stat in
                 Text(stats.translateKey(stat: stat))
             }
-            TableColumn("Singles") { stat in
+            TableColumn("Singles", value: \.single) { stat in
                 Text("\(stat.single)")
             }
-            TableColumn("Doubles") { stat in
+            TableColumn("Doubles", value: \.double) { stat in
                 Text("\(stat.double)")
             }
-            TableColumn("Triples") { stat in
+            TableColumn("Triples", value: \.triple) { stat in
                 Text("\(stat.triple)")
             }
-            TableColumn("Walks") { stat in
+            TableColumn("Walks", value: \.walks) { stat in
                 Text("\(stat.walks)")
             }
-            TableColumn("Intentional Walks") { stat in
+            TableColumn("Intentional Walks", value: \.intentional_walks) { stat in
                 Text("\(stat.intentional_walks)")
             }
-            TableColumn("HBP") { stat in
+            TableColumn("HBP", value: \.hit_by_pitch) { stat in
                 Text("\(stat.hit_by_pitch)")
             }
-            TableColumn("OBP") { stat in
+            TableColumn("OBP", value: \.obp) { stat in
                 Text(String(format: "%0.3f", stat.obp))
             }
-            TableColumn("SLG") { stat in
+            TableColumn("SLG", value: \.slg) { stat in
                 Text(String(format: "%0.3f", stat.slg))
             }
-            TableColumn("OPS") { stat in
+            TableColumn("OPS", value: \.ops) { stat in
                 Text(String(format: "%0.3f", stat.ops))
             }
         }
