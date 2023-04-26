@@ -9,8 +9,6 @@ import SwiftUI
 
 struct MatchupView: View {
     @ObservedObject var viewModel: MatchupViewModel
-    @EnvironmentObject var dataRequester: DataRequester
-    @EnvironmentObject var persistenceController: PersistenceController
     
     var body: some View {
         VStack {

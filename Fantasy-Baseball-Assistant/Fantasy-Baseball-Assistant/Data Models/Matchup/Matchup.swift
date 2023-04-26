@@ -11,6 +11,7 @@ import CoreData
 @objc(Matchup)
 class Matchup: NSManagedObject {
     @NSManaged var date: Date
+    @NSManaged var fetch_date: Date
     @NSManaged var home_team_raw: Int16
     @NSManaged var away_team_raw: Int16
     @NSManaged var weather: WeatherInfo
@@ -42,5 +43,6 @@ class Matchup: NSManagedObject {
         self.weather = weather
         self.home_team_info = home_team_info
         self.away_team_info = away_team_info
+        self.fetch_date = Date()
     }
 }

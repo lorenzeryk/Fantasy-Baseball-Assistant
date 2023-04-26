@@ -31,6 +31,7 @@
     <entity name="Matchup" representedClassName="Matchup" syncable="YES">
         <attribute name="away_team_raw" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="fetch_date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="home_team_raw" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="away_team_info" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TeamMatchupData"/>
         <relationship name="home_team_info" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TeamMatchupData"/>

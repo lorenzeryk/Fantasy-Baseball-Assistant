@@ -11,13 +11,10 @@ class MatchupViewModel: ObservableObject {
     var matchups: [Matchup] = []
     @Published var currentMatchup: Matchup?
     @Published var playerStatus: String = "Not Starting"
-    var selectedPlayer: Player
-    var persistenceController: PersistenceController
-    var dataRequester: DataRequester
+    var selectedPlayer: Player?
+    var dataRefreshTime: Double = 60 * 60 * 24
     
-    init(dataRequester: DataRequester, persistenceController: PersistenceController, selectedPlayer: Player) {
-        self.dataRequester = dataRequester
-        self.persistenceController = persistenceController
+    init(dataRequester: DataRequester, persistenceController: PersistenceController, selectedPlayer: Player?) {
         self.selectedPlayer = selectedPlayer
         initializeData(persistenceController: persistenceController, dataRequester: dataRequester)
     }
@@ -27,47 +24,44 @@ class MatchupViewModel: ObservableObject {
             return ""
         }
         
-        var meridiem: String
-        let calendar = Calendar.current
-        var hour = calendar.component(.hour, from: currentMatchup!.date)
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "h:m a"
         
-        if (hour >= 12) {
-            meridiem = "PM"
-            if (hour > 12) {
-                hour = hour % 12
-            }
-        } else {
-            meridiem = "AM"
-        }
+        let startTime =  dateformatter.string(from: currentMatchup!.date)
+        let timezone = TimeZone.current.abbreviation() ?? ""
         
-        let minute = calendar.component(.minute, from: currentMatchup!.date)
-        
-        let minuteString = (minute < 10) ? "0\(minute)": "\(minute)"
-        
-        return "\(hour):\(minuteString) \(meridiem)"
+        return "\(startTime) \(timezone)"
     }
     
     func initializeData(persistenceController: PersistenceController, dataRequester: DataRequester) {
         matchups = persistenceController.loadMatchupsForDate(Date())
         
-        if (matchups.isEmpty) {
-            Task.init {
-                print("Fetching matchup data")
-                matchups = await dataRequester.getMatchupData(peristenceController: persistenceController)
-                await MainActor.run {
-                    persistenceController.saveData()
-                    updateCurrentMatchup()
-                }
+        if (matchups.isEmpty || matchups.first!.fetch_date.distance(to: Date()) > dataRefreshTime) {
+            matchups = []
+            persistenceController.deleteMatchupsForDate(Date())
+            requestMatchupData(dataRequester: dataRequester, persistenceController: persistenceController)
+        }
+        
+        updateCurrentMatchup()
+    }
+    
+    private func requestMatchupData(dataRequester: DataRequester, persistenceController: PersistenceController) {
+        Task.init {
+            print("Fetching matchup data")
+            matchups = await dataRequester.getMatchupData(peristenceController: persistenceController)
+            await MainActor.run {
+                persistenceController.saveData()
             }
-        } else {
-            print("Matchup data found")
-            updateCurrentMatchup()
         }
     }
     
     private func updateCurrentMatchup() {
+        guard selectedPlayer != nil else {
+            return
+        }
+        
         for matchup in matchups {
-            if (matchup.away_team == selectedPlayer.team || matchup.home_team == selectedPlayer.team) {
+            if (matchup.away_team == selectedPlayer!.team || matchup.home_team == selectedPlayer!.team) {
                 currentMatchup = matchup
                 updatePlayerStatus()
             }
@@ -79,18 +73,22 @@ class MatchupViewModel: ObservableObject {
             return
         }
         
-        if (selectedPlayer.team == currentMatchup!.home_team) {
+        guard selectedPlayer != nil else {
+            return
+        }
+        
+        if (selectedPlayer!.team == currentMatchup!.home_team) {
             for startingPlayer in currentMatchup!.home_team_info.startingPlayers {
-                if (selectedPlayer.api_id == startingPlayer) {
+                if (selectedPlayer!.api_id == startingPlayer) {
                     playerStatus = "Starting"
                     return
                 }
             }
             playerStatus = "Not Starting"
             return
-        } else if (selectedPlayer.team == currentMatchup!.away_team) {
+        } else if (selectedPlayer!.team == currentMatchup!.away_team) {
             for startingPlayer in currentMatchup!.away_team_info.startingPlayers {
-                if (selectedPlayer.api_id == startingPlayer) {
+                if (selectedPlayer!.api_id == startingPlayer) {
                     playerStatus = "Starting"
                     return
                 }

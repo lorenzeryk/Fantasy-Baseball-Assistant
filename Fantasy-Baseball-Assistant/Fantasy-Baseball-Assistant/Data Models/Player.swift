@@ -32,6 +32,8 @@ class Player: NSManagedObject, Identifiable {
         set {self.team_raw = newValue.rawValue}
     }
     
+    var dataRefreshTime: Double = 60 * 60 * 24
+    
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Player> {
         return NSFetchRequest<Player>(entityName: "Player")
     }
@@ -83,7 +85,7 @@ class Player: NSManagedObject, Identifiable {
     
     func updateStats(dataRequester: DataRequester, persistenceController: PersistenceController) {
         Task.init {
-            if ((hittingStats == nil && pitchingStats == nil) || last_stat_update.distance(to: Date()) > (60 * 60 * 24)) {
+            if ((hittingStats == nil && pitchingStats == nil) || last_stat_update.distance(to: Date()) > dataRefreshTime) {
                 print("Starting call to data requester for stats")
                 guard let playerStats = await dataRequester.getPlayerStats(self, persistenceController: persistenceController) else {
                     print("Failed to retrieve stats for \(first_name) \(last_name)")

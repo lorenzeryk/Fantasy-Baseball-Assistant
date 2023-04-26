@@ -71,6 +71,12 @@ class RosterViewModel: NSObject, ObservableObject {
     }
     
     func initializeData(persistenceController: PersistenceController, dataRequester: DataRequester) {
+        Task.init {
+            print("Initializing matchup data")
+            let matchupViewModel = MatchupViewModel(dataRequester: dataRequester, persistenceController: persistenceController, selectedPlayer: nil)
+            matchupViewModel.initializeData(persistenceController: persistenceController, dataRequester: dataRequester)
+        }
+        
         if (roster.players.isEmpty) {
             let savedPlayers = persistenceController.loadPlayers()
             roster.initializeRoster(players: savedPlayers)

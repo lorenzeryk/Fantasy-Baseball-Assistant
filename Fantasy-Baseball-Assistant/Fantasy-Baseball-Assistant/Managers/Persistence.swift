@@ -69,11 +69,11 @@ class PersistenceController: ObservableObject {
     
     func loadMatchupsForDate(_ date: Date) -> [Matchup] {
         let fetchRequest: NSFetchRequest<Matchup> = Matchup.fetchRequest()
-        let startDate = Calendar.current.startOfDay(for: date)
-        var components = DateComponents()
-        components.day = 1
-        components.second = -1
-        let endDate =  Calendar.current.date(byAdding: components, to: startDate)!
+        let (startDate, endDate) = getStartEndDate(date)
+        
+        fetchRequest.predicate = NSPredicate (
+            format: "date >= %@ AND date <= %@", startDate as NSDate, endDate as NSDate
+        )
         fetchRequest.predicate = NSPredicate (
             format: "date >= %@ AND date <= %@", startDate as NSDate, endDate as NSDate
         )
@@ -82,5 +82,36 @@ class PersistenceController: ObservableObject {
         } catch {
             return []
         }
+    }
+    
+    func deleteMatchupsForDate(_ date: Date) {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = Matchup.fetchRequest()
+        let (startDate, endDate) = getStartEndDate(date)
+        fetchRequest.predicate = NSPredicate (
+            format: "date >= %@ AND date <= %@", startDate as NSDate, endDate as NSDate
+        )
+        
+        do {
+            let deleteRequest = NSBatchDeleteRequest (
+                fetchRequest: fetchRequest
+            )
+            
+            try container.viewContext.execute(deleteRequest)
+            saveData()
+        } catch {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "M/d/yyyy"
+            print("Failed to delete matchup data for date: \(dateFormatter.string(from: date))")
+        }
+    }
+    
+    private func getStartEndDate(_ date: Date) -> (Date, Date) {
+        let startDate = Calendar.current.startOfDay(for: date)
+        var components = DateComponents()
+        components.day = 1
+        components.second = -1
+        let endDate =  Calendar.current.date(byAdding: components, to: startDate) ?? startDate
+        
+        return (startDate, endDate)
     }
 }
