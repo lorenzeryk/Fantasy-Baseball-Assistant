@@ -8,22 +8,33 @@
 import Foundation
 import CoreData
 
+/// Base class for pitcher statistics
 @objc(PitcherStatsBase)
 class PitcherStatsBase: NSManagedObject, Identifiable {
     @NSManaged var win: Int16
     @NSManaged var loss: Int16
+    /// Innings pitched
     @NSManaged var ip_2: Double
+    /// Hits
     @NSManaged var h: Int16
+    /// Earned Run Average
     @NSManaged var era: Double
+    /// Total Strikeouts
     @NSManaged var ktotal: Int16
+    /// Walks
     @NSManaged var bb: Int16
     
     @NSManaged var hr: Int16
+    /// Opponent Batting Average
     @NSManaged var oba: Double
+    /// Opponent On Base Percentage
     @NSManaged var obp: Double
+    /// Opponent Slugging Percentage
     @NSManaged var slg: Double
+    /// Opponent On Base Plus Slugging
     @NSManaged var ops: Double
     @NSManaged var save: Int16
+    /// Save Opportunities
     @NSManaged var svo: Int16
     
     @NSManaged var key: String

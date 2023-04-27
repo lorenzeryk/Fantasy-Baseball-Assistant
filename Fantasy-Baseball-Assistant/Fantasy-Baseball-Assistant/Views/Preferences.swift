@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Preference pane that allows a user to enter an API Key
 struct Preferences: View {
     @EnvironmentObject var dataRequester: DataRequester
     
@@ -18,8 +19,8 @@ struct Preferences: View {
     }
 }
 
-struct Preferences_Previews: PreviewProvider {
-    static var previews: some View {
-        Preferences()
-    }
-}
+//struct Preferences_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Preferences()
+//    }
+//}

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// View that shows basic player information including name and team
 struct PlayerInfoView: View {
     @ObservedObject var player: Player
     

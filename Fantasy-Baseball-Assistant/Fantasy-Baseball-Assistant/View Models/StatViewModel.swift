@@ -7,8 +7,13 @@
 
 import Foundation
 
+/// View Model that takes a player's stats and extracts the data to display to a user based on the currently selected options for the stats
 class StatViewModel: ObservableObject {
     var currentPlayer: Player?
+    
+    /// The currently selected stat view. When updated updateSelectedStats is called to update the stats displayed to the user to correspond with their selection
+    ///
+    /// Defaults to Season on intiialization
     var selectedStatView: SelectedStatView = SelectedStatView.Season {
         didSet {
             updateSelectedStats()
@@ -21,6 +26,8 @@ class StatViewModel: ObservableObject {
                 updateSelectedStats()
             }
         }
+    
+    /// Stats for the currently selected stat view for hitting statistics
     @Published var selectedHittingStats: [FielderStatsBase]
     
     @Published var pitchingSortOrder: [KeyPathComparator<PitcherStatsBase>] = [
@@ -29,17 +36,12 @@ class StatViewModel: ObservableObject {
                 updateSelectedStats()
             }
         }
+    /// Stats for the currently selected stat view for pitching statistics
     @Published var selectedPitchingStats: [PitcherStatsBase]
     
+    /// Boolean to control if basic or detailed stats are presented to the user
     @Published var displayAdvancedStats = false
-    
-    init() {
-        currentPlayer = nil
-        selectedHittingStats = []
-        selectedPitchingStats = []
-        registerForNotification()
-    }
-    
+
     init(player: Player?) {
         currentPlayer = player
         selectedHittingStats = []
@@ -48,6 +50,7 @@ class StatViewModel: ObservableObject {
         registerForNotification()
     }
     
+    /// Method to extract the data necessary to display the currently selected stat view from the all statistics for the current player
     @objc private func updateSelectedStats() {
         guard currentPlayer != nil else {
             return
@@ -90,6 +93,13 @@ class StatViewModel: ObservableObject {
         }
     }
     
+    /// Method to get value for each key in the table
+    ///
+    /// If the selected stat view is month then returns a string of the month else returns the key value for opponent name of day/night
+    ///
+    /// - Parameters:
+    ///   - stat: The current statistic object for that row in the table
+    /// - Returns: A string for the key of that row of the table
     func translateKey(stat: FielderStatsBase) -> String {
         if (selectedStatView == SelectedStatView.Month) {
             return Month(rawValue: Int16(stat.key)!)!.text
@@ -101,6 +111,13 @@ class StatViewModel: ObservableObject {
         return ""
     }
     
+    /// Method to get value for each key in the table
+    ///
+    /// If the selected stat view is month then returns a string of the month else returns the key value for opponent name of day/night
+    ///
+    /// - Parameters:
+    ///   - stat: The current statistic object for that row in the table
+    /// - Returns: A string for the key of that row of the table
     func translateKey(stat: PitcherStatsBase) -> String {
         if (selectedStatView == SelectedStatView.Month) {
             return Month(rawValue: Int16(stat.key)!)!.text
@@ -112,6 +129,14 @@ class StatViewModel: ObservableObject {
         return ""
     }
     
+    /// Method to return the label for the currently selected stat view
+    ///
+    ///  The returned value is:
+    ///    - Stat View is Month -> returns "Month"
+    ///    - Stat View is Opponent -> returns "Opponent"
+    ///    - Stat View is DayNight -> returns "Time of Day"
+    ///
+    ///  - Returns: String for the label in the table for the key
     func getKey() -> String {
         if (selectedStatView == SelectedStatView.Month) {
             return "Month"
@@ -126,11 +151,13 @@ class StatViewModel: ObservableObject {
         return ""
     }
     
+    /// Register to get notifications for when a player's stats update
     func registerForNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(updateSelectedStats), name: .statsUpdated, object: nil)
     }
 }
 
+/// The currently selected stat view
 enum SelectedStatView {
     case Season
     case Month
@@ -138,6 +165,7 @@ enum SelectedStatView {
     case Opponent
 }
 
+/// Used to translate month for stats from integer to string representation
 enum Month: Int16 {
     case January = 1
     case February = 2

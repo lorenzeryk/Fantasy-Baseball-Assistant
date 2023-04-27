@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 
+/// Stores the starting players and record of a single team in a matchup
 @objc(TeamMatchupData)
 class TeamMatchupData: NSManagedObject {
     @NSManaged var id: String

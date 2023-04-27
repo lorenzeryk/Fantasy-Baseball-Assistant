@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// View that allows a user to add a player to the roster and displays an error message if the new player fails validation
 struct CreatePlayer: View {
     @EnvironmentObject var viewModel: RosterViewModel
     @EnvironmentObject var stateManager: StateManager

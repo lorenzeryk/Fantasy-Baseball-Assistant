@@ -9,6 +9,14 @@ import Foundation
 import CoreData
 
 extension DataRequester {
+    /// Requests all matchups across the league for today
+    ///
+    /// Requests matchups across the league today. If the request fails due to an Over Query Per Seconds Error then the request is retried the set number of times with a sleep of a random value between the set max and min times.
+    ///
+    /// - Parameters:
+    ///     - persistenceController: The instance of the Persistence Controller used throughout the application
+    ///
+    /// - Returns: An array of matchups or an empty array if the matchups could not be requested
     func getMatchupData(peristenceController: PersistenceController) async -> [Matchup] {
         print("Requesting matchup")
         let matchupData: ReturnedMatchup? = await requestMatchupData()

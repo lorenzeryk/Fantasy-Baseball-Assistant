@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Top Level View for player information
 struct PlayerSummaryView: View {
     @ObservedObject var selectedPlayer: Player
     @EnvironmentObject var dataRequester: DataRequester

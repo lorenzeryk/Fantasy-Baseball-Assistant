@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+/// Handles requesting all data from the server
 class DataRequester: ObservableObject {
     let base_url = "https://api.sportradar.com/mlb/trial/v7/en"
     let num_retries = 5
@@ -17,6 +18,7 @@ class DataRequester: ObservableObject {
 }
 
 extension DataRequester {
+    /// Handles an over Queries Per Second Condition which initiates retrying the request
     enum responseError: Error {
         case overQPS
     }

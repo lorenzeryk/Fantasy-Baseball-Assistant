@@ -8,6 +8,16 @@
 import Foundation
 
 extension DataRequester {
+    /// Used to validate a player when adding a player to the roster
+    ///
+    /// Fetches data from the team profile data endpoint and verifies the passed in player is present in the list of players for that team and the player position is also correct. The first name can match either the first name or preferred first name field returned from the API.
+    ///
+    /// - Parameters:
+    ///     - first_name: First name of the player being added
+    ///     - last_name: Last name of the player being added
+    ///     - team: Team the player is being added to. This is the team profile that is requested from the server
+    ///     - primary_position: Primary position of the player
+    /// - Returns: The API id value for the player or nil if the player is not found
     func validatePlayer(first_name: String, last_name: String, team: Team, primary_position: String) async -> String? {
         let returnedPlayers: ReturnedTeamProfile? = await getTeamProfilePlayers(team: team)
         

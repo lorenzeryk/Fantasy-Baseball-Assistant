@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// View that either displays player information views or roster view based on current state
 struct CenterView: View {
     @EnvironmentObject var rosterViewModel: RosterViewModel
     @EnvironmentObject var stateManager: StateManager

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Top Level View for displaying a quick summary of a player's season statistics. Creates sub view based on if player is a pitcher or hitter
 struct StatSummaryView: View {
     #warning ("TODO: Determine solution to have stats update when player stats update")
     @ObservedObject var player: Player

@@ -9,6 +9,15 @@ import Foundation
 import CoreData
 
 extension DataRequester {
+    /// Requests statistics for a player
+    ///
+    /// Requests statistics for a player from the team splits endpoint. If the request fails due to an Over Query Per Seconds Error then the request is retried the set number of times with a sleep of a random value between the set max and min times.
+    ///
+    /// - Parameters:
+    ///     - player: The player to request stats for
+    ///     - persistenceController: The instance of the Persistence Controller used throughout the application
+    ///     
+    /// - Returns: The statistics for that player or nil if the stats could not be retrieved
     func getPlayerStats(_ player: Player, persistenceController: PersistenceController) async -> Stats? {
         guard let returnedStats = await fetchStats(player: player) else {
             print("No stats returned")

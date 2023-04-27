@@ -7,7 +7,9 @@
 
 import Foundation
 
-class CreatePlayerViewModel: ObservableObject {    
+/// View Model used to display and store selected secondary positions when adding a player
+class CreatePlayerViewModel: ObservableObject {
+    /// Array that contains the value of each switch and its corresponding player position value on the create player view when selecting secondary positions
     var secondaryPositions: [PlayerPositionBinding] = [
         PlayerPositionBinding(id: 1,position: PlayerPosition(rawValue: 1)!, selected: false),
         PlayerPositionBinding(id: 2,position: PlayerPosition(rawValue: 2)!, selected: false),
@@ -21,6 +23,12 @@ class CreatePlayerViewModel: ObservableObject {
         PlayerPositionBinding(id: 10,position: PlayerPosition(rawValue: 10)!, selected: false)
     ]
     
+    /// Builds the array of secondary positions selected by the user when creating a player
+    ///
+    /// - Parameters:
+    ///   - selectedPrimary: The selected value for the primary position. This value is omitted from the selected secondary positions
+    ///
+    /// - Returns: An array of the all the selected secondary positions or nil if none or only the same as the primary position are selected
     func createSecondaryPositionArray(selectedPrimary: PlayerPosition) -> [PlayerPosition]? {
         var secondaryPositionsSelected: [PlayerPosition] = []
         for position in secondaryPositions {
@@ -36,6 +44,7 @@ class CreatePlayerViewModel: ObservableObject {
     }
 }
 
+/// Used to display and collect selected secondary positions on the create player view
 struct PlayerPositionBinding: Identifiable {
     var id: Int
     var position: PlayerPosition

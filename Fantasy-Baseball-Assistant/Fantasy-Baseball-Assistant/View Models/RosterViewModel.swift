@@ -9,10 +9,27 @@ import Foundation
 import CoreData
 import SwiftUI
 
+/// View Model that contains all the players and handles add and deleting players
 class RosterViewModel: NSObject, ObservableObject {
+    /// Roster object that contains all of the current players
     @Published var roster: Roster = Roster()
+    
+    /// Status of validation operation. If set to false then validation failed
     @Published var failedPlayerValidation = false
-
+    
+    /// Asynchronously adds a player to the roster
+    ///
+    /// Adds a player to the roster (if not already present in roster) and then fetches stats for that player
+    ///
+    /// - Parameters:
+    ///   - firstName: The first name of the player
+    ///   - lastName: The last name of the player
+    ///   - position: The primary position of the player
+    ///   - secondaryPositions: An optional array of the secondary positions of the player
+    ///   - peristenceController: The instance of the Persistence Controller used throughout the application
+    ///   - dataRequester: The instance of the Data Requester used throughout the application
+    ///   
+    /// - Returns: Boolean value of the status of adding the player and an optional string for the error message displayed to the user if the player is unable to be added
     func addPlayer(firstName: String, lastName: String, position: PlayerPosition, team: Team, secondaryPositions: [PlayerPosition]?, dataRequester: DataRequester, persistenceController: PersistenceController) async -> (Bool, String?) {
         await MainActor.run() {
             failedPlayerValidation = false
@@ -55,7 +72,14 @@ class RosterViewModel: NSObject, ObservableObject {
         return (true, nil)
     }
     
-    func deleteSelectedPlayer(_ playerID: Player.ID?, persistenceController: PersistenceController) -> Bool {
+    /// Deletes player from Persistence and Roster
+    ///
+    ///  - Parameters:
+    ///     - playerID: the UUID of the player to delete
+    ///     - peristenceController: The instance of the Persistence Controller used throughout the application
+    ///
+    ///  - Returns: Boolean of result of delete operation
+    func deletePlayer(_ playerID: Player.ID?, persistenceController: PersistenceController) -> Bool {
         guard playerID != nil else {
             print("No player selected to delete")
             return false
@@ -70,6 +94,13 @@ class RosterViewModel: NSObject, ObservableObject {
         return true
     }
     
+    /// Initializes the data for the application
+    ///
+    ///  First the matchup data is loaded/fetched. Then all of the saved players are loaded and the stats are updated if necessary for each player
+    ///
+    ///   - Parameters:
+    ///     - peristenceController: The instance of the Persistence Controller used throughout the application
+    ///     - dataRequester: The instance of the Data Requester used throughout the application
     func initializeData(persistenceController: PersistenceController, dataRequester: DataRequester) {
         Task.init {
             print("Initializing matchup data")
@@ -89,6 +120,12 @@ class RosterViewModel: NSObject, ObservableObject {
         }
     }
     
+    /// Check if a player is already in the roster
+    ///
+    ///  - Parameters:
+    ///     - playerID: The id from the sportsradar api for the player
+    ///
+    ///  - Returns: True if that player is already present in the roster
     private func checkForDuplicatePlayer(playerID: String) -> Bool {
         for player in roster.players {
             if (player.api_id == playerID) {

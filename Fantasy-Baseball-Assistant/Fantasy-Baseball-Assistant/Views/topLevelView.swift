@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Top Level View that has sidebar roster, toolbar, and creates Center View
 struct topLevelView: View {
     @StateObject var viewModel: RosterViewModel = RosterViewModel()
     @EnvironmentObject var stateManager: StateManager
@@ -57,6 +58,7 @@ struct topLevelView: View {
     }
 }
 
+/// Toolbar that provides controls to the user including hide/show sidebar, creating a player, a back button, and deleting a player
 struct HomeToolbar: ToolbarContent {
     @ObservedObject var viewModel: RosterViewModel
     @EnvironmentObject var stateManager: StateManager
@@ -99,7 +101,7 @@ struct HomeToolbar: ToolbarContent {
     }
     
     private func deletePlayer() {
-        if viewModel.deleteSelectedPlayer(stateManager.selectedPlayerID, persistenceController: persistenceController) == true {
+        if viewModel.deletePlayer(stateManager.selectedPlayerID, persistenceController: persistenceController) == true {
             stateManager.clearSelection()
         }
     }

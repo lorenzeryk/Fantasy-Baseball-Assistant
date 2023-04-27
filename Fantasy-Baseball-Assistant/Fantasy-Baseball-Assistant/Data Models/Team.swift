@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Stores team as an Int16
 enum Team: Int16, CaseIterable {
     case None = 0
     case Diamondbacks = 1
@@ -42,6 +43,7 @@ enum Team: Int16, CaseIterable {
 }
 
 extension Team {
+    /// Team as short three letter string
     var abbreviation: String {
         switch self {
         case .Diamondbacks: return "ARI"
@@ -78,6 +80,7 @@ extension Team {
         }
     }
     
+    /// Full name of team in form of ${City/State} ${Team Name}
     var fullText: String {
         switch self {
         case .Diamondbacks: return "Arizona Diamondbacks"
@@ -114,6 +117,7 @@ extension Team {
         }
     }
     
+    /// ID of team from Sportsradar API
     var teamID: String {
         switch self {
         case .Diamondbacks: return "25507be1-6a68-4267-bd82-e097d94b359b"
@@ -150,6 +154,12 @@ extension Team {
         }
     }
     
+    /// Get Team from the id
+    ///
+    ///  - Parameters:
+    ///     - id: ID of team
+    ///
+    /// - Returns: Team corresponding to that ID
     func getTeamFromID(_ id: String) -> Team {
         for team in Team.allCases {
             if (id == team.teamID) {

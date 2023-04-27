@@ -7,6 +7,7 @@
 
 import CoreData
 
+/// Handles all interactions with core data
 class PersistenceController: ObservableObject {
     let container: NSPersistentContainer
     
@@ -23,6 +24,9 @@ class PersistenceController: ObservableObject {
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
     
+    /// Handles saving core data
+    ///
+    /// If an error is thrown when trying to save then the error is printed to console and the application continues
     func saveData() {
         do {
             try container.viewContext.save()
@@ -32,10 +36,21 @@ class PersistenceController: ObservableObject {
         }
     }
     
+    /// Gets the entity description
+    ///
+    /// - Parameters:
+    ///    - entityName: String of the entity name
+    ///
+    /// - Returns: The entity description or nil
     func getDescription(entityName: String) -> NSEntityDescription? {
         return NSEntityDescription.entity(forEntityName: entityName, in: container.viewContext)
     }
     
+    /// Deletes a player from core data
+    ///
+    /// - Parameters:
+    ///   - id: The UUID of the player to delete
+    /// - Returns: Boolean of success of delete operations
     func deletePlayerByID(_ id: UUID) -> Bool {
         let fetchRequest: NSFetchRequest<Player> = Player.fetchRequest()
         fetchRequest.predicate = NSPredicate (
@@ -58,6 +73,9 @@ class PersistenceController: ObservableObject {
         }
     }
     
+    /// Loads all players from core data
+    ///
+    /// - Returns: All players saved in core data or an empty array if no players exist
     func loadPlayers() -> [Player] {
         let fetchRequest: NSFetchRequest<Player> = Player.fetchRequest()
         do {
@@ -67,6 +85,12 @@ class PersistenceController: ObservableObject {
         }
     }
     
+    /// Loads all matchups for a given date
+    ///
+    /// - Parameters:
+    ///     - date: The date for which the matchups are being requested for
+    ///
+    /// - Returns: An array of the matchups or an emtpty array if none exist
     func loadMatchupsForDate(_ date: Date) -> [Matchup] {
         let fetchRequest: NSFetchRequest<Matchup> = Matchup.fetchRequest()
         let (startDate, endDate) = getStartEndDate(date)
@@ -84,6 +108,10 @@ class PersistenceController: ObservableObject {
         }
     }
     
+    /// Deletes all matchups for a given date
+    ///
+    /// - Parameters:
+    ///     - date: The date to delete all matchups for
     func deleteMatchupsForDate(_ date: Date) {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = Matchup.fetchRequest()
         let (startDate, endDate) = getStartEndDate(date)

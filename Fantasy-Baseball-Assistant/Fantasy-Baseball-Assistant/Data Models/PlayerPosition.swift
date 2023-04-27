@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Player Positions stored as Int16
 enum PlayerPosition: Int16, CaseIterable {
     case None = 0
     case SP = 1
@@ -23,6 +24,7 @@ enum PlayerPosition: Int16, CaseIterable {
 }
 
 extension PlayerPosition {
+    /// Player Position in short two letter abbreviation
     var abbreviation: String {
         switch self {
         case .RP: return "RP"
@@ -39,6 +41,7 @@ extension PlayerPosition {
         }
     }
     
+    /// Full Name of Position
     var fullText: String {
         switch self {
         case .RP: return "Relief Pitcher"

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Top Level Stat View that provides buttons for the user to change which stats are displayed and creates either the HitterStatView or PitcherStatView
 struct MainStatView: View {
     @EnvironmentObject var stateManager: StateManager
     @ObservedObject var statViewModel: StatViewModel

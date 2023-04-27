@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// View that displays a table of statistics for hitters
 struct HitterStatView: View {
     @ObservedObject var stats: StatViewModel
     @Binding var sortOrder: [KeyPathComparator<FielderStatsBase>]

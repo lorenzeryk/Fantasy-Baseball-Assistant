@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 
+/// Stores all data for a single matchup
 @objc(Matchup)
 class Matchup: NSManagedObject {
     @NSManaged var date: Date

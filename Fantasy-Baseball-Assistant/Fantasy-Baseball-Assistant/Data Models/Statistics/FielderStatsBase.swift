@@ -8,13 +8,16 @@
 import Foundation
 import CoreData
 
+/// Base class for hitting statistics
 @objc(FielderStatsBase)
 class FielderStatsBase: NSManagedObject, Identifiable {
     @NSManaged var batting_average: Double
+    /// At bats
     @NSManaged var ab: Int16
     @NSManaged var hits: Int16
     @NSManaged var homeruns: Int16
     @NSManaged var runs: Int16
+    /// Runs Batted In
     @NSManaged var rbi: Int16
     @NSManaged var strike_outs: Int16
     @NSManaged var stolen_bases: Int16

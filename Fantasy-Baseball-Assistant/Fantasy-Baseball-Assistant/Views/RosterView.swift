@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// View that displays a table of hitters and a table of pitchers currently in the roster
 struct RosterView: View {
     @ObservedObject var viewModel: RosterViewModel
     @ObservedObject var stateManager: StateManager

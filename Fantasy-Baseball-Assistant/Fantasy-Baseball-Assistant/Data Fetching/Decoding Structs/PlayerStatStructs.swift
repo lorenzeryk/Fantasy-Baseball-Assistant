@@ -20,10 +20,12 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 
 import Foundation
 
+/// Decoding: Contains arary of all data when requesting stats  from server
 struct ReturnedStats: Codable {
     var players: [PlayerStats]
 }
 
+/// Decoding: Player Information and stats recieved from server
 struct PlayerStats: Codable {
     var first_name: String?
     var last_name: String?
@@ -31,19 +33,23 @@ struct PlayerStats: Codable {
     var splits: Splits
 }
 
+/// Decoding: Hitting and pitching stats recieved from server
 struct Splits: Codable {
     var hitting: Hitting?
     var pitching: Pitching?
 }
 
+/// Decoding: Contains all hitting stats recieved from server
 struct Hitting: Codable {
     var overall: [OverallHitting]?
 }
 
+/// Decoding: Contains all pitching stats recieved from server
 struct Pitching: Codable {
     var overall: [OverallPitching]?
 }
 
+/// Decoding: Breakdown of pitching stats by category recieved from server
 struct OverallPitching: Codable {
     var total: [PitchingStats]?
     var day_night: [PitchingStats]?
@@ -53,6 +59,7 @@ struct OverallPitching: Codable {
     var opponent: [PitchingStats]?
 }
 
+/// Decoding: Breakdown of hitting stats by category recieved from server
 struct OverallHitting: Codable {
     var total: [HittingStats]?
     var day_night: [HittingStats]?
@@ -62,6 +69,7 @@ struct OverallHitting: Codable {
     var opponent: [HittingStats]?
 }
 
+/// Decoding: Base level of hitting stats recieved from server
 struct HittingStats: Codable {
     var ab: Int?
     var runs: Int?
@@ -85,6 +93,7 @@ struct HittingStats: Codable {
     var name: String?
 }
 
+/// Decoding: Base level of pitching stats received from server
 struct PitchingStats: Codable {
     var win: Int?
     var loss: Int?
@@ -105,6 +114,7 @@ struct PitchingStats: Codable {
     var name: String?
 }
 
+/// Decoding: Returned stats object from request to get stats
 struct Stats {
     var hittingStats: FielderStats?
     var pitchingStats: PitcherStats?

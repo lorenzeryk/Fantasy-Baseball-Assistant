@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 
+/// Class containing different categories of hitting statistics
 @objc(FielderStats)
 class FielderStats: NSManagedObject {
     @NSManaged var season: FielderStatsBase

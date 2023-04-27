@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Decoding: Player data extracted when validating a player
 struct RequestedPlayer: Codable {
     var first_name: String
     var preferred_name: String
@@ -15,6 +16,7 @@ struct RequestedPlayer: Codable {
     var id: String
 }
 
+/// Decoding: Contains array of all players recieved from server
 struct ReturnedTeamProfile: Codable {
     var players: [RequestedPlayer]
 }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// View that displays a player's game information for the current day
 struct MatchupView: View {
     @ObservedObject var viewModel: MatchupViewModel
     

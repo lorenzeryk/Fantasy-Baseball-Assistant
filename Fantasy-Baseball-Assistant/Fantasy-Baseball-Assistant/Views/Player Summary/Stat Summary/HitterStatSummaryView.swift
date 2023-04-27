@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Displays a quick summary of season statistics for a pitcher
 struct HitterStatSummaryView: View {
     @ObservedObject var player: Player
     

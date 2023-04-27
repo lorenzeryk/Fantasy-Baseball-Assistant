@@ -8,6 +8,8 @@
 import Foundation
 import CoreData
 
+
+/// Stores weather condition and temperature for a matchup
 @objc(WeatherInfo)
 class WeatherInfo: NSManagedObject {
     @NSManaged var condition: String

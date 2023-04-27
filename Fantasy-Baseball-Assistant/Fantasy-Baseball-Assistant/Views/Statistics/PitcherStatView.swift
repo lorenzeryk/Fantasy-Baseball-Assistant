@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// View that displays a table of pitcher statistics
 struct PitcherStatView: View {
     @ObservedObject var stats: StatViewModel
     @Binding var sortOrder: [KeyPathComparator<PitcherStatsBase>]
@@ -48,6 +49,9 @@ struct PitcherStatView: View {
             TableColumn("ERA", value: \.era) { stat in
                 Text(String(format: "%0.2f", stat.era))
             }
+            TableColumn("WHIP", value: \.whip) { stat in
+                Text(String(format: "%0.2f", stat.whip))
+            }
             TableColumn("K", value: \.ktotal) { stat in
                 Text("\(stat.ktotal)")
             }
@@ -74,6 +78,9 @@ struct PitcherStatView: View {
             }
             TableColumn("ERA") { stat in
                 Text(String(format: "%0.2f", stat.era))
+            }
+            TableColumn("WHIP") { stat in
+                Text(String(format: "%0.2f", stat.whip))
             }
             TableColumn("K") { stat in
                 Text("\(stat.ktotal)")
