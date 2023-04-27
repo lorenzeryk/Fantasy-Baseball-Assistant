@@ -16,6 +16,7 @@ struct StatSummaryView: View {
         VStack {
             Text("Season Stat Summary")
                 .font(.system(size: 32))
+                .padding()
             if (player.isPitcher()) {
                 PitcherStatSummaryView(player: player)
             } else {

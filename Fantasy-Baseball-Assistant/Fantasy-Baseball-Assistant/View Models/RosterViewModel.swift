@@ -10,9 +10,30 @@ import CoreData
 import SwiftUI
 
 /// View Model that contains all the players and handles add and deleting players
-class RosterViewModel: NSObject, ObservableObject {
+class RosterViewModel: NSObject, ObservableObject {    
     /// Roster object that contains all of the current players
-    @Published var roster: Roster = Roster()
+    var roster: Roster = Roster() {
+        didSet {
+            updatePitchersHitters()
+        }
+    }
+    
+    @Published var hitters: [Player] = []
+    @Published var pitchers: [Player] = []
+    
+    @Published var hittersSortOrder: [KeyPathComparator<Player>] = [
+        .init(\.primary_position_raw, order: .forward)] {
+            didSet {
+                updatePitchersHitters()
+            }
+        }
+    
+    @Published var pitchersSortOrder: [KeyPathComparator<Player>] = [
+        .init(\.primary_position_raw, order: .forward)] {
+            didSet {
+                updatePitchersHitters()
+            }
+        }
     
     /// Status of validation operation. If set to false then validation failed
     @Published var failedPlayerValidation = false
@@ -28,7 +49,7 @@ class RosterViewModel: NSObject, ObservableObject {
     ///   - secondaryPositions: An optional array of the secondary positions of the player
     ///   - peristenceController: The instance of the Persistence Controller used throughout the application
     ///   - dataRequester: The instance of the Data Requester used throughout the application
-    ///   
+    ///
     /// - Returns: Boolean value of the status of adding the player and an optional string for the error message displayed to the user if the player is unable to be added
     func addPlayer(firstName: String, lastName: String, position: PlayerPosition, team: Team, secondaryPositions: [PlayerPosition]?, dataRequester: DataRequester, persistenceController: PersistenceController) async -> (Bool, String?) {
         await MainActor.run() {
@@ -133,5 +154,22 @@ class RosterViewModel: NSObject, ObservableObject {
             }
         }
         return false
+    }
+    
+    /// Updates arrays of position players and pitchers
+    private func updatePitchersHitters() {
+        hitters = []
+        pitchers = []
+
+        for player in roster.players {
+            if player.isPitcher() {
+                pitchers.append(player)
+            } else {
+                hitters.append(player)
+            }
+        }
+        
+        hitters = hitters.sorted(using: hittersSortOrder)
+        pitchers = pitchers.sorted(using: pitchersSortOrder)
     }
 }

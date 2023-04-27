@@ -25,7 +25,7 @@ struct CenterView: View {
                 }
             }
             else {
-                RosterView(viewModel: rosterViewModel, stateManager: stateManager)
+                RosterView(viewModel: rosterViewModel, stateManager: stateManager, hittingSortOrder: $rosterViewModel.hittersSortOrder, pitcherSortOrder: $rosterViewModel.pitchersSortOrder)
             }
         }
     }

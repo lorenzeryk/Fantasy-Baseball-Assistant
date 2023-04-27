@@ -11,6 +11,8 @@ import SwiftUI
 struct RosterView: View {
     @ObservedObject var viewModel: RosterViewModel
     @ObservedObject var stateManager: StateManager
+    @Binding var hittingSortOrder: [KeyPathComparator<Player>]
+    @Binding var pitcherSortOrder: [KeyPathComparator<Player>]
     
     var body: some View {
         RosterTables()
@@ -37,39 +39,41 @@ struct RosterView: View {
     
     @ViewBuilder private func PitchersTable() -> some View {
         Text("Pitchers")
+            .font(.system(size: 24))
             .padding()
-        Table(viewModel.roster.pitchers, selection: $stateManager.selectedPlayerID) {
-            TableColumn("Name") {
-                Text($0.first_name + " " + $0.last_name)
+        Table(viewModel.pitchers, selection: $stateManager.selectedPlayerID, sortOrder: $pitcherSortOrder) {
+            TableColumn("Name", value: \.last_name) { player in
+                Text(player.first_name + " " + player.last_name)
             }
-            TableColumn("Primary Position") {
-                Text($0.primary_position.fullText)
+            TableColumn("Primary Position", value: \.primary_position_raw) { player in
+                Text(player.primary_position.fullText)
             }
-            TableColumn("Secondary Positions") {
-                Text(getAllPlayerPositions(player: $0))
+            TableColumn("Secondary Positions") { player in
+                Text(getAllPlayerPositions(player: player))
             }
-            TableColumn("Team") {
-                Text($0.team.fullText)
+            TableColumn("Team", value: \.team.fullText) { player in
+                Text(player.team.fullText)
             }
         }
 
     }
     
     @ViewBuilder private func HittersTable() -> some View {
-        Text("Fielders")
+        Text("Hitters")
+            .font(.system(size: 24))
             .padding()
-        Table(viewModel.roster.hitters, selection: $stateManager.selectedPlayerID) {
-            TableColumn("Name") {
-                Text($0.first_name + " " + $0.last_name)
+        Table(viewModel.hitters, selection: $stateManager.selectedPlayerID, sortOrder: $hittingSortOrder) {
+            TableColumn("Name", value: \.last_name) { player in
+                Text(player.first_name + " " + player.last_name)
             }
-            TableColumn("Primary Position") {
-                Text($0.primary_position.fullText)
+            TableColumn("Primary Position", value: \.primary_position_raw) { player in
+                Text(player.primary_position.fullText)
             }
-            TableColumn("Secondary Positions") {
-                Text(getAllPlayerPositions(player: $0))
+            TableColumn("Secondary Positions") { player in
+                Text(getAllPlayerPositions(player: player))
             }
-            TableColumn("Team") {
-                Text($0.team.fullText)
+            TableColumn("Team", value: \.team.fullText) { player in
+                Text(player.team.fullText)
             }
         }
     }

@@ -18,7 +18,7 @@ struct topLevelView: View {
         NavigationView {
             VStack {
                 Text("Pitchers")
-                List(viewModel.roster.pitchers, id: \.self.id, selection: $stateManager.selectedPlayerID) { player in
+                List(viewModel.pitchers, id: \.self.id, selection: $stateManager.selectedPlayerID) { player in
                     Text(String("\(player.first_name) \(player.last_name), \(player.primary_position.abbreviation) \(player.team.abbreviation)"))
                 }
                 .onAppear{
@@ -34,7 +34,7 @@ struct topLevelView: View {
                 .navigationTitle("Roster")
                 
                 Text("Hitters")
-                List(viewModel.roster.hitters, id: \.self.id, selection: $stateManager.selectedPlayerID) { player in
+                List(viewModel.hitters, id: \.self.id, selection: $stateManager.selectedPlayerID) { player in
                     Text(String("\(player.first_name) \(player.last_name), \(player.primary_position.abbreviation) \(player.team.abbreviation)"))
                 }
                 .contextMenu(forSelectionType: Player.ID.self) { player in
