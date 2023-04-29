@@ -126,7 +126,6 @@ class RosterViewModel: NSObject, ObservableObject {
         Task.init {
             print("Initializing matchup data")
             let matchupViewModel = MatchupViewModel(dataRequester: dataRequester, persistenceController: persistenceController, selectedPlayer: nil)
-            matchupViewModel.initializeData(persistenceController: persistenceController, dataRequester: dataRequester)
         }
         
         if (roster.players.isEmpty) {
