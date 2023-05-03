@@ -34,7 +34,7 @@ class MatchupViewModel: ObservableObject {
         }
         
         let dateformatter = DateFormatter()
-        dateformatter.dateFormat = "h:m a"
+        dateformatter.dateFormat = "h:mm a"
         
         let startTime =  dateformatter.string(from: currentMatchup!.date)
         let timezone = TimeZone.current.abbreviation() ?? ""
