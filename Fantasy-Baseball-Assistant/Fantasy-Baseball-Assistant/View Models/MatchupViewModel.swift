@@ -18,7 +18,7 @@ class MatchupViewModel: ObservableObject {
     var selectedPlayer: Player?
     
     /// The frequency at which new data is requested from the server in seconds. Set to once every 24 hours currently
-    var dataRefreshTime: Double = 60 * 60 * 24
+    var dataRefreshTime: Double = 60 * 60
     
     init(dataRequester: DataRequester, persistenceController: PersistenceController, selectedPlayer: Player?) {
         self.selectedPlayer = selectedPlayer

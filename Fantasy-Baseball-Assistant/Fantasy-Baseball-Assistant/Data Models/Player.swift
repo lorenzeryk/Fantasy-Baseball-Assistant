@@ -37,7 +37,7 @@ class Player: NSManagedObject, Identifiable {
         set {self.team_raw = newValue.rawValue}
     }
     
-    var dataRefreshTime: Double = 60 * 60 * 24
+    var dataRefreshTime: Double = 60 * 60
     
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Player> {
         return NSFetchRequest<Player>(entityName: "Player")

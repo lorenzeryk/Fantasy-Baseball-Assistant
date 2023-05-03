@@ -76,17 +76,17 @@ struct HomeToolbar: ToolbarContent {
                 Image(systemName: "plus")
             })
         }
+        if (stateManager.selectedPlayerID != nil) {
+            ToolbarItem(placement: .navigation) {
+                Button(action: deletePlayer, label: {
+                    Image(systemName: "minus")
+                })
+            }
+        }
         if (stateManager.showPlayerInfo) {
             ToolbarItem(placement: .navigation) {
                 Button(action: backButton, label: {
                     Image(systemName: "chevron.backward")
-                })
-            }
-        }
-        if (stateManager.selectedPlayerID != nil && !stateManager.showPlayerInfo) {
-            ToolbarItem(placement: .navigation) {
-                Button(action: deletePlayer, label: {
-                    Image(systemName: "minus")
                 })
             }
         }
