@@ -20,7 +20,8 @@ class CreatePlayerViewModel: ObservableObject {
         PlayerPositionBinding(id: 7,position: PlayerPosition(rawValue: 7)!, selected: false),
         PlayerPositionBinding(id: 8,position: PlayerPosition(rawValue: 8)!, selected: false),
         PlayerPositionBinding(id: 9,position: PlayerPosition(rawValue: 9)!, selected: false),
-        PlayerPositionBinding(id: 10,position: PlayerPosition(rawValue: 10)!, selected: false)
+        PlayerPositionBinding(id: 10,position: PlayerPosition(rawValue: 10)!, selected: false),
+        PlayerPositionBinding(id: 11, position: PlayerPosition(rawValue: 11)!, selected: false)
     ]
     
     /// Builds the array of secondary positions selected by the user when creating a player

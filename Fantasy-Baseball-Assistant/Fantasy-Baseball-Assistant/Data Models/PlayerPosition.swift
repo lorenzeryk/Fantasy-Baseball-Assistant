@@ -20,7 +20,7 @@ enum PlayerPosition: Int16, CaseIterable {
     case Left = 8
     case Center = 9
     case Right = 10
-    
+    case DesignatedHitter = 11
 }
 
 extension PlayerPosition {
@@ -37,6 +37,7 @@ extension PlayerPosition {
         case .Left: return "LF"
         case .Center: return "CF"
         case .Right: return "RF"
+        case .DesignatedHitter: return "DH"
         case .None: return "NP"
         }
     }
@@ -54,6 +55,7 @@ extension PlayerPosition {
         case .Left: return "Left Field"
         case .Center: return "Center Field"
         case .Right: return "Right Field"
+        case .DesignatedHitter: return "Designated Hitter"
         case .None: return ""
         }
     }
